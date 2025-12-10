@@ -1,6 +1,7 @@
-import { Image, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { InforAccount } from "@/features/home/infor-account";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function HomeScreen() {
@@ -8,11 +9,8 @@ export default function HomeScreen() {
     <LinearGradient colors={["#D4CAFC", "#FCD1DA"]} style={styles.background}>
       <SafeAreaView style={styles.titleContainer}>
         <ScrollView>
-          <Image
-            source={require("../../assets/images/logo.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+          <InforAccount />
+          
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
