@@ -1,38 +1,62 @@
-import { useTheme } from "@react-navigation/native";
-import { Tabs } from "expo-router";
-import React from "react";
+import { colors } from '@/theme/colors';
+import { Tabs } from 'expo-router';
+import React from 'react';
 
-import { Platform } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
-  const { colors } = useTheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.primary,
+        tabBarActiveTintColor: colors.primary[10],
         tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
+          ios: { position: 'absolute' },
           default: {},
         }),
+        headerShown: false,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: 'Trang chủ',
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="home" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="manage-student"
+        options={{
+          title: 'QL học viên',
           // tabBarIcon: ({ color }) => (
-          //   <IconSymbol size={28} name="house.fill" color={color} />
+          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
           // ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="military-number"
         options={{
-          title: "Explore",
+          title: 'Quân số',
+          // tabBarIcon: ({ color }) => (
+          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
+          // ),
+        }}
+      />
+      <Tabs.Screen
+        name="schedule"
+        options={{
+          title: 'T.K.Biểu',
+          // tabBarIcon: ({ color }) => (
+          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
+          // ),
+        }}
+      />
+      <Tabs.Screen
+        name="setting"
+        options={{
+          title: 'Cài đặt',
           // tabBarIcon: ({ color }) => (
           //   <IconSymbol size={28} name="paperplane.fill" color={color} />
           // ),

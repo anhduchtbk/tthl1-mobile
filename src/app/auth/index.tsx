@@ -1,48 +1,55 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ButtonLogin } from "@/components/button/login";
-import { FormInputLabel } from "@/components/input/form-input-label";
-import { LinearGradient } from "expo-linear-gradient";
+import { Box } from '@/components/common/Layout/Box';
+import { Text } from '@/components/common/Text/Text';
+import { ButtonLogin } from '@/features/login/ButtonLogin';
+import { FormInputLabel } from '@/features/login/FormInputLabel';
+import { colors } from '@/theme/colors';
+import { FontSize } from '@/theme/fonts';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function LoginScreen() {
   return (
-    <LinearGradient colors={["#D4CAFC", "#FCD1DA"]} style={styles.background}>
+    <LinearGradient colors={['#D4CAFC', '#FCD1DA']} style={styles.background}>
       <SafeAreaView style={styles.titleContainer}>
         <Image
-          source={require("../../assets/images/logo.png")}
+          source={require('../../assets/images/logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
 
-        <View>
-          <Text style={styles.header1}>Chào mừng, </Text>
-          <Text style={styles.header2}>
-            Đăng nhập để bắt đầu với TTHL1 - K02
+        <Box mt={16} gap={16}>
+          <Text fontSize={24} fontWeight="bold" color={colors.primary[60]}>
+            Chào mừng,
           </Text>
-        </View>
+          <Text fontSize={FontSize.LARGE} color={colors.text['darkest']}>
+            Đăng nhập để bắt đầu với TTHL1 - K02 👋
+          </Text>
+        </Box>
 
-        <View style={styles.formLogin}>
-          <FormInputLabel label="Tên đăng nhập" />
+        <Box mt={36}>
+          <FormInputLabel label="Tên đăng nhập" autoFocus />
+          <Box h={12} />
           <FormInputLabel label="Mật khẩu" />
           <TouchableOpacity activeOpacity={0.7} style={styles.forgotPass}>
-            <Text style={{ color: "#5C0191" }}>Quên mật khẩu ?</Text>
+            <Text fontSize={FontSize.LARGE} color={colors.primary[60]}>
+              Quên mật khẩu?
+            </Text>
           </TouchableOpacity>
           <ButtonLogin />
-        </View>
+        </Box>
       </SafeAreaView>
     </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    paddingRight: 20,
-    paddingLeft: 20,
-    gap: 36,
-  },
   background: {
     flex: 1,
+  },
+  titleContainer: {
+    paddingHorizontal: 16,
   },
   logo: {
     width: 61,
@@ -51,18 +58,16 @@ const styles = StyleSheet.create({
   header1: {
     fontWeight: 700,
     fontSize: 24,
-    color: "#5C0191",
-    lineHeight: 34,
+    color: '#5C0191',
   },
   header2: {
     fontWeight: 400,
     fontSize: 16,
-    lineHeight: 34,
   },
   forgotPass: {
-    alignItems: "center",
-    fontWeight: 400,
-    fontSize: 16,
+    paddingVertical: 12,
+    marginBottom: 24,
+    alignItems: 'center',
   },
   formLogin: {
     gap: 12,

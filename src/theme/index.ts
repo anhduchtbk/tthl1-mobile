@@ -1,4 +1,3 @@
-import button from '@/theme/button';
 import { colors } from '@/theme/colors';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 
@@ -7,8 +6,6 @@ export const lightColors = {
   secondary: colors.secondary[60],
   accent: colors.accent[60],
   grey: colors.grey,
-
-  placeholder: colors.grey[30],
 
   background: colors.neutral.background,
   backgroundWhite: colors.neutral.white,
@@ -32,7 +29,6 @@ export const lightTheme = {
     ...lightColors,
   },
   components: {
-    button: button(lightColors),
   },
 };
 
@@ -41,8 +37,6 @@ export const darkColors: ColorType = {
   secondary: colors.secondary[60],
   accent: colors.accent[60],
   grey: colors.grey,
-
-  placeholder: colors.grey[30],
 
   background: colors.neutral.background,
   backgroundWhite: colors.neutral.white,
@@ -66,7 +60,6 @@ export const darkTheme = {
     ...darkColors,
   },
   components: {
-    button: button(darkColors),
   },
 };
 
