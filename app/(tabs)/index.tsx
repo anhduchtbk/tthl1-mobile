@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   txtFooter: {
+    fontFamily: "Mulish",
     fontWeight: 600,
     fontSize: 16,
     lineHeight: 24,

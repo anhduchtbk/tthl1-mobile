@@ -63,11 +63,13 @@ const styles = StyleSheet.create({
     height: 118,
   },
   txtAccount: {
+    fontFamily: "Mulish",
     color: "#490074",
     fontWeight: 800,
     fontSize: 13,
   },
   txtCode: {
+    fontFamily: "Mulish",
     fontSize: 13,
     color: "#8D5581",
   },

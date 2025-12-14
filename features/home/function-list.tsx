@@ -71,10 +71,12 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   txtTitle: {
+    fontFamily: 'Mulish',
     fontWeight: 700,
     fontSize: 20,
   },
   txtFunction: {
+    fontFamily: 'Mulish',
     flex: 1,
     fontSize: 14,
     fontWeight: 500,

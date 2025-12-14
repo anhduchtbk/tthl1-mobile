@@ -103,6 +103,7 @@ export function Timetable() {
             key={index}
             isCheck={selectedIndex === index}
             onPress={() => setSelectedIndex(index)}
+            isDefault={index === 0}
           />
         ))}
       </ScrollView>
@@ -161,23 +162,27 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   txtSchedule: {
+    fontFamily: "Mulish",
     fontWeight: 800,
     fontSize: 13,
     lineHeight: 20,
     color: "#777777",
   },
   txtSubject: {
+    fontFamily: "Mulish",
     fontWeight: 700,
     fontSize: 14,
     lineHeight: 20,
   },
   txtTeacher: {
+    fontFamily: "Mulish",
     fontWeight: 700,
     color: "#565656",
     lineHeight: 20,
     fontSize: 13,
   },
   txtLesson: {
+    fontFamily: "Mulish",
     lineHeight: 20,
     color: "#565656",
     fontSize: 13,
@@ -187,15 +192,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   txtDayElementChecked: {
+    fontFamily: "Mulish",
     fontWeight: 400,
     fontSize: 14,
     color: "#5C0191",
   },
   txtDayElement: {
+    fontFamily: "Mulish",
     fontWeight: 400,
     fontSize: 14,
   },
   txtHeaderSchedule: {
+    fontFamily: "Mulish",
     fontWeight: 700,
     fontSize: 20,
   },

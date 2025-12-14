@@ -26,7 +26,9 @@ export default function HomeScreen() {
           <FormInputLabel label="Tên đăng nhập" />
           <FormInputLabel label="Mật khẩu" />
           <TouchableOpacity activeOpacity={0.7} style={styles.forgotPass}>
-            <Text style={{ color: "#5C0191" }}>Quên mật khẩu ?</Text>
+            <Text style={{ fontFamily: "Mulish", color: "#5C0191" }}>
+              Quên mật khẩu ?
+            </Text>
           </TouchableOpacity>
           <ButtonLogin />
         </View>
@@ -49,12 +51,14 @@ const styles = StyleSheet.create({
     height: 68,
   },
   header1: {
+    fontFamily: "Mulish",
     fontWeight: 700,
     fontSize: 24,
     color: "#5C0191",
     lineHeight: 34,
   },
   header2: {
+    fontFamily: "Mulish",
     fontWeight: 400,
     fontSize: 16,
     lineHeight: 34,

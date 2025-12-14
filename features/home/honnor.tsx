@@ -25,12 +25,16 @@ function Honored({ name, unit, learnSystem }: PropsHonorOfWeek) {
       <View style={{ gap: 10 }}>
         <View>
           <Text style={styles.txtNameHonor}>{name}</Text>
-          <Text style={{ fontSize: 11, color: "#565656" }}>{unit}</Text>
+          <Text
+            style={{ fontFamily: "Mulish", fontSize: 11, color: "#565656" }}
+          >
+            {unit}
+          </Text>
         </View>
 
         <View style={styles.learnSystem}>
           <StarSvg />
-          <Text>{learnSystem}</Text>
+          <Text style={styles.txtLearnSystem}>{learnSystem}</Text>
         </View>
       </View>
     </View>
@@ -69,6 +73,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   honerContainer: {
+    flex: 1,
     flexDirection: "row",
     gap: 8,
     backgroundColor: "#FFFFFF",
@@ -79,6 +84,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 3,
+    width: 260,
   },
   avatarContainer: {
     alignItems: "center",
@@ -95,6 +101,7 @@ const styles = StyleSheet.create({
     bottom: -10,
   },
   txtNameHonor: {
+    fontFamily: "Mulish",
     fontWeight: 700,
     fontSize: 14,
     color: "#292929",
@@ -106,8 +113,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   txtHeader: {
+    fontFamily: "Mulish",
     fontWeight: 700,
     fontSize: 20,
     lineHeight: 30,
+  },
+  txtLearnSystem: {
+    fontFamily: "Mulish",
+    fontWeight: 400,
+    color: "#565656",
   },
 });

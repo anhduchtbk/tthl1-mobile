@@ -19,6 +19,7 @@ export function FormInputLabel({ label }: Props) {
 
 const styles = StyleSheet.create({
   labelFont: {
+    fontFamily: "Mulish",
     fontWeight: 400,
     color: "#627A96",
     fontSize: 14,
