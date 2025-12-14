@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 export function FunctionList() {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.txtTitle}>Chức năng</Text>
       <View style={styles.containerFList}>
         <View style={styles.btAva}>
@@ -41,6 +41,9 @@ export function FunctionList() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    gap: 10,
+  },
   containerFList: {
     flex: 1,
     flexDirection: "row",
@@ -55,6 +58,11 @@ const styles = StyleSheet.create({
     padding: 12,
     flexDirection: "row",
     justifyContent: "center",
+    shadowColor: "rgba(0, 0, 0, 0.12)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   imgAva: {
     width: 32,

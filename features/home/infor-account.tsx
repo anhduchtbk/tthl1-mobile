@@ -1,6 +1,5 @@
 import NotificationSvg from "@/assets/icons/notification-svg";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { FunctionList } from "./function-list";
 
 export function InforAccount() {
   return (
@@ -40,8 +39,6 @@ export function InforAccount() {
           style={styles.imgLogo}
         />
       </View>
-      <FunctionList />
-      
     </View>
   );
 }

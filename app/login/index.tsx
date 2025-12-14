@@ -10,7 +10,7 @@ export default function HomeScreen() {
     <LinearGradient colors={["#D4CAFC", "#FCD1DA"]} style={styles.background}>
       <SafeAreaView style={styles.titleContainer}>
         <Image
-          source={require("../../assets/images/logo.png")}
+          source={require("@/assets/images/logo.png")}
           style={styles.logo}
           resizeMode="contain"
         />
