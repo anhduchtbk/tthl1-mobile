@@ -1,22 +1,26 @@
-import { Tabs } from "expo-router";
-import React from "react";
+import { Redirect, Tabs } from "expo-router";
+import React, { useEffect } from "react";
 
+import HomeSvg from "@/assets/icons/home-svg";
 import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { RootState } from "@/store/redux/store";
+import { useSelector } from "react-redux";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  useEffect(() => {
+    console.log(isLoggedIn);
+    <Redirect href={"/login"} />;
 
-  // if (true) {
-  //   return <Redirect href={'/login'} />
-  // }
+    if (!isLoggedIn) {
+    }
+  }, [isLoggedIn]);
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: "#846FE2",
         headerShown: false,
         tabBarButton: HapticTab,
       }}
@@ -24,10 +28,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
+          title: "Trang chủ",
+          tabBarIcon: ({ color }) => <HomeSvg />,
         }}
       />
       <Tabs.Screen

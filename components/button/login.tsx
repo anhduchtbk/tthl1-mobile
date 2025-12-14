@@ -1,12 +1,16 @@
 import { useRouter } from "expo-router";
 import { Button, StyleSheet, View } from "react-native";
 
-export function ButtonLogin() {
+type Props = {
+  onPress: () => void
+}
+
+export function ButtonLogin({onPress}: Props) {
   const router = useRouter();
 
   return (
     <View style={styles.login}>
-      <Button title={"Đăng nhập"} color={"#5C0191"} onPress={() => router.replace('/(tabs)')}></Button>
+      <Button title={"Đăng nhập"} color={"#5C0191"} onPress={onPress}></Button>
     </View>
   );
 }

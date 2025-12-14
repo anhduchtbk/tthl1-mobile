@@ -38,6 +38,36 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Mulish-MediumItalic.ttf"],
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Mulish",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Mulish-BoldItalic.ttf",
+                    "weight": 700,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Mulish-Bold.ttf",
+                    "weight": 700
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": [
+              "./assets/fonts/Mulish-Bold.ttf",
+              "./assets/fonts/Mulish-MediumItalic.ttf"
+            ]
+          }
+        }
       ]
     ],
     "experiments": {
