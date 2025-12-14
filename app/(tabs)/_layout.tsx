@@ -1,17 +1,21 @@
-import { Tabs } from "expo-router";
-import React from "react";
+import { Redirect, Tabs } from "expo-router";
+import React, { useEffect } from "react";
 
 import HomeSvg from "@/assets/icons/home-svg";
 import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { RootState } from "@/store/redux/store";
+import { useSelector } from "react-redux";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  useEffect(() => {
+    console.log(isLoggedIn);
+    <Redirect href={"/login"} />;
 
-  // if (true) {
-  //   return <Redirect href={'/login'} />
-  // }
+    if (!isLoggedIn) {
+    }
+  }, [isLoggedIn]);
 
   return (
     <Tabs

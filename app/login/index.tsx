@@ -3,9 +3,23 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ButtonLogin } from "@/components/button/login";
 import { FormInputLabel } from "@/components/input/form-input-label";
+import { loginSuccess } from "@/store/redux/authSlice";
 import { LinearGradient } from "expo-linear-gradient";
+import { useDispatch } from "react-redux";
 
 export default function HomeScreen() {
+  const dispatch = useDispatch();
+
+  const handleLogin = async () => {
+    const res = {
+      token: "expo_router_token_123",
+      user: { id: 1, name: "Anh Đức" },
+    };
+
+    // await AsyncStorage.setItem("token", res.token);
+    dispatch(loginSuccess(res));
+  };
+
   return (
     <LinearGradient colors={["#D4CAFC", "#FCD1DA"]} style={styles.background}>
       <SafeAreaView style={styles.titleContainer}>
@@ -30,7 +44,7 @@ export default function HomeScreen() {
               Quên mật khẩu ?
             </Text>
           </TouchableOpacity>
-          <ButtonLogin />
+          <ButtonLogin onPress={handleLogin} />
         </View>
       </SafeAreaView>
     </LinearGradient>
