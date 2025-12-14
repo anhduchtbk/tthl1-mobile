@@ -24,7 +24,7 @@ export default function HomeScreen() {
 
         <View style={styles.formLogin}>
           <FormInputLabel label="Tên đăng nhập" />
-          <FormInputLabel label="Mật khẩu" />
+          <FormInputLabel label="Mật khẩu" isPassword />
           <TouchableOpacity activeOpacity={0.7} style={styles.forgotPass}>
             <Text style={{ fontFamily: "Mulish", color: "#5C0191" }}>
               Quên mật khẩu ?
