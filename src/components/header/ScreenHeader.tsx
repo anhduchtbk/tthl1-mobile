@@ -1,5 +1,7 @@
 import LeftArrowSvg from '@/assets/icons/left-arrow-svg';
+import { useRouter } from 'expo-router';
 import { ReactElement } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Box } from '../common/Layout/Box';
 import { Text } from '../common/Text/Text';
 
@@ -10,9 +12,12 @@ type Props = {
 };
 
 export function ScreenHeader({ title, RightComponent, onBackPress }: Props) {
+  const insets = useSafeAreaInsets();
+  const router = useRouter();
+
   return (
-    <Box flexDirection="row" alignItems="center">
-      <Box>
+    <Box flexDirection="row" alignItems="center" mt={insets.top}>
+      <Box onPress={onBackPress ? onBackPress : router.back}>
         <LeftArrowSvg />
       </Box>
 
@@ -20,9 +25,12 @@ export function ScreenHeader({ title, RightComponent, onBackPress }: Props) {
         <Text fontWeight="bold" fontSize={18}>
           {title}
         </Text>
+        <Text fontWeight="bold" fontSize={18}>
+          {title}
+        </Text>
       </Box>
 
-      <Box>{RightComponent && RightComponent}</Box>
+      {RightComponent && RightComponent}
     </Box>
   );
 }

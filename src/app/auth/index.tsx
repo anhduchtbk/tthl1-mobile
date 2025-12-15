@@ -3,7 +3,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { ButtonLogin } from '@/features/login/ButtonLogin';
 import { FormInputLabel } from '@/features/login/FormInputLabel';
 import { colors } from '@/theme/colors';
@@ -14,7 +13,6 @@ export default function LoginScreen() {
   return (
     <LinearGradient colors={['#D4CAFC', '#FCD1DA']} style={styles.background}>
       <SafeAreaView style={styles.titleContainer}>
-        <ScreenHeader title="QUẢN LÝ HỌC VIÊN" />
         <Image
           source={require('../../assets/images/logo.png')}
           style={styles.logo}
