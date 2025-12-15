@@ -18,7 +18,14 @@ export default function StudentDetailScreen() {
         borderTopRightRadius={30}
         mb={100}
       >
-        <Box pos="absolute" top={-40} left={0} right={0} alignItems='center' zIndex={999}>
+        <Box
+          pos="absolute"
+          top={-40}
+          left={0}
+          right={0}
+          alignItems="center"
+          zIndex={999}
+        >
           <Image
             source={{
               uri: 'https://images2.thanhnien.vn/zoom/686_429/528068263637045248/2025/3/24/chi-pu-r4-1742803995521521142964-0-0-568-908-crop-1742804234653431348943.jpg',
