@@ -33,4 +33,6 @@ export const colors = {
   blackTransparent: 'rgba(0, 0, 0, 0.39)',
   white: '#FFFFFF',
   black: '#000000',
+  blue: '#3867F8',
+  red: '#BF2116'
 };

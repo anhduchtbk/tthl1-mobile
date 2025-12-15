@@ -1,60 +1,73 @@
-
-import NotificationSvg from "@/assets/icons/notification-svg";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { FunctionList } from "./function-list";
+import NotificationSvg from '@/assets/icons/notification-svg';
+import { Box } from '@/components/common/Layout/Box';
+import { Text } from '@/components/common/Text/Text';
+import { colors } from '@/theme/colors';
+import { Image, StyleSheet } from 'react-native';
 
 export function InforAccount() {
   return (
-    <View>
-      <View style={styles.containerUser}>
+    <Box>
+      <Box flexDirection="row" marginLeft={16} marginY={6} gap={8}>
         <Image
-          source={require("../../assets/images/logo.png")}
+          source={require('../../assets/images/logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
-        <View style={styles.containerCode}>
-          <Text style={styles.txtAccount} numberOfLines={1}>
+        <Box flex={1}>
+          <Text
+            numberOfLines={1}
+            fontWeight="bold"
+            fontSize={13}
+            color={colors.white}
+          >
             Nguyễn Anh Tuấn
           </Text>
-          <Text style={styles.txtCode} numberOfLines={1}>
+          <Text fontSize={13} numberOfLines={1} color={colors.white}>
             A4 - B2 - C3
           </Text>
-        </View>
+        </Box>
         <NotificationSvg />
-      </View>
-      <View style={styles.titleContainer}>
-        <View
+      </Box>
+      <Box
+        flexDirection="row"
+        gap={4}
+        alignItems="center"
+        backgroundColor={'#FFF7DB'}
+        borderRadius={16}
+        py={5}
+        px={20}
+      >
+        <Image
+          source={require('@/assets/images/background-banner-home.png')}
+          style={styles.imgBanner}
+          resizeMode="contain"
+        />
+        <Box
           style={{
             flex: 1,
             gap: 16,
-            justifyContent: "center",
+            justifyContent: 'center',
             marginVertical: 24,
           }}
         >
-          <Text style={styles.txtAccount}>
+          <Text fontWeight="bold" fontSize={16}>
             Trung tâm huấn luyện và giáo dục nghề nghiệp số 1
           </Text>
-          <Text style={[styles.txtAccount, { fontSize: 16 }]}>Tiểu đoàn 2</Text>
-        </View>
+          <Text style={{ fontWeight: 900 }} fontSize={16} color={colors.red}>
+            Tiểu đoàn 2
+          </Text>
+        </Box>
         <Image
-          source={require("@/assets/images/logo.png")}
+          source={require('@/assets/images/logo.png')}
           style={styles.imgLogo}
         />
-      </View>
-      <FunctionList />
-      
-    </View>
+      </Box>
+    </Box>
   );
 }
 const styles = StyleSheet.create({
-  containerUser: {
-    flexDirection: "row",
-    gap: 8,
-    marginLeft: 16,
-    marginVertical: 6,
-  },
   titleContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 4,
   },
   txtTitle: {},
@@ -63,19 +76,11 @@ const styles = StyleSheet.create({
     height: 36,
   },
   imgLogo: {
-    width: 105,
-    height: 118,
+    width: 65,
+    height: 73,
   },
-  txtAccount: {
-    color: "#490074",
-    fontWeight: 800,
-    fontSize: 13,
-  },
-  txtCode: {
-    fontSize: 13,
-    color: "#8D5581",
-  },
-  containerCode: {
-    flex: 1,
+  imgBanner: {
+    position: 'absolute',
+    left: 10,
   },
 });
