@@ -1,7 +1,7 @@
 export const colors = {
   primary: {
     10: '#846FE2',
-    60: '#5C0191', //Base
+    60: '#1C6EF3', //Base
   },
   text: {
     2: '#627A96',
@@ -30,4 +30,6 @@ export const colors = {
   blackTransparent: 'rgba(0, 0, 0, 0.39)',
   white: '#FFFFFF',
   black: '#000000',
+  blue: '#3867F8',
+  red: '#BF2116'
 };

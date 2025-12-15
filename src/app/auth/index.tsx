@@ -1,5 +1,10 @@
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
@@ -10,11 +15,23 @@ import { FontSize } from '@/theme/fonts';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function LoginScreen() {
+  const insets = useSafeAreaInsets();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
   return (
-    <LinearGradient colors={['#D4CAFC', '#FCD1DA']} style={styles.background}>
-      <SafeAreaView style={styles.titleContainer}>
+    <LinearGradient
+      colors={['#E4DFBDB2', '#E4DFBDB2']}
+      style={styles.background}
+    >
+      <Image
+        source={require('@/assets/images/background-splash-image.png')}
+        style={styles.logoAbsolute}
+        resizeMode="contain"
+        width={screenWidth}
+        height={screenHeight}
+      />
+      <Box style={styles.titleContainer} pt={insets.top} pb={insets.bottom}>
         <Image
-          source={require('../../assets/images/logo.png')}
+          source={require('@/assets/images/logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -31,7 +48,7 @@ export default function LoginScreen() {
         <Box mt={36}>
           <FormInputLabel label="Tên đăng nhập" autoFocus />
           <Box h={12} />
-          <FormInputLabel label="Mật khẩu" />
+          <FormInputLabel label="Mật khẩu" isPassword />
           <TouchableOpacity activeOpacity={0.7} style={styles.forgotPass}>
             <Text fontSize={FontSize.LARGE} color={colors.primary[60]}>
               Quên mật khẩu?
@@ -39,7 +56,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
           <ButtonLogin />
         </Box>
-      </SafeAreaView>
+      </Box>
     </LinearGradient>
   );
 }
@@ -54,6 +71,13 @@ const styles = StyleSheet.create({
   logo: {
     width: 61,
     height: 68,
+  },
+  logoAbsolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   header1: {
     fontWeight: 700,
