@@ -1,10 +1,13 @@
 export const colors = {
   primary: {
     10: '#846FE2',
+    20: '#3867F8',
     60: '#5C0191', //Base
   },
   text: {
+    1: '#565656',
     2: '#627A96',
+    3: '#292929',
     darkest: '#32343D',
   },
   secondary: {

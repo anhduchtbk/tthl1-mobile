@@ -1,0 +1,50 @@
+import { Box } from '@/components/common/Layout/Box';
+import OverflowScrollView from '@/components/common/ScrollView/OverflowScrollView';
+import { BasicInformation } from '@/features/manage-student/student-detail/BasicInformation';
+import { RelativeInformation } from '@/features/manage-student/student-detail/RelativeInformation';
+import { StudentHeader } from '@/features/manage-student/student-detail/StudentHeader';
+import { colors } from '@/theme/colors';
+import React from 'react';
+import { Image, StyleSheet } from 'react-native';
+
+export default function StudentDetailScreen() {
+  return (
+    <Box flex={1} bgColor={'#CAD6FF'}>
+      <Box
+        flex={1}
+        bgColor={colors.white}
+        mt={140}
+        borderTopLeftRadius={30}
+        borderTopRightRadius={30}
+        mb={100}
+      >
+        <Box pos="absolute" top={-40} left={0} right={0} alignItems='center' zIndex={999}>
+          <Image
+            source={{
+              uri: 'https://images2.thanhnien.vn/zoom/686_429/528068263637045248/2025/3/24/chi-pu-r4-1742803995521521142964-0-0-568-908-crop-1742804234653431348943.jpg',
+            }}
+            style={styles.imgAvatar}
+          />
+        </Box>
+        <OverflowScrollView
+          contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <StudentHeader />
+          <BasicInformation />
+          <RelativeInformation />
+        </OverflowScrollView>
+      </Box>
+    </Box>
+  );
+}
+
+const styles = StyleSheet.create({
+  imgAvatar: {
+    width: 80,
+    height: 80,
+    borderWidth: 4,
+    borderRadius: 20,
+    borderColor: colors.white,
+  },
+});
