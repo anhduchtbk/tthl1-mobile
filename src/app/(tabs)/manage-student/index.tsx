@@ -2,14 +2,24 @@ import FilterSvg from '@/assets/icons/filter-svg';
 import PartyMemberSvg from '@/assets/icons/party-member-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ManageStudentScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Box flexDirection="row" alignItems="center" py={2} gap={8} paddingLeft={16}>
+    <Box flex={1}>
+      <Box bgColor={'white'}>
+        <ScreenHeader title="QUẢN LÝ HỌC VIÊN" />
+      </Box>
+      <Box
+        flexDirection="row"
+        alignItems="center"
+        gap={8}
+        paddingLeft={16}
+        mt={20}
+      >
         <Text>Bộ lọc</Text>
         <FilterSvg />
       </Box>
@@ -17,9 +27,9 @@ export default function ManageStudentScreen() {
         data={ListStudents}
         renderItem={({ item }) => <RenderItem item={item} />}
         keyExtractor={item => item.id}
-        contentContainerStyle={{paddingHorizontal: 16, paddingTop: 16}}
+        contentContainerStyle={{ flex: 1, paddingHorizontal: 16, paddingTop: 16 }}
       />
-    </SafeAreaView>
+    </Box>
   );
 }
 
@@ -53,16 +63,24 @@ type ItemProps = {
   isPartyMember: boolean;
   division: string;
 };
+
 type RenderItemProps = {
   item: ItemProps;
 };
+
 const RenderItem = (itemProps: RenderItemProps) => {
   return (
     <Box style={styles.card}>
-      <Text color={'#292929'} fontWeight='bold'>{itemProps.item.fullName}</Text>
-      <Box flexDirection="row" alignItems="center" gap={12} mt={4}>
-        <Text color={'#565656'} fontSize={11}>Đơn vị: {itemProps.item.division}</Text>
-        <Text color={'#565656'} fontSize={11}>Ngày sinh: {itemProps.item.dob}</Text>
+      <Text color={colors.text[3]} fontWeight="bold">
+        {itemProps.item.fullName}
+      </Text>
+      <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
+        <Text color={colors.text[1]} fontSize={11}>
+          Đơn vị: {itemProps.item.division}
+        </Text>
+        <Text color={colors.text[1]} fontSize={11}>
+          Ngày sinh: {itemProps.item.dob}
+        </Text>
       </Box>
       <Box
         flexDirection="row"
@@ -73,12 +91,16 @@ const RenderItem = (itemProps: RenderItemProps) => {
           {itemProps.item.isPartyMember && (
             <Box flexDirection="row" alignItems="center" gap={8}>
               <PartyMemberSvg width={13} height={13} />
-              <Text color={'#565656'} fontSize={11}>Đảng viên</Text>
+              <Text color={colors.text[1]} fontSize={11}>
+                Đảng viên
+              </Text>
             </Box>
           )}
         </Box>
         <TouchableOpacity activeOpacity={0.7} style={styles.containerBox}>
-          <Text fontSize={FontSize.SMALL} color={'#3867F8'}>Xem thêm</Text>
+          <Text fontSize={FontSize.SMALL} color={colors.primary[20]}>
+            Xem thêm
+          </Text>
         </TouchableOpacity>
       </Box>
     </Box>
