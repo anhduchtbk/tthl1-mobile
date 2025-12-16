@@ -3,10 +3,10 @@ import {
   ScrollView,
   StyleSheet,
   useWindowDimensions,
-  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Box } from '@/components/common/Layout/Box';
 import { FunctionList } from '@/features/home/function-list';
 import { HonorOfWeek } from '@/features/home/honnor';
 import { InforAccount } from '@/features/home/infor-account';
@@ -27,19 +27,26 @@ export default function HomeScreen() {
         width={screenWidth}
         height={screenHeight / 2}
       />
-      <SafeAreaView style={styles.titleContainer}>
-        <ScrollView contentContainerStyle={styles.titleContainer}>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <ScrollView
+          style={styles.titleContainer}
+          showsVerticalScrollIndicator={false}
+        >
           <InforAccount />
           <FunctionList />
           <Timetable />
           <HonorOfWeek />
-          <View style={{ alignItems: 'center', gap: 34 }}>
-            <Image
-              source={require('@/assets/images/footer-home-image.png')}
-              resizeMode="contain"
-              style={{ width: screenWidth, height: 200 }}
-            />
-          </View>
+          <Image
+            source={require('@/assets/images/footer-home-image.png')}
+            resizeMode="contain"
+            style={{
+              width: screenWidth,
+              height: (screenWidth / 375) * 280,
+              marginTop: 16,
+              alignSelf: 'center',
+            }}
+          />
+          <Box h={50} />
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -47,42 +54,19 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    paddingRight: 10,
-    paddingLeft: 10,
-    gap: 30,
-  },
   background: {
     flex: 1,
+  },
+  container: {
+    flex: 1,
+  },
+  titleContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
   },
   logo: {
     width: 61,
     height: 68,
-  },
-  header1: {
-    fontWeight: 700,
-    fontSize: 24,
-    color: '#5C0191',
-    lineHeight: 34,
-  },
-  header2: {
-    fontWeight: 400,
-    fontSize: 16,
-    lineHeight: 34,
-  },
-  forgotPass: {
-    alignItems: 'center',
-    fontWeight: 400,
-    fontSize: 16,
-  },
-  formLogin: {
-    gap: 12,
-  },
-  txtFooter: {
-    fontFamily: 'Mulish',
-    fontWeight: 600,
-    fontSize: 16,
-    lineHeight: 24,
   },
   logoAbsolute: {
     position: 'absolute',
