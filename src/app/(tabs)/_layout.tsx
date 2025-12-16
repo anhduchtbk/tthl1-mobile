@@ -1,19 +1,17 @@
-import { colors } from '@/theme/colors';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { Ionicons } from '@expo/vector-icons';
-import { Platform } from 'react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.primary[10],
-        tabBarStyle: Platform.select({
-          ios: { position: 'absolute' },
-          default: {},
-        }),
+        // tabBarActiveTintColor: colors.primary[10],
+        // tabBarStyle: Platform.select({
+        //   ios: { position: 'absolute' },
+        //   default: {},
+        // }),
         headerShown: false,
       }}
     >

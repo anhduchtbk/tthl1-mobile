@@ -1,22 +1,24 @@
 import { Box } from '@/components/common/Layout/Box';
 import OverflowScrollView from '@/components/common/ScrollView/OverflowScrollView';
+import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { BasicInformation } from '@/features/manage-student/student-detail/BasicInformation';
 import { RelativeInformation } from '@/features/manage-student/student-detail/RelativeInformation';
 import { StudentHeader } from '@/features/manage-student/student-detail/StudentHeader';
 import { colors } from '@/theme/colors';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 
 export default function StudentDetailScreen() {
   return (
-    <Box flex={1} bgColor={'#CAD6FF'}>
+    <LinearGradient colors={['#CAD6FF', '#FFF7DB']} style={{ flex: 1 }}>
+      <ScreenHeader title="CHI TIẾT HỌC VIÊN" />
       <Box
         flex={1}
+        mt={44}
         bgColor={colors.white}
-        mt={140}
         borderTopLeftRadius={30}
         borderTopRightRadius={30}
-        mb={100}
       >
         <Box
           pos="absolute"
@@ -34,7 +36,10 @@ export default function StudentDetailScreen() {
           />
         </Box>
         <OverflowScrollView
-          contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 16 }}
+          contentContainerStyle={{
+            paddingVertical: 50,
+            paddingHorizontal: 16,
+          }}
           showsVerticalScrollIndicator={false}
         >
           <StudentHeader />
@@ -42,7 +47,7 @@ export default function StudentDetailScreen() {
           <RelativeInformation />
         </OverflowScrollView>
       </Box>
-    </Box>
+    </LinearGradient>
   );
 }
 
