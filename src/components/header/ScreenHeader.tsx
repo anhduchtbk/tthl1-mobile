@@ -25,9 +25,10 @@ export function ScreenHeader({
     <Box
       flexDirection="row"
       alignItems="center"
+      justifyContent='space-between'
       mt={insets.top}
       px={16}
-      py={12}
+      py={14}
     >
       <Box onPress={onBackPress ? onBackPress : router.back}>
         <LeftArrowSvg />
