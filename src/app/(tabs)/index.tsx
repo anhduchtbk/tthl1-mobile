@@ -2,7 +2,6 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -35,14 +34,10 @@ export default function HomeScreen() {
           <Timetable />
           <HonorOfWeek />
           <View style={{ alignItems: 'center', gap: 34 }}>
-            <Text style={styles.txtFooter}>
-              Một phút cũng luyện {'\n'} Một giây cũng rèn
-            </Text>
-
             <Image
-              source={require('@/assets/images/police-man.png')}
+              source={require('@/assets/images/footer-home-image.png')}
               resizeMode="contain"
-              style={{ width: 139, height: 139 }}
+              style={{ width: screenWidth, height: 200 }}
             />
           </View>
         </ScrollView>

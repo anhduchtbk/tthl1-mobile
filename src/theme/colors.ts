@@ -2,7 +2,11 @@ export const colors = {
   primary: {
     10: '#1C6EF3',
     20: '#3867F8',
+    30: '#91BAFE',
+    40: '#F6FAFF',
+    50: '#FFFEF3',
     60: '#5C0191', //Base
+    70: '#F6FFF8',
   },
   text: {
     1: '#565656',
@@ -34,5 +38,5 @@ export const colors = {
   white: '#FFFFFF',
   black: '#000000',
   blue: '#3867F8',
-  red: '#BF2116'
+  red: '#BF2116',
 };
