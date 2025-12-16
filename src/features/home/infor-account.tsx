@@ -6,7 +6,7 @@ import { Image, StyleSheet } from 'react-native';
 
 export function InforAccount() {
   return (
-    <Box>
+    <Box gap={24}>
       <Box flexDirection="row" marginLeft={16} marginY={6} gap={8}>
         <Image
           source={require('../../assets/images/logo.png')}
@@ -26,7 +26,26 @@ export function InforAccount() {
             A4 - B2 - C3
           </Text>
         </Box>
-        <NotificationSvg />
+        <Box>
+          <NotificationSvg />
+          <Box
+            borderRadius={100}
+            borderWidth={1}
+            borderColor={colors.white}
+            justifyContent="center"
+            alignItems="center"
+            bgColor={colors.red}
+            position="absolute"
+            right={-1}
+            bottom={26}
+            w={15}
+            height={15}
+          >
+            <Text color={colors.white} fontSize={8}>
+              1
+            </Text>
+          </Box>
+        </Box>
       </Box>
       <Box
         flexDirection="row"
