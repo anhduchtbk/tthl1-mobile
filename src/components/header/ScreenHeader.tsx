@@ -16,15 +16,18 @@ export function ScreenHeader({ title, RightComponent, onBackPress }: Props) {
   const router = useRouter();
 
   return (
-    <Box flexDirection="row" alignItems="center" mt={insets.top}>
+    <Box
+      flexDirection="row"
+      alignItems="center"
+      mt={insets.top}
+      px={16}
+      py={12}
+    >
       <Box onPress={onBackPress ? onBackPress : router.back}>
         <LeftArrowSvg />
       </Box>
 
       <Box position="absolute" left={0} right={0} alignItems="center">
-        <Text fontWeight="bold" fontSize={18}>
-          {title}
-        </Text>
         <Text fontWeight="bold" fontSize={18}>
           {title}
         </Text>
