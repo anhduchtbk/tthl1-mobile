@@ -1,7 +1,6 @@
-import FilterSvg from '@/assets/icons/filter-svg';
 import SearchSvg from '@/assets/icons/search-svg';
+import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
-import { Text } from '@/components/common/Text/Text';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
 import { colors } from '@/theme/colors';
@@ -24,16 +23,7 @@ export default function ManageStudentScreen() {
           RightComponent={<RightComponent />}
         />
       </Box>
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        gap={8}
-        paddingLeft={16}
-        mt={20}
-      >
-        <Text>Bộ lọc</Text>
-        <FilterSvg />
-      </Box>
+      <FilterButton />
       <FlatList
         data={ListStudents}
         renderItem={({ item }) => <RenderStudentItem item={item} />}
