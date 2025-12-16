@@ -27,7 +27,7 @@ export default function ManageStudentScreen() {
         data={ListStudents}
         renderItem={({ item }) => <RenderItem item={item} />}
         keyExtractor={item => item.id}
-        contentContainerStyle={{ flex: 1, paddingHorizontal: 16, paddingTop: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16 }}
       />
     </Box>
   );

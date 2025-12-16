@@ -2,7 +2,11 @@ import { colors } from '@/theme/colors';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { Ionicons } from '@expo/vector-icons';
+import HomeSvg from '@/assets/icons/home-svg';
+import ManageStudentSvg from '@/assets/icons/manage-student-svg';
+import PersonnelSvg from '@/assets/icons/personnel-svg';
+import SettingSvg from '@/assets/icons/setting-svg';
+import TimetableIconSvg from '@/assets/icons/time-table';
 import { Platform } from 'react-native';
 
 export default function TabLayout() {
@@ -22,7 +26,7 @@ export default function TabLayout() {
         options={{
           title: 'Trang chủ',
           tabBarIcon: ({ color }) => (
-            <Ionicons size={28} name="home" color={color} />
+            <HomeSvg activeColor={color} />
           ),
         }}
       />
@@ -30,36 +34,36 @@ export default function TabLayout() {
         name="manage-student"
         options={{
           title: 'QL học viên',
-          // tabBarIcon: ({ color }) => (
-          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
-          // ),
+          tabBarIcon: ({ color }) => (
+            <ManageStudentSvg activeColor={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="military-number"
         options={{
           title: 'Quân số',
-          // tabBarIcon: ({ color }) => (
-          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
-          // ),
+          tabBarIcon: ({ color }) => (
+            <PersonnelSvg activeColor={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="schedule"
         options={{
           title: 'T.K.Biểu',
-          // tabBarIcon: ({ color }) => (
-          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
-          // ),
+          tabBarIcon: ({ color }) => (
+            <TimetableIconSvg activeColor={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="setting"
         options={{
           title: 'Cài đặt',
-          // tabBarIcon: ({ color }) => (
-          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
-          // ),
+          tabBarIcon: ({ color }) => (
+            <SettingSvg activeColor={color} />
+          ),
         }}
       />
     </Tabs>
