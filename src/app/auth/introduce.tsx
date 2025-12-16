@@ -6,12 +6,12 @@ import { Image, StyleSheet, useWindowDimensions } from 'react-native';
 
 const IntroducteScreen = () => {
   const router = useRouter();
-  const { width: screenWidth } = useWindowDimensions();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   const { logoFullWidth, logoFullHeight } = useMemo(() => {
     return {
-      logoFullWidth: screenWidth / 2,
-      logoFullHeight: screenWidth / 2,
+      logoFullWidth: screenWidth,
+      logoFullHeight: screenHeight,
     };
   }, [screenWidth]);
 
@@ -21,10 +21,11 @@ const IntroducteScreen = () => {
   }, [router]);
 
   return (
-    <LinearGradient colors={['#D4CAFC', '#FCD1DA']} style={styles.container}>
+    <LinearGradient colors={['#FFFFFF', '#E4DFBDB2']} style={styles.container}>
       <Image
         source={images.logo}
         style={{ width: logoFullWidth, height: logoFullHeight }}
+        resizeMode="cover"
       />
     </LinearGradient>
   );
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
 });
 
