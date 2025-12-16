@@ -6,6 +6,7 @@ import ManageStudentSvg from '@/assets/icons/manage-student-svg';
 import PersonnelSvg from '@/assets/icons/personnel-svg';
 import SettingSvg from '@/assets/icons/setting-svg';
 import TimetableIconSvg from '@/assets/icons/time-table';
+import { colors } from '@/theme/colors';
 import { Platform } from 'react-native';
 
 export default function TabLayout() {
