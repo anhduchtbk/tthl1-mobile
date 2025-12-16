@@ -13,11 +13,7 @@ export function ButtonLogin() {
       style={styles.container}
       onPress={() => router.replace('/(tabs)')}
     >
-      <Text
-        fontSize={FontSize.LARGE}
-        fontWeight="bold"
-        color={colors.primary[60]}
-      >
+      <Text fontSize={FontSize.LARGE} fontWeight="bold" color={colors.white}>
         ĐĂNG NHẬP
       </Text>
     </TouchableOpacity>
@@ -27,8 +23,8 @@ export function ButtonLogin() {
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    backgroundColor: colors.white,
-    borderRadius: 50,
+    backgroundColor: colors.primary[20],
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },

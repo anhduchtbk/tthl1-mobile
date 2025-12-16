@@ -37,7 +37,7 @@ export default function LoginScreen() {
         />
 
         <Box mt={16} gap={16}>
-          <Text fontSize={24} fontWeight="bold" color={colors.primary[60]}>
+          <Text fontSize={24} fontWeight="bold" color={colors.primary[20]}>
             Chào mừng,
           </Text>
           <Text fontSize={FontSize.LARGE} color={colors.text['darkest']}>
@@ -50,7 +50,7 @@ export default function LoginScreen() {
           <Box h={12} />
           <FormInputLabel label="Mật khẩu" isPassword />
           <TouchableOpacity activeOpacity={0.7} style={styles.forgotPass}>
-            <Text fontSize={FontSize.LARGE} color={colors.primary[60]}>
+            <Text fontSize={FontSize.LARGE} color={colors.primary[20]}>
               Quên mật khẩu?
             </Text>
           </TouchableOpacity>

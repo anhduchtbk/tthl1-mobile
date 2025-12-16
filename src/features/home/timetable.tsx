@@ -16,6 +16,8 @@ type PropsSchedule = {
   lesson?: number;
   isDone?: boolean;
   teacher?: string;
+  bgColor?: string;
+  borderColor?: string;
 };
 
 function DayElement({
@@ -27,7 +29,7 @@ function DayElement({
     <>
       {isCheck || isDefault ? (
         <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
-          <Box style={styles.background} bgColor={'#F6FAFF'}>
+          <Box style={styles.background} bgColor={colors.primary[40]}>
             <Text style={styles.txtDayElementChecked} color={colors.black}>
               Thứ 2
             </Text>
@@ -52,20 +54,32 @@ function Schedule({
   lesson,
   isDone,
   teacher,
+  bgColor,
+  borderColor,
 }: PropsSchedule) {
   return (
-    <View style={styles.containerShedule}>
-      <View style={styles.schedule}>
-        <Text style={styles.txtSchedule}>{schedule}</Text>
-      </View>
-      <View>
-        <Text style={styles.txtSubject}>{subject}</Text>
-        <Text style={styles.txtLesson}>
+    <Box gap={12}>
+      <Box
+        backgroundColor={bgColor}
+        p={12}
+        borderRadius={12}
+        borderLeftWidth={4}
+        borderLeftColor={borderColor}
+      >
+        <Text style={styles.txtSchedule} fontSize={13} color={'#777777'}>
+          {schedule} (7:30 - 11:00)
+        </Text>
+      </Box>
+      <Box>
+        <Text style={styles.txtSubject} fontSize={14}>
+          {subject}
+        </Text>
+        <Text style={styles.txtLesson} fontSize={13} color={'#565656'}>
           Buổi: {lesson} {isDone ? '(XONG)' : ''}
         </Text>
         <Text style={styles.txtTeacher}>CBHL: {teacher}</Text>
-      </View>
-    </View>
+      </Box>
+    </Box>
   );
 }
 
@@ -102,6 +116,8 @@ export function Timetable() {
         lesson={16}
         isDone={true}
         teacher="Đại uý Nguyễn Văn A"
+        bgColor={colors.primary[40]}
+        borderColor={'#91BAFE'}
       />
       <Schedule
         schedule="Chiều"
@@ -109,6 +125,8 @@ export function Timetable() {
         lesson={16}
         isDone={true}
         teacher="Đại uý Nguyễn Văn A"
+        bgColor={colors.primary[50]}
+        borderColor={'#FEF08A'}
       />
       <Schedule
         schedule="Ngoại khoá"
@@ -116,7 +134,19 @@ export function Timetable() {
         lesson={16}
         isDone={true}
         teacher="Đại uý Nguyễn Văn A"
+        bgColor={colors.primary[70]}
+        borderColor={'#20C74B'}
       />
+      <Box
+        borderRadius={8}
+        alignItems="center"
+        bgColor={colors.primary[40]}
+        borderWidth={1}
+        borderColor={colors.primary[30]}
+        p={12}
+      >
+        <Text color={colors.primary[20]}>Xem chi tiết</Text>
+      </Box>
     </View>
   );
 }
@@ -151,16 +181,11 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   txtSchedule: {
-    fontFamily: 'Mulish',
     fontWeight: 800,
-    fontSize: 13,
     lineHeight: 20,
-    color: '#777777',
   },
   txtSubject: {
-    fontFamily: 'Mulish',
     fontWeight: 700,
-    fontSize: 14,
     lineHeight: 20,
   },
   txtTeacher: {
@@ -171,10 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   txtLesson: {
-    fontFamily: 'Mulish',
     lineHeight: 20,
-    color: '#565656',
-    fontSize: 13,
   },
   schedule: {
     justifyContent: 'center',
