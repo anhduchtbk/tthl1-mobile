@@ -1,11 +1,11 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import BookSvgTab from '@/assets/icons/book-tab-svg';
 import HomeSvg from '@/assets/icons/home-svg';
-import MilitaryNumberSvg from '@/assets/icons/military-number';
-import SettingSvgComponent from '@/assets/icons/setting-svg';
-import TimetableTabSvg from '@/assets/icons/timetable-tab-svg';
+import ManageStudentSvg from '@/assets/icons/manage-student-svg';
+import PersonnelSvg from '@/assets/icons/personnel-svg';
+import SettingSvg from '@/assets/icons/setting-svg';
+import TimetableIconSvg from '@/assets/icons/time-table';
 import { Platform } from 'react-native';
 
 export default function TabLayout() {
@@ -24,35 +24,45 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Trang chủ',
-          tabBarIcon: ({ color }) => <HomeSvg color={color} />,
+          tabBarIcon: ({ color }) => (
+            <HomeSvg activeColor={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="manage-student"
         options={{
           title: 'QL học viên',
-          tabBarIcon: ({ color }) => <BookSvgTab color={color} />,
+          tabBarIcon: ({ color }) => (
+            <ManageStudentSvg activeColor={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="military-number"
         options={{
           title: 'Quân số',
-          tabBarIcon: ({ color }) => <MilitaryNumberSvg color={color} />,
+          tabBarIcon: ({ color }) => (
+            <PersonnelSvg activeColor={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="schedule"
         options={{
           title: 'T.K.Biểu',
-          tabBarIcon: ({ color }) => <TimetableTabSvg color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TimetableIconSvg activeColor={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="setting"
         options={{
           title: 'Cài đặt',
-          tabBarIcon: ({ color }) => <SettingSvgComponent color={color} />,
+          tabBarIcon: ({ color }) => (
+            <SettingSvg activeColor={color} />
+          ),
         }}
       />
     </Tabs>
