@@ -43,7 +43,7 @@ function Honored({ name, unit, learnSystem }: PropsHonorOfWeek) {
 
 export function HonorOfWeek() {
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={styles.txtHeader}>Học viên tiêu biểu tuần 13</Text>
       <ScrollView horizontal contentContainerStyle={styles.container}>
         <Honored
@@ -117,6 +117,8 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: 20,
     lineHeight: 30,
+    marginTop: 32,
+    marginBottom: 20,
   },
   txtLearnSystem: {
     fontFamily: 'Mulish',

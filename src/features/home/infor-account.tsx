@@ -2,6 +2,7 @@ import NotificationSvg from '@/assets/icons/notification-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
+import { FontSize } from '@/theme/fonts';
 import { Image, StyleSheet } from 'react-native';
 
 export function InforAccount() {
@@ -39,7 +40,7 @@ export function InforAccount() {
             right={-1}
             bottom={26}
             w={15}
-            height={15}
+            h={15}
           >
             <Text color={colors.white} fontSize={8}>
               1
@@ -69,11 +70,15 @@ export function InforAccount() {
             marginVertical: 24,
           }}
         >
-          <Text fontWeight="bold" fontSize={16}>
-            Trung tâm huấn luyện và giáo dục nghề nghiệp số 1
+          <Text fontWeight="bold" fontSize={FontSize.LARGE}>
+            Trung tâm Huấn luyện và Giáo dục nghề nghiệp số 1
           </Text>
-          <Text style={{ fontWeight: 900 }} fontSize={16} color={colors.red}>
-            Tiểu đoàn 2
+          <Text
+            style={{ fontWeight: 900 }}
+            fontSize={FontSize.LARGE}
+            color={colors.red}
+          >
+            TIỂU ĐOÀN 2
           </Text>
         </Box>
         <Image

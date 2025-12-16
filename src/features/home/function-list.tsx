@@ -7,7 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export function FunctionList() {
   return (
-    <Box gap={16}>
+    <Box mt={16} mb={32} gap={16}>
       <Text style={styles.txtTitle}>Chức năng</Text>
       <Box gap={16}>
         <View style={styles.containerFList}>
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 16,
-    marginBottom: 8,
   },
   btAva: {
     flex: 1,
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 12,
     flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
     borderColor: '#BED6FF',
     borderWidth: 1,
     gap: 8,
