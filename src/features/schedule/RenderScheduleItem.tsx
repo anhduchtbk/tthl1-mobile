@@ -1,4 +1,4 @@
-import PartyMemberSvg from '@/assets/icons/party-member-svg';
+import StarSvg from '@/assets/icons/star-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
@@ -7,17 +7,17 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type ItemProps = {
-  fullName: string;
-  dob: string;
-  isPartyMember: boolean;
-  division: string;
+  companyFullname: string;
+  companyAmount: number;
+  commanderAmount: number;
+  commanderFullname: string;
 };
 
 type RenderItemProps = {
   item: ItemProps;
 };
 
-export function RenderStudentItem({item}: RenderItemProps) {
+export function RenderScheduleItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
@@ -27,14 +27,14 @@ export function RenderStudentItem({item}: RenderItemProps) {
   return (
     <Box style={styles.card}>
       <Text color={colors.text[3]} fontWeight="bold">
-        {item.fullName}
+        {item.companyFullname}
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          Đơn vị: {item.division}
+          Học viên: {item.companyAmount}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          Ngày sinh: {item.dob}
+          Chỉ huy: {item.commanderAmount}
         </Text>
       </Box>
       <Box
@@ -43,14 +43,12 @@ export function RenderStudentItem({item}: RenderItemProps) {
         justifyContent="space-between"
       >
         <Box flex={1}>
-          {itemProps.item.isPartyMember && (
-            <Box flexDirection="row" alignItems="center" gap={2}>
-              <PartyMemberSvg width={13} height={13} />
-              <Text color={colors.text[1]} fontSize={11}>
-                Đảng viên
-              </Text>
-            </Box>
-          )}
+          <Box flexDirection="row" alignItems="center" gap={6}>
+            <StarSvg />
+            <Text color={colors.text[1]} fontSize={11}>
+              Đại đội trưởng: {item.commanderFullname}
+            </Text>
+          </Box>
         </Box>
         <TouchableOpacity
           activeOpacity={0.7}
@@ -58,7 +56,7 @@ export function RenderStudentItem({item}: RenderItemProps) {
           onPress={onSeeMore}
         >
           <Text fontSize={FontSize.SMALL} color={colors.primary[20]}>
-            Xem thêm
+            Xem chi tiết
           </Text>
         </TouchableOpacity>
       </Box>
