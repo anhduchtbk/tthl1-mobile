@@ -21,8 +21,11 @@ type RenderItemProps = {
 export function RenderFacilityItem(itemProps: RenderItemProps) {
   const router = useRouter();
 
-  const onSeeMore = () => {
-    router.push('/manage-student/student-detail');
+  const onSeeMore = (value: string) => {
+    router.push({
+      pathname: '/(tabs)/home/manage-list-facility',
+      params: { value },
+    });
   };
 
   return (
@@ -57,7 +60,7 @@ export function RenderFacilityItem(itemProps: RenderItemProps) {
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}
-          onPress={onSeeMore}
+          onPress={() => onSeeMore(itemProps.item.name)}
         >
           <Text fontSize={FontSize.SMALL} color={colors.primary[20]}>
             Xem chi tiết
