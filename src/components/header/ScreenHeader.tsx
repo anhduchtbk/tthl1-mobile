@@ -7,11 +7,17 @@ import { Text } from '../common/Text/Text';
 
 type Props = {
   title: string;
+  subTitle?: string;
   RightComponent?: ReactElement;
   onBackPress?: () => void;
 };
 
-export function ScreenHeader({ title, RightComponent, onBackPress }: Props) {
+export function ScreenHeader({
+  title,
+  RightComponent,
+  onBackPress,
+  subTitle,
+}: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
@@ -32,6 +38,7 @@ export function ScreenHeader({ title, RightComponent, onBackPress }: Props) {
         <Text fontWeight="bold" fontSize={18}>
           {title}
         </Text>
+        <Text fontSize={18}>{subTitle}</Text>
       </Box>
 
       {RightComponent && RightComponent}
