@@ -3,9 +3,11 @@ import HomeColorSvg from '@/assets/icons/home-color-svg';
 import TimetableSvg from '@/assets/icons/timetable-svg';
 import UserSvg from '@/assets/icons/user-svg';
 import { Box } from '@/components/common/Layout/Box';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export function FunctionList() {
+  const router = useRouter();
   return (
     <Box mt={16} mb={32} gap={16}>
       <Text style={styles.txtTitle}>Chức năng</Text>
@@ -23,7 +25,12 @@ export function FunctionList() {
         <View style={styles.containerFList}>
           <View style={styles.btAva}>
             <HomeColorSvg />
-            <Text style={styles.txtFunction}>Quản lý vật chất</Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => router.replace('/(tabs)/home/manage-facility')}
+            >
+              <Text style={styles.txtFunction}>Quản lý vật chất</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.btAva}>
             <TimetableSvg />
