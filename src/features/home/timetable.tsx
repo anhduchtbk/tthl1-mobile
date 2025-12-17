@@ -38,10 +38,10 @@ function DayElement({
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
-          <View style={styles.background}>
+          <Box style={styles.background}>
             <Text style={styles.txtDayElement}>Thứ 2</Text>
             <Text style={styles.txtDayElement}>(01/01/2025)</Text>
-          </View>
+          </Box>
         </TouchableOpacity>
       )}
     </>
@@ -61,7 +61,7 @@ export function DayElementScrollView() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   return (
-    <ScrollView horizontal contentContainerStyle={styles.dayContainer} >
+    <ScrollView horizontal contentContainerStyle={styles.dayContainer}>
       {dayofweek.map((value, index) => (
         <DayElement
           key={index}
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   dayContainer: {
     gap: 8,
-    height: 48
+    height: 48,
   },
   containerShedule: {
     flexDirection: 'row',
