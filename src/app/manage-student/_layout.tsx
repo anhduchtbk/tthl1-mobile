@@ -3,9 +3,8 @@ import React from 'react';
 
 export default function ManageStudentLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="student-detail" />
+    <Stack>
+      <Stack.Screen name="student-detail"  options={{ headerShown: false }} />
     </Stack>
   );
 }

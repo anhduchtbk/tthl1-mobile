@@ -39,4 +39,5 @@ export const colors = {
   black: '#000000',
   blue: '#3867F8',
   red: '#BF2116',
+  placeholder: '#B3B3B3',
 };

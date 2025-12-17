@@ -20,6 +20,7 @@ export const lightColors = {
   blackTransparent: colors.blackTransparent,
   pureWhite: colors.white,
   pureBlack: colors.black,
+  placeholder: colors.placeholder,
 };
 
 export const lightTheme = {
@@ -28,8 +29,7 @@ export const lightTheme = {
     ...DefaultTheme.colors,
     ...lightColors,
   },
-  components: {
-  },
+  components: {},
 };
 
 export const darkColors: ColorType = {
@@ -51,6 +51,7 @@ export const darkColors: ColorType = {
   blackTransparent: colors.blackTransparent,
   pureWhite: colors.white,
   pureBlack: colors.black,
+  placeholder: colors.placeholder,
 };
 
 export const darkTheme = {
@@ -59,8 +60,7 @@ export const darkTheme = {
     ...DarkTheme.colors,
     ...darkColors,
   },
-  components: {
-  },
+  components: {},
 };
 
 export type ColorType = typeof lightColors;
