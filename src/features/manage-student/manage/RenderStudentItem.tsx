@@ -43,7 +43,7 @@ export function RenderStudentItem({item}: RenderItemProps) {
         justifyContent="space-between"
       >
         <Box flex={1}>
-          {itemProps.item.isPartyMember && (
+          {item.isPartyMember && (
             <Box flexDirection="row" alignItems="center" gap={2}>
               <PartyMemberSvg width={13} height={13} />
               <Text color={colors.text[1]} fontSize={11}>
