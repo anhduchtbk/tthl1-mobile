@@ -2,11 +2,11 @@ import SearchSvg from '@/assets/icons/search-svg';
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
-import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
+import { RenderScheduleItem } from '@/features/schedule/RenderScheduleItem';
 import { colors } from '@/theme/colors';
 import { FlatList, TouchableOpacity } from 'react-native';
 
-export default function ManageStudentScreen() {
+export default function ScheduleScreen() {
   const RightComponent = () => {
     return (
       <TouchableOpacity activeOpacity={0.7}>
@@ -24,41 +24,41 @@ export default function ManageStudentScreen() {
         mb={4}
       >
         <ScreenHeader
-          title="QUẢN LÝ HỌC VIÊN"
+          title="THỜI KHOÁ BIỂU"
           RightComponent={<RightComponent />}
         />
       </Box>
       <FilterButton />
       <FlatList
-        data={ListStudents}
-        renderItem={({ item }) => <RenderStudentItem item={item} />}
+        data={ListSchedule}
+        renderItem={({ item }) => <RenderScheduleItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16 }}
       />
     </Box>
   );
 }
 
-const ListStudents = [
+const ListSchedule = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    fullName: 'Nguyễn Văn A - TO1',
-    dob: '01/01/2000',
-    isPartyMember: true, // dang vien
-    division: 'A1B1C1',
+    companyFullname: 'Đại đội 1 - VB2',
+    companyAmount: 110,
+    commanderAmount: 4,
+    commanderFullname: 'Nguyễn Văn A',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    fullName: 'Nguyễn Thu A - TO1',
-    dob: '01/01/2000',
-    isPartyMember: true, // dang vien
-    division: 'A5B2C3',
+    companyFullname: 'Đại đội 1 - VB2',
+    companyAmount: 110,
+    commanderAmount: 4,
+    commanderFullname: 'Nguyễn Văn A',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    fullName: 'Nguyễn Văn B - TO1',
-    dob: '01/01/2001',
-    isPartyMember: false, // dang vien
-    division: 'A4B2C2',
+    companyFullname: 'Đại đội 1 - VB2',
+    companyAmount: 110,
+    commanderAmount: 4,
+    commanderFullname: 'Nguyễn Văn A',
   },
 ];
