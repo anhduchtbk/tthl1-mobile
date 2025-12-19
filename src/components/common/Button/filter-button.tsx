@@ -5,7 +5,7 @@ import { Text } from '../Text/Text';
 
 export default function FilterButton() {
   return (
-    <Box flexDirection="row" alignItems="center" gap={8} p={16}>
+    <Box flexDirection="row" alignItems="center" gap={8}>
       <Text color={colors.text[3]}>Bộ lọc</Text>
       <FilterSvg width={14} height={14} />
     </Box>
