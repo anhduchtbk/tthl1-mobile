@@ -21,7 +21,7 @@ export function RenderStudentItem({item}: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
-    router.push('/manage-student/student-detail');
+    router.navigate('/manage-student/student-detail');
   };
 
   return (

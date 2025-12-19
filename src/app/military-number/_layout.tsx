@@ -1,12 +1,13 @@
 import { Stack } from 'expo-router';
 import React from 'react';
 
-export default function HomeLayout() {
+export default function MilitaryNumberLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="military-history-report" />
+
       <Stack.Screen name="index" />
-      <Stack.Screen name="manage-facility" />
-      <Stack.Screen name="facility-detail" />
+      <Stack.Screen name="personel-detail" />
     </Stack>
   );
 }
