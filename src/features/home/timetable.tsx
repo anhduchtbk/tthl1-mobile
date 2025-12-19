@@ -38,13 +38,39 @@ function DayElement({
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
-          <View style={styles.background}>
+          <Box style={styles.background}>
             <Text style={styles.txtDayElement}>Thứ 2</Text>
             <Text style={styles.txtDayElement}>(01/01/2025)</Text>
-          </View>
+          </Box>
         </TouchableOpacity>
       )}
     </>
+  );
+}
+
+export function DayElementScrollView() {
+  const dayofweek: string[] = [
+    'Thứ 2',
+    'Thứ 3',
+    'Thứ 4',
+    'Thứ 5',
+    'Thứ 6',
+    'Thứ 7',
+    'CN',
+  ];
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  return (
+    <ScrollView horizontal contentContainerStyle={styles.dayContainer}>
+      {dayofweek.map((value, index) => (
+        <DayElement
+          key={index}
+          isCheck={selectedIndex === index}
+          onPress={() => setSelectedIndex(index)}
+          isDefault={index === 0}
+        />
+      ))}
+    </ScrollView>
   );
 }
 
@@ -84,32 +110,12 @@ function Schedule({
 }
 
 export function Timetable() {
-  const dayofweek: string[] = [
-    'Thứ 2',
-    'Thứ 3',
-    'Thứ 4',
-    'Thứ 5',
-    'Thứ 6',
-    'Thứ 7',
-    'CN',
-  ];
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
   return (
     <View style={styles.timetable}>
       <View style={styles.headerTimetable}>
         <Text style={styles.txtHeaderSchedule}>Thời khoá biểu (C1 - VB2)</Text>
       </View>
-      <ScrollView horizontal contentContainerStyle={styles.dayContainer}>
-        {dayofweek.map((value, index) => (
-          <DayElement
-            key={index}
-            isCheck={selectedIndex === index}
-            onPress={() => setSelectedIndex(index)}
-            isDefault={index === 0}
-          />
-        ))}
-      </ScrollView>
+      <DayElementScrollView />
       <Schedule
         schedule="Sáng"
         subject="Kỹ thuật võ thuật CAND"
@@ -161,6 +167,7 @@ const styles = StyleSheet.create({
   },
   dayContainer: {
     gap: 8,
+    height: 48,
   },
   containerShedule: {
     flexDirection: 'row',

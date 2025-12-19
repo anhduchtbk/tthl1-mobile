@@ -3,7 +3,7 @@ import MagnifierSvg from '@/assets/icons/MagnifierSvg';
 import UpwardArrowSvg from '@/assets/icons/UpwardArrowSvg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { useTheme } from '@react-navigation/native';
+import { colors } from '@/theme/colors';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Dropdown as DropdownElement } from 'react-native-element-dropdown';
@@ -34,6 +34,7 @@ type DropdownComponentProps = {
   searchPlaceholder?: string;
   value: string | null;
   isFocus: boolean;
+  isRequired?: boolean;
   onFocus: () => void;
   onBlur: () => void;
   onChange: (item: DropdownItem) => void;
@@ -46,46 +47,37 @@ const DropdownComponent = ({
   searchPlaceholder,
   value,
   isFocus,
+  isRequired,
   onFocus,
   onBlur,
   onChange,
 }: DropdownComponentProps) => {
-  const { colors } = useTheme();
-
   return (
     <Box>
       {label && (
-        <Text color={colors.text} fontSize={14}>
-          {label}
+        <Text color={colors.text[2]} fontSize={14}>
+          {label} <Text color={colors.action.error}>{isRequired && '*'}</Text>
         </Text>
       )}
-      <Box h={6} />
+      <Box h={4} />
       <DropdownElement
-        style={[
-          styles.dropdown,
-          {
-            borderColor: value ? colors.grey[60] : colors.grey[60],
-          },
-        ]}
-        placeholderStyle={{
-          ...styles.dropdownPlaceholder,
-          color: colors.grey[60],
-        }}
+        style={styles.dropdown}
+        placeholderStyle={styles.dropdownPlaceholder}
         selectedTextStyle={{
           ...styles.dropdownPlaceholder,
-          color: colors.text,
+          color: colors.text[3],
         }}
         inputSearchStyle={{
-          color: colors.text,
+          color: colors.text[3],
           ...styles.dropdownInputSearch,
         }}
         searchPlaceholderTextColor={colors.grey[60]}
         renderRightIcon={() =>
-          isFocus ? <UpwardArrowSvg /> : <DownwardArrowSvg/>
+          isFocus ? <UpwardArrowSvg /> : <DownwardArrowSvg />
         }
         itemTextStyle={{
           ...styles.dropdownPlaceholder,
-          color: colors.text,
+          color: colors.text[3],
         }}
         containerStyle={{
           backgroundColor: colors.white,
@@ -109,13 +101,15 @@ const DropdownComponent = ({
 
 const styles = StyleSheet.create({
   dropdown: {
-    borderWidth: 1,
-    borderRadius: 2,
-    paddingHorizontal: 12,
-    paddingVertical: 15,
+    borderWidth: 0.75,
+    borderColor: colors.blue,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 13,
   },
   dropdownPlaceholder: {
-    fontSize: 14,
+    fontSize: 16,
+    color: colors.placeholder
   },
   dropdownInputSearch: {
     fontSize: 12,

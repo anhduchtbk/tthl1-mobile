@@ -11,7 +11,7 @@ export function ButtonLogin() {
     <TouchableOpacity
       activeOpacity={0.7}
       style={styles.container}
-      onPress={() => router.replace('/(tabs)/home')}
+      onPress={() => router.replace('/(tabs)')}
     >
       <Text fontSize={FontSize.LARGE} fontWeight="bold" color={colors.white}>
         ĐĂNG NHẬP

@@ -102,12 +102,12 @@ const TextField = forwardRef<
         case 'inactive': {
           if (isFocused) {
             return {
-              borderColor: colors.grey[60],
+              borderColor: colors.blue,
               backgroundColor: themeColors.white,
             };
           }
           return {
-            borderColor: colors.grey[60],
+            borderColor: colors.blue,
             backgroundColor: themeColors.white,
           };
         }
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   containerInput: {
-    borderWidth: 1,
-    borderRadius: 2,
+    borderWidth: 0.75,
+    borderRadius: 10,
   },
 });

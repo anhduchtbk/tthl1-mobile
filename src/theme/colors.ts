@@ -7,6 +7,8 @@ export const colors = {
     50: '#FFFEF3',
     60: '#5C0191', //Base
     70: '#F6FFF8',
+    80: '#FEF08A',
+    90: '#20C74B',
   },
   text: {
     1: '#565656',
