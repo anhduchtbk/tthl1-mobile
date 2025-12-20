@@ -5,9 +5,7 @@ export default function MilitaryNumberLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="military-history-report" />
-
-      <Stack.Screen name="index" />
-      <Stack.Screen name="personel-detail" />
+      <Stack.Screen name="report-number" />
     </Stack>
   );
 }

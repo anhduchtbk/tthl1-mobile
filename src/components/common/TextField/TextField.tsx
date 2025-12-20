@@ -102,12 +102,12 @@ const TextField = forwardRef<
         case 'inactive': {
           if (isFocused) {
             return {
-              borderColor: colors.grey[60],
+              borderColor: colors.blue,
               backgroundColor: themeColors.white,
             };
           }
           return {
-            borderColor: colors.grey[60],
+            borderColor: colors.blue,
             backgroundColor: themeColors.white,
           };
         }
@@ -189,8 +189,8 @@ const TextField = forwardRef<
                 labelColor
                   ? labelColor
                   : disabled
-                    ? themeColors.placeholder
-                    : themeColors.text
+                  ? themeColors.placeholder
+                  : themeColors.text
               }
               fontSize={size === 'small' ? 12 : 14}
             >
@@ -285,10 +285,10 @@ const TextField = forwardRef<
               status === 'success'
                 ? colors.action.success
                 : status === 'warning'
-                  ? colors.action.warning
-                  : status === 'error'
-                    ? colors.action.error
-                    : themeColors.error
+                ? colors.action.warning
+                : status === 'error'
+                ? colors.action.error
+                : themeColors.error
             }
             fontSize={12}
           >
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   containerInput: {
-    borderWidth: 1,
-    borderRadius: 2,
+    borderWidth: 0.75,
+    borderRadius: 10,
   },
 });
