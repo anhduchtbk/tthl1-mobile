@@ -6,6 +6,8 @@ import { DayElementScrollView } from '../schedule/DayElement';
 import { Schedule } from '../schedule/Schedule';
 
 export function Timetable() {
+  const router = useRouter();
+
   return (
     <Box style={styles.timetable}>
       <Box style={styles.headerTimetable}>
@@ -46,6 +48,7 @@ export function Timetable() {
         borderWidth={1}
         borderColor={colors.primary[30]}
         p={12}
+        onPress={() => router.push('/schedule')}
       >
         <Text color={colors.primary[20]}>Xem chi tiết</Text>
       </Box>

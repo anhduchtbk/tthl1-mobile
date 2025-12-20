@@ -3,32 +3,51 @@ import HomeColorSvg from '@/assets/icons/home-color-svg';
 import TimetableSvg from '@/assets/icons/timetable-svg';
 import UserSvg from '@/assets/icons/user-svg';
 import { Box } from '@/components/common/Layout/Box';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export function FunctionList() {
+  const router = useRouter();
+
   return (
     <Box mt={16} mb={32} gap={16}>
       <Text style={styles.txtTitle}>Chức năng</Text>
       <Box gap={16}>
         <View style={styles.containerFList}>
-          <View style={styles.btAva}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.btAva}
+            onPress={() => router.push('/(tabs)/manage-student')}
+          >
             <UserSvg />
             <Text style={styles.txtFunction}>Quản lý học viên</Text>
-          </View>
-          <View style={styles.btAva}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.btAva}
+            onPress={() => router.push('/(tabs)/military-number')}
+          >
             <BookSvg />
             <Text style={styles.txtFunction}>Điểm danh quân số</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.containerFList}>
-          <View style={styles.btAva}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.btAva}
+            onPress={() => router.push('/home/manage-facility')}
+          >
             <HomeColorSvg />
             <Text style={styles.txtFunction}>Quản lý vật chất</Text>
-          </View>
-          <View style={styles.btAva}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.btAva}
+            onPress={() => router.push('/(tabs)/schedule')}
+          >
             <TimetableSvg />
             <Text style={styles.txtFunction}>Thời khoá biểu</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </Box>
     </Box>

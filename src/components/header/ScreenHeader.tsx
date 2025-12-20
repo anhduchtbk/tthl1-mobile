@@ -1,6 +1,8 @@
 import LeftArrowSvg from '@/assets/icons/left-arrow-svg';
+import SearchSvg from '@/assets/icons/search-svg';
 import { useRouter } from 'expo-router';
 import { ReactElement } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Box } from '../common/Layout/Box';
 import { Text } from '../common/Text/Text';
@@ -10,6 +12,7 @@ type Props = {
   subTitle?: string;
   RightComponent?: ReactElement;
   onBackPress?: () => void;
+  isSearch?: boolean;
 };
 
 export function ScreenHeader({
@@ -17,6 +20,7 @@ export function ScreenHeader({
   RightComponent,
   onBackPress,
   subTitle,
+  isSearch,
 }: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -41,7 +45,13 @@ export function ScreenHeader({
         {subTitle && <Text fontSize={18}>{subTitle}</Text>}
       </Box>
 
-      {RightComponent && RightComponent}
+      {isSearch ? (
+        <TouchableOpacity activeOpacity={0.7}>
+          <SearchSvg />
+        </TouchableOpacity>
+      ) : (
+        RightComponent && RightComponent
+      )}
     </Box>
   );
 }

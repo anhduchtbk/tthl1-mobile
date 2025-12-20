@@ -1,20 +1,11 @@
-import SearchSvg from '@/assets/icons/search-svg';
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderScheduleItem } from '@/features/schedule/RenderScheduleItem';
 import { colors } from '@/theme/colors';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList } from 'react-native';
 
 export default function ScheduleScreen() {
-  const RightComponent = () => {
-    return (
-      <TouchableOpacity activeOpacity={0.7}>
-        <SearchSvg />
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <Box flex={1} bgColor={colors.white}>
       <Box
@@ -25,7 +16,7 @@ export default function ScheduleScreen() {
       >
         <ScreenHeader
           title="THỜI KHOÁ BIỂU"
-          RightComponent={<RightComponent />}
+          isSearch
         />
       </Box>
 
