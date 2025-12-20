@@ -42,7 +42,7 @@ export function ScreenHeader({
         <Text fontWeight="bold" fontSize={18}>
           {title}
         </Text>
-        <Text fontSize={18}>{subTitle}</Text>
+        {subTitle && <Text fontSize={18}>{subTitle}</Text>}
       </Box>
 
       {isSearch ? (
