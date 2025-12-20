@@ -1,6 +1,7 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
+import { useRouter } from 'expo-router';
 import { ReactElement, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -110,6 +111,8 @@ function Schedule({
 }
 
 export function Timetable() {
+  const router = useRouter();
+
   return (
     <View style={styles.timetable}>
       <View style={styles.headerTimetable}>
@@ -150,6 +153,7 @@ export function Timetable() {
         borderWidth={1}
         borderColor={colors.primary[30]}
         p={12}
+        onPress={() => router.push('/schedule')}
       >
         <Text color={colors.primary[20]}>Xem chi tiết</Text>
       </Box>

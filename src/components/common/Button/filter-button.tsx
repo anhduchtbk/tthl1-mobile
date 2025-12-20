@@ -3,9 +3,13 @@ import { colors } from '@/theme/colors';
 import { Box } from '../Layout/Box';
 import { Text } from '../Text/Text';
 
-export default function FilterButton() {
+export default function FilterButton({
+  onOpenFilter,
+}: {
+  onOpenFilter?: () => void;
+}) {
   return (
-    <Box flexDirection="row" alignItems="center" gap={8}>
+    <Box flexDirection="row" alignItems="center" gap={8} onPress={onOpenFilter}>
       <Text color={colors.text[3]}>Bộ lọc</Text>
       <FilterSvg width={14} height={14} />
     </Box>

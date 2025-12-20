@@ -17,11 +17,11 @@ type RenderItemProps = {
   item: ItemProps;
 };
 
-export function RenderScheduleItem({ item }: RenderItemProps) {
+export function RenderFacilityItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
-    // router.push('/manage-student/student-detail');
+    router.push('/home/manage-facility-by-unit');
   };
 
   return (
