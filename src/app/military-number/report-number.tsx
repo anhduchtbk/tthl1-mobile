@@ -50,7 +50,7 @@ const ReportNumberScreen = () => {
   return (
     <Box>
       <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
-      <Box gap={16} px={16}>
+      <Box mt={20} px={16} gap={16}>
         <Dropdown
           data={data}
           control={control}

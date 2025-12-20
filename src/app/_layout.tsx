@@ -1,6 +1,7 @@
 import { AsyncFont } from '@/components/common/AsyncFont/AsyncFont';
 import { queryClient } from '@/lib/react-query';
 import { darkTheme, lightTheme } from '@/theme';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
@@ -41,15 +42,17 @@ export default function RootLayout() {
           <ThemeProvider
             value={colorScheme === 'dark' ? darkTheme : lightTheme}
           >
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="auth" options={{ headerShown: false }} />
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <BottomSheetModalProvider>
+              <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="auth" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-              {/* <Stack.Screen
+                {/* <Stack.Screen
                 name="modal"
                 options={{ presentation: 'modal', title: 'Modal' }}
               /> */}
-            </Stack>
+              </Stack>
+            </BottomSheetModalProvider>
             <StatusBar style="auto" />
           </ThemeProvider>
         </QueryClientProvider>
