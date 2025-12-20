@@ -28,7 +28,10 @@ export default function ScheduleScreen() {
           RightComponent={<RightComponent />}
         />
       </Box>
-      <FilterButton />
+
+      <Box px={16}>
+        <FilterButton />
+      </Box>
       <FlatList
         data={ListSchedule}
         renderItem={({ item }) => <RenderScheduleItem item={item} />}

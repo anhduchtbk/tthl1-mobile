@@ -3,6 +3,7 @@ import { Box } from '@/components/common/Layout/Box';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { colors } from '@/theme/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -48,7 +49,7 @@ const ReportNumberScreen = () => {
   });
 
   return (
-    <Box>
+    <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
       <Box gap={16} px={16}>
         <Dropdown

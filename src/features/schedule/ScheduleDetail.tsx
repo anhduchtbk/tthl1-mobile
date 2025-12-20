@@ -2,14 +2,28 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
 import { StyleSheet } from 'react-native';
-import { DayElementScrollView } from '../schedule/DayElement';
-import { Schedule } from '../schedule/Schedule';
+import { DayElementScrollView } from './DayElement';
+import { Schedule } from './Schedule';
 
-export function Timetable() {
+type ScheduleDetailProps = {
+  week?: number;
+};
+
+export function ScheduleDetail({ week }: ScheduleDetailProps) {
   return (
     <Box style={styles.timetable}>
-      <Box style={styles.headerTimetable}>
-        <Text style={styles.txtHeaderSchedule}>Thời khoá biểu (C1 - VB2)</Text>
+      <Box
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text fontSize={15} fontWeight="bold">
+          Thời khoá biểu (C1 - VB2)
+        </Text>
+        <Text fontSize={12} color={colors.primary[20]}>
+          {' '}
+          Tuần {week}{' '}
+        </Text>
       </Box>
       <DayElementScrollView />
       <Schedule
@@ -39,16 +53,6 @@ export function Timetable() {
         bgColor={colors.primary[70]}
         borderColor={'#20C74B'}
       />
-      <Box
-        borderRadius={8}
-        alignItems="center"
-        bgColor={colors.primary[40]}
-        borderWidth={1}
-        borderColor={colors.primary[30]}
-        p={12}
-      >
-        <Text color={colors.primary[20]}>Xem chi tiết</Text>
-      </Box>
     </Box>
   );
 }

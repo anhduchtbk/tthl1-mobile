@@ -28,7 +28,9 @@ export default function MilitaryNumberScreen() {
           RightComponent={<RightComponent />}
         />
       </Box>
-      <FilterButton />
+      <Box px={16}>
+        <FilterButton />
+      </Box>
       <FlatList
         data={ListSchedule}
         renderItem={({ item }) => <RenderMilitaryItem item={item} />}
