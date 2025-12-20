@@ -25,7 +25,7 @@ export function ScreenHeader({
     <Box
       flexDirection="row"
       alignItems="center"
-      justifyContent='space-between'
+      justifyContent="space-between"
       mt={insets.top}
       px={16}
       py={14}
@@ -38,7 +38,7 @@ export function ScreenHeader({
         <Text fontWeight="bold" fontSize={18}>
           {title}
         </Text>
-        <Text fontSize={18}>{subTitle}</Text>
+        {subTitle && <Text fontSize={18}>{subTitle}</Text>}
       </Box>
 
       {RightComponent && RightComponent}
