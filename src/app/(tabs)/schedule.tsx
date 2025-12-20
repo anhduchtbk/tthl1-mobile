@@ -19,7 +19,8 @@ export default function ScheduleScreen() {
           isSearch
         />
       </Box>
-      <Box p={16}>
+
+      <Box px={16}>
         <FilterButton />
       </Box>
       <FlatList

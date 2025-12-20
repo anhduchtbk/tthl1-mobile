@@ -1,8 +1,8 @@
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
-import { DayElementScrollView } from '@/features/home/timetable';
 import { HistoryElements } from '@/features/manage-student/history/HistoryElement';
+import { DayElementScrollView } from '@/features/schedule/DayElement';
 import { colors } from '@/theme/colors';
 import { ScrollView } from 'react-native';
 
@@ -32,10 +32,10 @@ export default function MilitaryNumberScreen() {
   ];
 
   return (
-    <Box bgColor={colors.white}>
+    <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="LỊCH SỬ BÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Box mt={20} px={16} gap={16}>
+        <Box px={16} gap={16}>
           <FilterButton />
           <DayElementScrollView />
 

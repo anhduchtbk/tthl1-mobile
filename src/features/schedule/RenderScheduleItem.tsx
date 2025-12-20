@@ -21,7 +21,7 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
-    // router.push('/manage-student/student-detail');
+    router.push('/schedule/schedule-detail');
   };
 
   return (

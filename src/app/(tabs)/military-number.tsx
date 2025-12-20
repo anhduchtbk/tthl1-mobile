@@ -19,7 +19,7 @@ export default function MilitaryNumberScreen() {
           isSearch
         />
       </Box>
-      <Box p={16}>
+      <Box px={16}>
         <FilterButton />
       </Box>
       <FlatList
