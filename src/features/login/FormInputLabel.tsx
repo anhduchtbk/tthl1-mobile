@@ -7,22 +7,24 @@ import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 type Props = PropsWithChildren<{
   label: string;
-  invisible?: boolean;
   style?: any;
-  defaultValue?: string;
   autoFocus?: boolean;
   isPassword?: boolean;
+  isRequired?: boolean;
 }>;
 
 export function FormInputLabel({
   label,
   autoFocus = false,
   isPassword,
+  isRequired,
 }: Props) {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   return (
     <Box gap={4}>
-      <Text color={colors.text[2]}>{label}</Text>
+      <Text color={colors.text[2]}>
+        {label} <Text color={colors.action.error}>{isRequired && '*'}</Text>
+      </Text>
       <Box
         h={50}
         justifyContent="center"
@@ -30,8 +32,8 @@ export function FormInputLabel({
         borderColor={colors.blue}
         borderRadius={10}
         px={16}
-        flexDirection='row'
-        alignItems='center'
+        flexDirection="row"
+        alignItems="center"
       >
         <TextInput
           style={styles.inputStyle}

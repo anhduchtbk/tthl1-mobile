@@ -16,6 +16,7 @@ export type DropdownProps = {
   control?: Control<any>;
   name?: Path<any>;
   value?: string;
+  isRequired?: boolean;
   onChange?: (value: string) => void;
 };
 
@@ -27,6 +28,7 @@ const Dropdown = ({
   control,
   name,
   value: externalValue,
+  isRequired,
   onChange: externalOnChange,
 }: DropdownProps) => {
   const [isFocus, setIsFocus] = useState(false);
@@ -60,6 +62,7 @@ const Dropdown = ({
       searchPlaceholder={searchPlaceholder}
       value={currentValue}
       isFocus={isFocus}
+      isRequired={isRequired}
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
       onChange={handleChange}

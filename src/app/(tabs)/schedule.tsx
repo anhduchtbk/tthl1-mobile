@@ -33,7 +33,7 @@ export default function ScheduleScreen() {
         data={ListSchedule}
         renderItem={({ item }) => <RenderScheduleItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 16 }}
       />
     </Box>
   );
