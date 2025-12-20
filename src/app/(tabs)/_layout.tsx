@@ -24,45 +24,35 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Trang chủ',
-          tabBarIcon: ({ color }) => (
-            <HomeSvg activeColor={color} />
-          ),
+          tabBarIcon: ({ color }) => <HomeSvg activeColor={color} />,
         }}
       />
       <Tabs.Screen
         name="manage-student"
         options={{
           title: 'QL học viên',
-          tabBarIcon: ({ color }) => (
-            <ManageStudentSvg activeColor={color} />
-          ),
+          tabBarIcon: ({ color }) => <ManageStudentSvg activeColor={color} />,
         }}
       />
       <Tabs.Screen
         name="military-number"
         options={{
           title: 'Quân số',
-          tabBarIcon: ({ color }) => (
-            <PersonnelSvg activeColor={color} />
-          ),
+          tabBarIcon: ({ color }) => <PersonnelSvg activeColor={color} />,
         }}
       />
       <Tabs.Screen
         name="schedule"
         options={{
           title: 'T.K.Biểu',
-          tabBarIcon: ({ color }) => (
-            <TimetableIconSvg activeColor={color} />
-          ),
+          tabBarIcon: ({ color }) => <TimetableIconSvg activeColor={color} />,
         }}
       />
       <Tabs.Screen
         name="setting"
         options={{
           title: 'Cài đặt',
-          tabBarIcon: ({ color }) => (
-            <SettingSvg activeColor={color} />
-          ),
+          tabBarIcon: ({ color }) => <SettingSvg activeColor={color} />,
         }}
       />
     </Tabs>

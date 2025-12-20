@@ -4,7 +4,7 @@ import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { DayElementScrollView } from '@/features/home/timetable';
 import { HistoryElements } from '@/features/manage-student/history/HistoryElements';
 import { colors } from '@/theme/colors';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 
 export default function MilitaryNumberScreen() {
   const dictColors = {
@@ -68,5 +68,3 @@ export default function MilitaryNumberScreen() {
     </Box>
   );
 }
-
-const styles = StyleSheet.create({});
