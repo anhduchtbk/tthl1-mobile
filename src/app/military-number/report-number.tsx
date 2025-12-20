@@ -48,9 +48,9 @@ const ReportNumberScreen = () => {
   });
 
   return (
-    <Box px={16}>
+    <Box>
       <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
-      <Box gap={16}>
+      <Box gap={16} px={16}>
         <Dropdown
           data={data}
           control={control}
@@ -67,7 +67,7 @@ const ReportNumberScreen = () => {
           label={'Tổng quân số'}
           placeholder={'0'}
           returnKeyType="next"
-          keyboardType='number-pad'
+          keyboardType="number-pad"
           onSubmitEditing={() => refs.absentNumber.current?.focus()}
           error={errors?.companyNumber?.message}
         />
@@ -78,7 +78,7 @@ const ReportNumberScreen = () => {
           control={control}
           label={'Tổng vắng'}
           placeholder={'0'}
-          keyboardType='number-pad'
+          keyboardType="number-pad"
           error={errors?.absentNumber?.message}
         />
       </Box>
