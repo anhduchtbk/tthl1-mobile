@@ -1,6 +1,7 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
+import { useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { DayElementScrollView } from '../schedule/DayElement';
 import { Schedule } from '../schedule/Schedule';
