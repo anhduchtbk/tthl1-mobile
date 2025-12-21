@@ -67,7 +67,6 @@ export function BasicInformation() {
     <Box pt={16}>
       <Box
         alignSelf="flex-start"
-        alignItems="center"
         py={8}
         px={16}
         borderBottomWidth={1}

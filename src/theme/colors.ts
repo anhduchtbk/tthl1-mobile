@@ -29,6 +29,7 @@ export const colors = {
     black: '#2B2B2B',
     background: '#F5F3F0',
     white: '#F7F7F7',
+    dark: '#F4F4F4',
   },
   action: {
     success: '#3CA857', //green

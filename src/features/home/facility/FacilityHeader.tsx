@@ -3,7 +3,13 @@ import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 
-export function FacilityHeader() {
+export function FacilityHeader({
+  onLendFacility,
+  onBackFacility,
+}: {
+  onLendFacility: () => void;
+  onBackFacility: () => void;
+}) {
   return (
     <Box>
       <Box alignItems="center" gap={8}>
@@ -72,8 +78,11 @@ export function FacilityHeader() {
           borderRadius={16}
           py={9}
           px={30}
+          onPress={onLendFacility}
         >
-          <Text color={colors.white} align='center'>Đăng ký{'\n'}mượn vật chất</Text>
+          <Text color={colors.white} align="center">
+            Đăng ký{'\n'}mượn vật chất
+          </Text>
         </Box>
         <Box
           flex={1}
@@ -83,8 +92,11 @@ export function FacilityHeader() {
           borderRadius={16}
           py={9}
           px={30}
+          onPress={onBackFacility}
         >
-          <Text color={colors.blue} align='center'>Đăng ký{'\n'}trả vật chất</Text>
+          <Text color={colors.blue} align="center">
+            Đăng ký{'\n'}trả vật chất
+          </Text>
         </Box>
       </Box>
     </Box>

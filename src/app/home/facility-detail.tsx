@@ -1,15 +1,20 @@
+import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import OverflowScrollView from '@/components/common/ScrollView/OverflowScrollView';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import BackFacilityModal from '@/features/home/facility/BackFacilityModal';
 import { FacilityHeader } from '@/features/home/facility/FacilityHeader';
-import { BasicInformation } from '@/features/manage-student/student-detail/BasicInformation';
-import { RelativeInformation } from '@/features/manage-student/student-detail/RelativeInformation';
+import { FacilityInformation } from '@/features/home/facility/FacilityInformation';
+import LendFacilityModal from '@/features/home/facility/LendFacilityModal';
 import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
 export default function FacilityDetailScreen() {
+  const [isOpenLendModal, setIsOpenLendModal] = useState(false);
+  const [isOpenBackModal, setIsOpenBackModal] = useState(false);
+
   return (
     <LinearGradient colors={['#CAD6FF', '#FFF7DB']} style={{ flex: 1 }}>
       <ScreenHeader title="CHI TIẾT VẬT CHẤT" />
@@ -42,11 +47,24 @@ export default function FacilityDetailScreen() {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <FacilityHeader />
-          <BasicInformation />
-          <RelativeInformation />
+          <FacilityHeader
+            onLendFacility={() => setIsOpenLendModal(true)}
+            onBackFacility={() => setIsOpenBackModal(true)}
+          />
+          <Box pt={16} pb={8}>
+            <FilterButton />
+          </Box>
+          <FacilityInformation />
         </OverflowScrollView>
       </Box>
+      <LendFacilityModal
+        isVisible={isOpenLendModal}
+        onClose={() => setIsOpenLendModal(false)}
+      />
+      <BackFacilityModal
+        isVisible={isOpenBackModal}
+        onClose={() => setIsOpenBackModal(false)}
+      />
     </LinearGradient>
   );
 }
