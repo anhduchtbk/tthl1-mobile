@@ -1,10 +1,9 @@
+import Button from '@/components/common/Button';
+import Dropdown from '@/components/common/Dropdown/Dropdown';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import { colors } from '@/theme/colors';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, {
   useCallback,
   useEffect,
@@ -13,6 +12,7 @@ import React, {
   useState,
 } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface StudentFilterBottomSheetProps {
   isOpen: boolean;
@@ -32,7 +32,15 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   const wasOpenRef = useRef(false);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-  const snapPoints = useMemo(() => ['50%'], []);
+  const snapPoints = useMemo(() => ['80%'], []);
+
+  const insets = useSafeAreaInsets();
+
+  const data = [
+    { label: 'Điểm danh thể dục buổi sáng', value: '1' },
+    { label: 'Điểm danh Ăn cơm sáng', value: '2' },
+    { label: 'Điểm danh Học buổi sáng (Võ thuật CAND)', value: '3' },
+  ];
 
   useEffect(() => {
     if (isOpen) {
@@ -89,17 +97,142 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
       enableHandlePanningGesture
       enableDynamicSizing={false}
     >
-      <BottomSheetView style={styles.container}>
-        <Box flexDirection='row' alignItems='center' justifyContent='space-between'>
-          <TouchableOpacity activeOpacity={0.7} onPress={onClose} style={{width: 80}}>
-            <Text fontSize={17} color={'#343434'}>Đóng</Text>
-          </TouchableOpacity>
-          <Text fontSize={20} fontWeight="bold" color={'#333'}>
-            Bộ lọc
-          </Text>
-          <Box w={80} />
+      <Box style={styles.container} pb={insets.bottom}>
+        <Box>
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+            mb={16}
+          >
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={onClose}
+              style={{ width: 80 }}
+            >
+              <Text fontSize={17} color={'#343434'}>
+                Đóng
+              </Text>
+            </TouchableOpacity>
+            <Text fontSize={20} fontWeight="bold" color={'#333'}>
+              Bộ lọc
+            </Text>
+            <Box w={80} />
+          </Box>
+          {/*  */}
+          <Box flexDirection="row" justifyContent="space-between" gap={8}>
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Hệ đào tạo"
+                placeholder={'Hệ đào tạo'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Đại đội"
+                placeholder={'Đại đội'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+          </Box>
+
+          {/*  */}
+          <Box flexDirection="row" justifyContent="space-between" gap={8}>
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Trung đội"
+                placeholder={'Trung đội'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Tiểu đội"
+                placeholder={'Tiểu đội'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+          </Box>
+
+          {/*  */}
+          <Box flexDirection="row" justifyContent="space-between" gap={8}>
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Đảng viên"
+                placeholder={'Đảng viên'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Đoàn viên"
+                placeholder={'Đoàn viên'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+          </Box>
+
+          {/*  */}
+          <Box flexDirection="row" justifyContent="space-between" gap={8}>
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Chính sách"
+                placeholder={'Chính sách'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+
+            <Box flex={1}>
+              <Dropdown
+                data={data}
+                name="Năng khiếu"
+                placeholder={'Năng khiếu'}
+                searchPlaceholder={'Tìm kiếm'}
+                dropdownStyle={{
+                  borderColor: colors.primary[20],
+                }}
+              />
+            </Box>
+          </Box>
         </Box>
-      </BottomSheetView>
+
+        {/*  */}
+        <Box>
+          <Button text="Xác nhận" />
+        </Box>
+      </Box>
     </BottomSheetModal>
   );
 };
@@ -107,7 +240,8 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
   },
 });
 
