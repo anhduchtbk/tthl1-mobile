@@ -5,7 +5,7 @@ export const lightColors = {
   primary: colors.primary[60],
   secondary: colors.secondary[60],
   accent: colors.accent[60],
-  grey: colors.grey,
+  grey: colors.grey[60],
 
   background: colors.neutral.background,
   backgroundWhite: colors.neutral.white,
@@ -36,7 +36,7 @@ export const darkColors: ColorType = {
   primary: colors.primary[60],
   secondary: colors.secondary[60],
   accent: colors.accent[60],
-  grey: colors.grey,
+  grey: colors.grey[60],
 
   background: colors.neutral.background,
   backgroundWhite: colors.neutral.white,

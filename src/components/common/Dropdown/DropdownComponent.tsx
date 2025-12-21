@@ -5,7 +5,7 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import { Dropdown as DropdownElement } from 'react-native-element-dropdown';
 import TextField from '../TextField/TextField';
 import type { DropdownItem } from './Dropdown';
@@ -38,6 +38,7 @@ type DropdownComponentProps = {
   onFocus: () => void;
   onBlur: () => void;
   onChange: (item: DropdownItem) => void;
+  dropdownStyle?: ViewStyle;
 };
 
 const DropdownComponent = ({
@@ -51,6 +52,7 @@ const DropdownComponent = ({
   onFocus,
   onBlur,
   onChange,
+  dropdownStyle
 }: DropdownComponentProps) => {
   return (
     <Box>
@@ -61,7 +63,7 @@ const DropdownComponent = ({
       )}
       <Box h={4} />
       <DropdownElement
-        style={styles.dropdown}
+        style={[styles.dropdown, dropdownStyle]}
         placeholderStyle={styles.dropdownPlaceholder}
         selectedTextStyle={{
           ...styles.dropdownPlaceholder,

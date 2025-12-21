@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Control, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
+import { ViewStyle } from 'react-native';
 import DropdownComponent from './DropdownComponent';
 
 export type DropdownItem = {
@@ -18,6 +19,7 @@ export type DropdownProps = {
   value?: string;
   isRequired?: boolean;
   onChange?: (value: string) => void;
+  dropdownStyle?: ViewStyle;
 };
 
 const Dropdown = ({
@@ -30,6 +32,7 @@ const Dropdown = ({
   value: externalValue,
   isRequired,
   onChange: externalOnChange,
+  dropdownStyle
 }: DropdownProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const [internalValue, setInternalValue] = useState<string | null>(
@@ -66,6 +69,7 @@ const Dropdown = ({
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
       onChange={handleChange}
+      dropdownStyle={dropdownStyle}
     />
   );
 };
