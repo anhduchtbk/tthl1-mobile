@@ -103,18 +103,18 @@ const TextField = forwardRef<
           if (isFocused) {
             return {
               borderColor: colors.blue,
-              backgroundColor: themeColors.white,
+              backgroundColor: 'transparent',
             };
           }
           return {
             borderColor: colors.blue,
-            backgroundColor: themeColors.white,
+            backgroundColor: 'transparent',
           };
         }
         default: // active | disable
           return {
             borderColor: colors.grey[60],
-            backgroundColor: themeColors.white,
+            backgroundColor: 'transparent',
           };
       }
     };
