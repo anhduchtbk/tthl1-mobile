@@ -26,20 +26,14 @@ const elevationLevel = [0, 1, 2, 3, 4];
 
 const useButtonBehavior = ({
   loading,
-  elevated,
   disabled,
   variant = 'primary',
   onPressAction,
-  onPressInAction,
-  onPressOutAction,
 }: {
   loading?: boolean;
-  elevated?: boolean;
   disabled?: boolean;
   variant?: ButtonVariant;
   onPressAction?: (event: GestureResponderEvent) => void;
-  onPressInAction?: (event: GestureResponderEvent) => void;
-  onPressOutAction?: (event: GestureResponderEvent) => void;
 }) => {
   const { colors } = useTheme();
   const maxElevationLevel = 4;
@@ -51,15 +45,15 @@ const useButtonBehavior = ({
   const flat = variant === 'text' || variant === 'text-inline';
   // elevation
   const elevation = useSharedValue(
-    elevated && !flat ? maxElevationLevel : minElevationLevel
+    !flat ? maxElevationLevel : minElevationLevel
   );
   useEffect(() => {
-    if (elevated && !flat) {
+    if (!flat) {
       elevation.value = maxElevationLevel;
     } else {
       elevation.value = minElevationLevel;
     }
-  }, [elevated, elevation, flat, maxElevationLevel, minElevationLevel]);
+  }, [elevation, flat, maxElevationLevel, minElevationLevel]);
 
   // colors
   const progress = useSharedValue(disabled ? -1 : 0);
@@ -94,16 +88,14 @@ const useButtonBehavior = ({
 
   const onPressIn = (event: GestureResponderEvent) => {
     if (disabled || loading) return;
-    if (!elevated && !flat) {
+    if (!flat) {
       elevation.value = withTiming(maxElevationLevel, animationConfig);
     }
     progress.value = withTiming(1, animationConfig);
-    // setTextColor(colors.primary);
-    onPressInAction?.(event);
   };
   const onPressOut = (event: GestureResponderEvent) => {
     if (disabled || loading) return;
-    if (!elevated && !flat) {
+    if (!flat) {
       elevation.value = withTiming(minElevationLevel, animationConfig);
     }
     progress.value = withTiming(0, animationConfig, finished => {
@@ -111,8 +103,6 @@ const useButtonBehavior = ({
         runOnJS(runDisabledAnimation)();
       }
     });
-    // setTextColor(colors.primary);
-    onPressOutAction?.(event);
   };
 
   const isAndroid = Platform.OS === 'android';

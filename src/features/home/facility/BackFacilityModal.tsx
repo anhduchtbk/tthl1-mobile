@@ -82,7 +82,7 @@ const BackFacilityModal = ({ isVisible, onClose }: Props) => {
         >
           <Box w={20} />
           <Text fontSize={20} fontWeight="bold" color={'#3C4257'}>
-            Mượn vật chất
+            Trả vật chất
           </Text>
           <TouchableOpacity activeOpacity={0.7} onPress={() => onClose()}>
             <CloseSvg />
@@ -93,8 +93,8 @@ const BackFacilityModal = ({ isVisible, onClose }: Props) => {
             data={data}
             control={control}
             name="companyName"
-            label={'Nơi mượn vật chất'}
-            placeholder={'Nơi mượn vật chất'}
+            label={'Nơi trả vật chất'}
+            placeholder={'Nơi trả vật chất'}
             searchPlaceholder={'Tìm kiếm'}
             dropdownStyle={{ borderColor: '#F1CFE3' }}
           />
@@ -137,7 +137,7 @@ const BackFacilityModal = ({ isVisible, onClose }: Props) => {
             }}
           />
         </Box>
-        <Button text="GỬI YÊU CẦU"/>
+        <Button text="GỬI YÊU CẦU" rounded />
       </Box>
     </Modal>
   );

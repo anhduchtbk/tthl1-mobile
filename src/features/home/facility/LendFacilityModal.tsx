@@ -137,7 +137,7 @@ const LendFacilityModal = ({ isVisible, onClose }: Props) => {
             }}
           />
         </Box>
-        <Button text="GỬI YÊU CẦU"/>
+        <Button text="GỬI YÊU CẦU" rounded />
       </Box>
     </Modal>
   );

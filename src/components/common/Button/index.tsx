@@ -6,10 +6,9 @@ import type {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import Animated from 'react-native-reanimated';
 
 import { Box } from '@/components/common/Layout/Box';
-import { useTheme } from '@react-navigation/native';
+import { colors } from '@/theme/colors';
 import { Text } from '../Text/Text';
 import Spinner from './Spinner';
 import type { IconProps } from './buttonRenderUtils';
@@ -23,18 +22,13 @@ export interface ButtonProps {
   subtext?: string;
   disabled?: boolean;
   loading?: boolean;
-  mini?: boolean;
   size?: 'small' | 'medium' | 'default';
   rounded?: boolean;
-  elevated?: boolean;
   icon?: React.ReactElement<IconProps> | React.ComponentType<IconProps>;
   iconAfter?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
-  onPressIn?: (event: GestureResponderEvent) => void;
-  onPressOut?: (event: GestureResponderEvent) => void;
   onLongPress?: (event: GestureResponderEvent) => void;
   style?: StyleProp<ViewStyle>;
-  animatedStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   subtextStyle?: StyleProp<TextStyle>;
   children?:
@@ -48,52 +42,35 @@ function Button({
   subtext,
   disabled,
   loading,
-  mini,
   size = 'default',
   rounded,
-  elevated,
   icon,
   iconAfter,
   onPress: onPressAction,
-  onPressIn: onPressInAction,
-  onPressOut: onPressOutAction,
   onLongPress,
   style,
-  animatedStyle,
   textStyle,
   subtextStyle,
   children,
 }: ButtonProps) {
-  const { onPress, onPressIn, onPressOut, textColor, loadingColor } =
-    useButtonBehavior({
-      loading,
-      elevated,
-      disabled,
-      variant,
-      onPressAction,
-      onPressInAction,
-      onPressOutAction,
-    });
+  const { onPress, textColor, loadingColor } = useButtonBehavior({
+    loading,
+    disabled,
+    variant,
+    onPressAction,
+  });
   const noIcon = !icon;
   const hasText = Boolean(text);
   const hasSubtext = Boolean(subtext);
 
-  const { colors } = useTheme();
-
   const baseStyle: Record<ButtonVariant, StyleProp<ViewStyle>> = {
     primary: {
-      backgroundColor: disabled ? colors.primary : colors.primary,
-    },
-    secondary: {
-      backgroundColor: colors.secondary,
-    },
-    tertiary: {
-      backgroundColor: colors.primary,
+      backgroundColor: disabled ? colors.primary[20] : colors.primary[20],
     },
     outlined: {
       backgroundColor: 'transparent',
       borderWidth: 1,
-      borderColor: colors.primary,
+      borderColor: colors.primary[20],
     },
     text: {},
     'text-inline': {},
@@ -118,63 +95,57 @@ function Button({
   }
 
   return (
-    <Animated.View
-      style={[animatedStyle, { flexDirection: mini ? 'row' : 'column' }]}
+    <Content
+      variant={variant}
+      disabled={disabled}
+      size={size}
+      rounded={rounded}
+      loading={loading}
+      hasSubtext={hasSubtext}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      style={[baseStyle[variant], style]}
     >
-      <Content
-        variant={variant}
-        disabled={disabled}
-        size={size}
-        rounded={rounded}
-        loading={loading}
-        hasSubtext={hasSubtext}
-        onPress={onPress}
-        onPressIn={onPressIn}
-        onPressOut={onPressOut}
-        onLongPress={onLongPress}
-        style={[baseStyle[variant], style]}
-      >
-        {loading && <Spinner color={loadingColor} />}
-        {variant === 'custom' && !loading && (
-          <>
-            {typeof children === 'object' && children}
-            {typeof children === 'function' && children(textColor)}
-          </>
-        )}
-        {variant !== 'custom' && !loading && (
-          <>
-            {icon && !iconAfter && renderIconWithColor(icon, textColor)}
-            {(hasText || hasSubtext) && (
-              <Box
-                ml={icon && !iconAfter ? 4 : 0}
-                mr={icon && !iconAfter ? 4 : 0}
+      {loading && <Spinner color={loadingColor} />}
+      {variant === 'custom' && !loading && (
+        <>
+          {typeof children === 'object' && children}
+          {typeof children === 'function' && children(textColor)}
+        </>
+      )}
+      {variant !== 'custom' && !loading && (
+        <>
+          {icon && !iconAfter && renderIconWithColor(icon, textColor)}
+          {(hasText || hasSubtext) && (
+            <Box
+              ml={icon && !iconAfter ? 4 : 0}
+              mr={icon && !iconAfter ? 4 : 0}
+            >
+              <Text
+                selectable={false}
+                fontWeight={variant === 'text' ? 'semibold' : 'bold'}
+                align={noIcon ? 'center' : 'left'}
+                color={textColor}
+                style={textStyle}
               >
+                {text}
+              </Text>
+              {hasSubtext && (
                 <Text
                   selectable={false}
-                  fontWeight={variant === 'text' ? 'semibold' : 'bold'}
                   align={noIcon ? 'center' : 'left'}
                   color={textColor}
-                  style={textStyle}
+                  style={subtextStyle}
                 >
-                  {text}
+                  {subtext}
                 </Text>
-                {hasSubtext && (
-                  <Text
-                    selectable={false}
-                    align={noIcon ? 'center' : 'left'}
-                    color={textColor}
-                    style={subtextStyle}
-                  >
-                    {subtext}
-                  </Text>
-                )}
-              </Box>
-            )}
-            {icon && iconAfter && renderIconWithColor(icon, textColor)}
-          </>
-        )}
-      </Content>
-    </Animated.View>
+              )}
+            </Box>
+          )}
+          {icon && iconAfter && renderIconWithColor(icon, textColor)}
+        </>
+      )}
+    </Content>
   );
 }
 
@@ -201,9 +172,9 @@ const Content: React.FC<ContentProps> = ({
     const borderWidth = variant === 'primary' ? 0 : 2;
     const paddingSize = size;
     let paddingY = {
-      default: 12 - borderWidth,
-      medium: 10 - borderWidth,
-      small: 8 - borderWidth,
+      default: 16 - borderWidth,
+      medium: 15 - borderWidth,
+      small: 14 - borderWidth,
     }[paddingSize];
 
     if (hasSubtext && !loading) {
@@ -217,7 +188,7 @@ const Content: React.FC<ContentProps> = ({
       flexDirection="row"
       py={paddingY}
       px={12}
-      borderRadius={rounded ? 99 : 12}
+      borderRadius={rounded ? 50 : 8}
       justifyContent="center"
       alignItems="center"
       opacity={
