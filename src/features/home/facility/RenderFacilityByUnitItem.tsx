@@ -7,34 +7,34 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type ItemProps = {
-  companyFullname: string;
-  companyAmount: number;
-  commanderAmount: number;
-  commanderFullname: string;
+  facilityName: string;
+  totalAmount: number;
+  leftAmount: number;
+  inChargeFullname: string;
 };
 
 type RenderItemProps = {
   item: ItemProps;
 };
 
-export function RenderScheduleItem({ item }: RenderItemProps) {
+export function RenderFacilityByUnitItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
-    router.push('/schedule/schedule-detail');
+    router.push('/home/facility-detail');
   };
 
   return (
     <Box style={styles.card}>
       <Text color={colors.text[3]} fontWeight="bold">
-        {item.companyFullname}
+        {item.facilityName}
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight='bold'>Học viên: </Text>{item.companyAmount}
+          <Text fontWeight='bold'>Tổng số: </Text>{item.totalAmount}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight='bold'>Chỉ huy: </Text>{item.commanderAmount}
+          <Text fontWeight='bold'>Còn lại: </Text>{item.leftAmount}
         </Text>
       </Box>
       <Box
@@ -46,7 +46,7 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
           <Box flexDirection="row" alignItems="center" gap={6}>
             <StarSvg />
             <Text color={colors.text[1]} fontSize={11}>
-              Đại đội trưởng: {item.commanderFullname}
+              Phụ trách: {item.inChargeFullname}
             </Text>
           </Box>
         </Box>

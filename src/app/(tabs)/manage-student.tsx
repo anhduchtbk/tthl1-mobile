@@ -1,39 +1,53 @@
-import SearchSvg from '@/assets/icons/search-svg';
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
+import StudentFilterBottomSheet from '@/features/manage-student/manage/StudentFilterBottomSheet';
 import { colors } from '@/theme/colors';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { FlatList } from 'react-native';
 
 export default function ManageStudentScreen() {
-  const RightComponent = () => {
-    return (
-      <TouchableOpacity activeOpacity={0.7}>
-        <SearchSvg />
-      </TouchableOpacity>
-    );
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [filters, setFilters] = useState<{
+    countries?: string[];
+    years?: string[];
+    category?: string;
+    sortType: 'rating' | 'a-z';
+  }>({
+    countries: [],
+    years: [],
+    sortType: 'rating',
+    category: '',
+  });
+
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
   };
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box
-        bgColor={colors.white}
-        borderBottomWidth={1}
-        borderColor={'#F5F5F5'}
-        mb={4}
-      >
+      <Box bgColor={colors.white} mb={4}>
         <ScreenHeader
           title="QUẢN LÝ HỌC VIÊN"
-          RightComponent={<RightComponent />}
+          isSearch
         />
       </Box>
-      <FilterButton />
+      <Box p={16}>
+        <FilterButton onOpenFilter={handleOpenModal} />
+      </Box>
       <FlatList
         data={ListStudents}
         renderItem={({ item }) => <RenderStudentItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
+      />
+
+      <StudentFilterBottomSheet
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        onSelect={handleOpenModal}
+        selectedYears={filters.years}
       />
     </Box>
   );
