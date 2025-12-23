@@ -1,8 +1,7 @@
 import Button from '@/components/common/Button';
-import Dropdown from '@/components/common/Dropdown/Dropdown';
+import ButtonTypeSelector from '@/components/common/Button/buttonTypeSelector';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { colors } from '@/theme/colors';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, {
   useCallback,
@@ -36,11 +35,41 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
 
   const insets = useSafeAreaInsets();
 
-  const data = [
-    { label: 'Điểm danh thể dục buổi sáng', value: '1' },
-    { label: 'Điểm danh Ăn cơm sáng', value: '2' },
-    { label: 'Điểm danh Học buổi sáng (Võ thuật CAND)', value: '3' },
+  const OPTIONS_1 = [
+    { label: 'Chính quy', value: 'chinh_quy' },
+    { label: 'Trung cấp', value: 'trung_cap' },
+    { label: 'Văn bằng 2', value: 'van_bang_2' },
   ];
+
+  const OPTIONS_2 = [
+    { label: 1, value: 1 },
+    { label: 2, value: 2 },
+    { label: 3, value: 3 },
+    { label: 4, value: 5 },
+  ];
+
+  const OPTIONS_3 = [
+    { label: 'Chính thức', value: 'chinh_thuc' },
+    { label: 'Dự bị', value: 'du_bi' },
+    { label: 'Không', value: 'khong' },
+  ];
+  const OPTIONS_4 = [
+    { label: 'Con CA', value: 'con_ca' },
+    { label: 'GĐ có công với CM', value: 'co_cong_cm' },
+    { label: 'Con thương binh', value: 'con_thuong_binh' },
+  ];
+
+  const OPTIONS_5 = [
+    { label: 'Ca hát', value: 'ca_hat' },
+    { label: 'Đá bóng', value: 'da_bong' },
+    { label: 'Pickleball', value: 'pickleball' },
+    { label: 'CNTT', value: 'cntt' },
+  ];
+  const [itemSelect_1, setItemSelect_1] = useState<string[]>([]);
+  const [itemSelect_2, setItemSelect_2] = useState<number[]>([]);
+  const [itemSelect_3, setItemSelect_3] = useState<string[]>([]);
+  const [itemSelect_4, setItemSelect_4] = useState<string[]>([]);
+  const [itemSelect_5, setItemSelect_5] = useState<string[]>([]);
 
   useEffect(() => {
     if (isOpen) {
@@ -119,111 +148,138 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
             </Text>
             <Box w={80} />
           </Box>
-          {/*  */}
-          <Box flexDirection="row" justifyContent="space-between" gap={8}>
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Hệ đào tạo"
-                placeholder={'Hệ đào tạo'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
+          <Box>
+            <Box>
+              <Text fontSize={14} fontWeight="bold">
+                Hệ đào tạo
+              </Text>
             </Box>
-
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Đại đội"
-                placeholder={'Đại đội'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
-            </Box>
-          </Box>
-
-          {/*  */}
-          <Box flexDirection="row" justifyContent="space-between" gap={8}>
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Trung đội"
-                placeholder={'Trung đội'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
-            </Box>
-
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Tiểu đội"
-                placeholder={'Tiểu đội'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
+            <Box flexDirection="row" gap={8} flexWrap="wrap">
+              {OPTIONS_1.map((value, index) => {
+                return (
+                  <ButtonTypeSelector
+                    key={index}
+                    label={value.label}
+                    active={itemSelect_1.some(e => value.value === e)}
+                    onPress={() => {
+                      setItemSelect_1(prev => {
+                        if (prev.includes(value.value)) {
+                          return prev.filter(v => v !== value.value);
+                        }
+                        return [...prev, value.value];
+                      });
+                    }}
+                  />
+                );
+              })}
             </Box>
           </Box>
 
-          {/*  */}
-          <Box flexDirection="row" justifyContent="space-between" gap={8}>
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Đảng viên"
-                placeholder={'Đảng viên'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
+          <Box>
+            <Box>
+              <Text fontSize={14} fontWeight="bold">
+                Đại đội
+              </Text>
             </Box>
-
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Đoàn viên"
-                placeholder={'Đoàn viên'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
+            <Box flexDirection="row" gap={8} flexWrap="wrap">
+              {OPTIONS_2.map((value, index) => {
+                return (
+                  <ButtonTypeSelector
+                    key={index}
+                    label={'' + value.label}
+                    active={itemSelect_2.some(e => value.value === e)}
+                    onPress={() => {
+                      setItemSelect_2(prev => {
+                        if (prev.includes(value.value)) {
+                          return prev.filter(v => v !== value.value);
+                        }
+                        return [...prev, value.value];
+                      });
+                    }}
+                  />
+                );
+              })}
             </Box>
           </Box>
 
-          {/*  */}
-          <Box flexDirection="row" justifyContent="space-between" gap={8}>
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Chính sách"
-                placeholder={'Chính sách'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
+          <Box>
+            <Box>
+              <Text fontSize={14} fontWeight="bold">
+                Đảng viên
+              </Text>
             </Box>
+            <Box flexDirection="row" gap={8} flexWrap="wrap">
+              {OPTIONS_3.map((value, index) => {
+                return (
+                  <ButtonTypeSelector
+                    key={index}
+                    label={value.label}
+                    active={itemSelect_3.some(e => value.value === e)}
+                    onPress={() => {
+                      setItemSelect_3(prev => {
+                        if (prev.includes(value.value)) {
+                          return prev.filter(v => v !== value.value);
+                        }
+                        return [...prev, value.value];
+                      });
+                    }}
+                  />
+                );
+              })}
+            </Box>
+          </Box>
 
-            <Box flex={1}>
-              <Dropdown
-                data={data}
-                name="Năng khiếu"
-                placeholder={'Năng khiếu'}
-                searchPlaceholder={'Tìm kiếm'}
-                dropdownStyle={{
-                  borderColor: colors.primary[20],
-                }}
-              />
+          <Box>
+            <Box>
+              <Text fontSize={14} fontWeight="bold">
+                Chính sách
+              </Text>
+            </Box>
+            <Box flexDirection="row" gap={8} flexWrap="wrap">
+              {OPTIONS_4.map((value, index) => {
+                return (
+                  <ButtonTypeSelector
+                    key={index}
+                    label={value.label}
+                    active={itemSelect_4.some(e => value.value === e)}
+                    onPress={() => {
+                      setItemSelect_4(prev => {
+                        if (prev.includes(value.value)) {
+                          return prev.filter(v => v !== value.value);
+                        }
+                        return [...prev, value.value];
+                      });
+                    }}
+                  />
+                );
+              })}
+            </Box>
+          </Box>
+
+          <Box>
+            <Box>
+              <Text fontSize={14} fontWeight="bold">
+                Năng khiếu
+              </Text>
+            </Box>
+            <Box flexDirection="row" gap={8} flexWrap="wrap">
+              {OPTIONS_5.map((value, index) => {
+                return (
+                  <ButtonTypeSelector
+                    key={index}
+                    label={value.label}
+                    active={itemSelect_5.some(e => value.value === e)}
+                    onPress={() => {
+                      setItemSelect_5(prev => {
+                        if (prev.includes(value.value)) {
+                          return prev.filter(v => v !== value.value);
+                        }
+                        return [...prev, value.value];
+                      });
+                    }}
+                  />
+                );
+              })}
             </Box>
           </Box>
         </Box>
