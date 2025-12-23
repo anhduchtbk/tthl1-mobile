@@ -2,6 +2,7 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
+import { useRouter } from 'expo-router';
 import { PropsWithChildren, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
@@ -201,6 +202,12 @@ type RowItemProps = PropsWithChildren<{
 }>;
 
 const RenderTimeItem = ({ item }: RowItemProps) => {
+  const router = useRouter();
+
+  const onOpenHistoryRequest = () => {
+    router.push('/home/notification/history-request');
+  };
+
   return (
     <Box style={styles.containerItem}>
       {item.infos.map((item, index) => {
@@ -264,6 +271,7 @@ const RenderTimeItem = ({ item }: RowItemProps) => {
                     borderWidth={1}
                     borderColor={colors.primary[20]}
                     borderRadius={16}
+                    onPress={onOpenHistoryRequest}
                   >
                     <Text fontSize={FontSize.SMALL} color={colors.blue}>
                       Lịch sử

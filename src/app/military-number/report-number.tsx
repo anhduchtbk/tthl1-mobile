@@ -1,3 +1,4 @@
+import Button from '@/components/common/Button';
 import Dropdown from '@/components/common/Dropdown/Dropdown';
 import { Box } from '@/components/common/Layout/Box';
 import Input from '@/components/common/TextField/Input';
@@ -63,12 +64,14 @@ const ReportNumberScreen = () => {
         />
         <Input
           as={TextField}
+          isRequired
           name="companyNumber"
           control={control}
           label={'Tổng quân số'}
           placeholder={'0'}
           returnKeyType="next"
           keyboardType="number-pad"
+          labelColor={colors.text[2]}
           onSubmitEditing={() => refs.absentNumber.current?.focus()}
           error={errors?.companyNumber?.message}
         />
@@ -80,8 +83,10 @@ const ReportNumberScreen = () => {
           label={'Tổng vắng'}
           placeholder={'0'}
           keyboardType="number-pad"
+          labelColor={colors.text[2]}
           error={errors?.absentNumber?.message}
         />
+        <Button text="Xác nhận" rounded />
       </Box>
     </Box>
   );

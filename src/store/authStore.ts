@@ -1,78 +1,42 @@
-// import type { User } from '@/types/user';
-// import { createMMKV } from 'react-native-mmkv';
-// import { create } from 'zustand';
-// import type { StateStorage } from 'zustand/middleware';
-// import { createJSONStorage, persist } from 'zustand/middleware';
-// import type { UseBoundStore } from 'zustand/react';
-// import type { StoreApi } from 'zustand/vanilla';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
-// const BLACKLIST_KEYS = ['actions'];
+export interface User {
+  _id: string;
+  email: string;
+  role: string;
+}
 
-// interface AuthState {
-//   user: User | null;
-//   token: string | null;
-// }
+interface AuthState {
+  user: User | null;
+  token: string | null;
+  setAuth: (data: { user: User; token?: string }) => void;
+  clearAuth: () => void;
+}
 
-// interface AuthActions {
-//   setAuth: (user: User, token: string) => void;
-//   updateUser: (user: Partial<User>) => void;
-//   setToken: (token: string) => void;
-//   clearAuth: () => void;
-// }
+export const useAuthStore = create<AuthState>()(
+  persist(
+    set => ({
+      user: null,
+      token: null,
+      setAuth: data => {
+        if (data.token) {
+          set({ user: data.user, token: data.token });
+        } else {
+          set({ user: data.user });
+        }
+      },
+      clearAuth: async () => {
+        console.log('====1');
 
-// const initialState: Omit<AuthState & { actions: AuthActions }, 'actions'> = {
-//   user: null,
-//   token: null,
-// };
-
-// const authStorage = createMMKV({
-//   id: 'timeshel-auth-storage',
-// });
-
-// const zustandStorage: StateStorage = {
-//   setItem: (name: string, value: string) => {
-//     authStorage.set(name, value);
-//   },
-//   getItem: (name: string) => {
-//     const value = authStorage.getString(name);
-//     return value ?? null;
-//   },
-//   removeItem: (name: string) => {
-//     authStorage.remove(name);
-//   },
-// };
-
-// export const useAuthStore: UseBoundStore<
-//   StoreApi<AuthState & { actions: AuthActions }>
-// > = create(
-//   persist(
-//     set => ({
-//       ...initialState,
-//       actions: {
-//         setAuth: (user, token) => set({ user, token }),
-//         updateUser: user =>
-//           set(state => ({
-//             user: state.user ? { ...state.user, ...user } : (user as User),
-//           })),
-//         setToken: token => set({ token }),
-//         clearAuth: () => set({ user: null, token: null }),
-//       },
-//     }),
-//     {
-//       name: 'auth-storage',
-//       storage: createJSONStorage(() => zustandStorage),
-//       partialize: state =>
-//         Object.fromEntries(
-//           Object.entries(state).filter(([key]) => !BLACKLIST_KEYS.includes(key))
-//         ),
-//     }
-//   )
-// );
-
-// export const useAuth = () =>
-//   useAuthStore(state => ({
-//     user: state.user,
-//     token: state.token,
-//   }));
-
-// export const useAuthActions = () => useAuthStore(state => state.actions);
+        await AsyncStorage.removeItem('token');
+        set({ user: null, token: null });
+      },
+    }),
+    {
+      name: 'auth-storage',
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);

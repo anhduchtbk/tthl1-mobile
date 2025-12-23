@@ -5,7 +5,7 @@ import { RenderMilitaryItem } from '@/features/military-number/RenderMilitaryIte
 import { colors } from '@/theme/colors';
 import { FlatList } from 'react-native';
 
-export default function MilitaryNumberScreen() {
+export default function NotificationScreen() {
   return (
     <Box flex={1} bgColor={colors.white}>
       <Box
@@ -15,7 +15,7 @@ export default function MilitaryNumberScreen() {
         mb={4}
       >
         <ScreenHeader
-          title="ĐIỂM DANH QUÂN SỐ"
+          title="THÔNG BÁO"
           isSearch
         />
       </Box>

@@ -57,6 +57,7 @@ const TextField = forwardRef<
       strengthLevel = 'empty',
       isShowStrengthBar = false,
       rightLabel,
+      isRequired,
       ...props
     },
     ref
@@ -195,6 +196,7 @@ const TextField = forwardRef<
               fontSize={size === 'small' ? 12 : 14}
             >
               {label}
+              {isRequired && <Text color={colors.action.error}> *</Text>}
               {isOptional && (
                 <Text
                   color={disabled ? themeColors.placeholder : themeColors.text}
