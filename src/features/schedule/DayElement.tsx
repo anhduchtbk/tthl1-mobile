@@ -52,14 +52,16 @@ export function DayElementScrollView() {
 
   return (
     <ScrollView horizontal contentContainerStyle={styles.dayContainer}>
-      {dayofweek.map((value, index) => (
-        <DayElement
-          key={index}
-          isCheck={selectedIndex === index}
-          onPress={() => setSelectedIndex(index)}
-          isDefault={index === 0}
-        />
-      ))}
+      {dayofweek.map((value, index) => {
+        return (
+          <DayElement
+            key={index}
+            isCheck={selectedIndex === index}
+            onPress={() => setSelectedIndex(index)}
+            isDefault={selectedIndex === index}
+          />
+        );
+      })}
     </ScrollView>
   );
 }

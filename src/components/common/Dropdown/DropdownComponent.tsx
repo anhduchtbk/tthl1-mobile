@@ -52,7 +52,7 @@ const DropdownComponent = ({
   onFocus,
   onBlur,
   onChange,
-  dropdownStyle
+  dropdownStyle,
 }: DropdownComponentProps) => {
   return (
     <Box>
@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
   dropdown: {
     borderWidth: 0.75,
     borderColor: colors.blue,
-    borderRadius: 10,
+    borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 13,
   },
   dropdownPlaceholder: {
     fontSize: 16,
-    color: colors.placeholder
+    color: colors.placeholder,
   },
   dropdownInputSearch: {
     fontSize: 12,

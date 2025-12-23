@@ -1,11 +1,19 @@
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import MilitaryFilterModal from '@/features/military-number/MilitaryFilterModal';
 import { RenderMilitaryItem } from '@/features/military-number/RenderMilitaryItem';
 import { colors } from '@/theme/colors';
+import { useState } from 'react';
 import { FlatList } from 'react-native';
 
 export default function MilitaryNumberScreen() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
   return (
     <Box flex={1} bgColor={colors.white}>
       <Box
@@ -14,19 +22,22 @@ export default function MilitaryNumberScreen() {
         borderColor={'#F5F5F5'}
         mb={4}
       >
-        <ScreenHeader
-          title="ĐIỂM DANH QUÂN SỐ"
-          isSearch
-        />
+        <ScreenHeader title="ĐIỂM DANH QUÂN SỐ" isSearch />
       </Box>
       <Box px={16}>
-        <FilterButton />
+        <FilterButton onOpenFilter={handleOpenModal} />
       </Box>
       <FlatList
         data={ListSchedule}
         renderItem={({ item }) => <RenderMilitaryItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
+      />
+
+      <MilitaryFilterModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSelect={handleOpenModal}
       />
     </Box>
   );
