@@ -1,3 +1,4 @@
+import { Student } from '@/api/types/student';
 import PartyMemberSvg from '@/assets/icons/party-member-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
@@ -6,18 +7,11 @@ import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-type ItemProps = {
-  fullName: string;
-  dob: string;
-  isPartyMember: boolean;
-  division: string;
-};
-
 type RenderItemProps = {
-  item: ItemProps;
+  item: Student;
 };
 
-export function RenderStudentItem({item}: RenderItemProps) {
+export function RenderStudentItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
@@ -31,10 +25,10 @@ export function RenderStudentItem({item}: RenderItemProps) {
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          Đơn vị: {item.division}
+          Đơn vị: A{item.squad}B{item.platoon}C{item.company.id}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          Ngày sinh: {item.dob}
+          Ngày sinh: {item.birthday}
         </Text>
       </Box>
       <Box

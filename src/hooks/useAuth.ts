@@ -14,14 +14,15 @@ export const useLogin = () => {
       if (response.data) {
         await AsyncStorage.setItem('token', response.data.token);
         setAuth({
-          user: response.data.user,
+          user: {
+            id: response.data?.role?.id,
+            email: response.data.email,
+            name: response.data?.role?.name,
+            description: response.data?.role?.description, 
+          },
           token: response.data.token,
         });
       }
     },
   });
-};
-
-export const useGetUser = () => {
-  return useAuthStore(state => state.user);
 };

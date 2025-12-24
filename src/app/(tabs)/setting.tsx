@@ -4,6 +4,7 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { StudentHeader } from '@/features/manage-student/student-detail/StudentHeader';
+import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -11,13 +12,14 @@ import { Image, StyleSheet } from 'react-native';
 
 export default function SettingScreen() {
   const router = useRouter();
+  const clearAuth = useAuthStore(state => state.clearAuth);
 
   const onPressChangePassword = () => {
-    // Handle change password action
     router.push('/setting/change-password');
   };
 
   const onLogOut = () => {
+    clearAuth();
     router.replace('/auth');
   };
 

@@ -1,11 +1,14 @@
 import NotificationSvg from '@/assets/icons/notification-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { Image, StyleSheet } from 'react-native';
 
 export function InforAccount() {
+  const { user } = useAuthStore();
+
   return (
     <Box gap={24}>
       <Box flexDirection="row" marginLeft={16} marginY={6} gap={8}>
@@ -21,10 +24,10 @@ export function InforAccount() {
             fontSize={13}
             color={colors.white}
           >
-            Nguyễn Anh Tuấn
+            {user?.name || ''}
           </Text>
           <Text fontSize={13} numberOfLines={1} color={colors.white}>
-            A4 - B2 - C3
+            {user?.description || ''}
           </Text>
         </Box>
         <Box>

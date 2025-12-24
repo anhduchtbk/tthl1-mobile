@@ -7,7 +7,7 @@ import { colors } from '@/theme/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { StyleSheet, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 import z from 'zod';
 
 type ChangePasswordFormData = {
@@ -37,7 +37,7 @@ export default function ChangePasswordScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<ChangePasswordFormData>({
     resolver: zodResolver(changePasswordSchema),
     mode: 'onChange',
@@ -48,44 +48,48 @@ export default function ChangePasswordScreen() {
     },
   });
 
+  const onConfirm = () => {
+    
+  };
+
   return (
     <Box bgColor={colors.white}>
       <ScreenHeader title="ĐỔI MẬT KHẨU" />
       <Box mt={16} px={16} gap={16}>
         <Input
           as={TextField}
+          autoFocus
+          isRequired
+          ref={refs.currentPassword}
           name="currentPassword"
-          label="Nhập mật khẩu hiện tại *"
+          label="Nhập mật khẩu hiện tại"
           control={control}
           returnKeyType="next"
+          onSubmitEditing={() => refs.newPassword.current?.focus()}
           error={errors?.currentPassword?.message}
         />
         <Input
           as={TextField}
+          isRequired
+          ref={refs.newPassword}
           name="newPassword"
-          label="Nhập mật khẩu mới *"
+          label="Nhập mật khẩu mới"
           control={control}
           returnKeyType="next"
+          onSubmitEditing={() => refs.confirmNewPassword.current?.focus()}
           error={errors?.newPassword?.message}
         />
         <Input
           as={TextField}
-          label="Nhập lại mật khẩu mới *"
+          isRequired
+          ref={refs.confirmNewPassword}
+          label="Nhập lại mật khẩu mới"
           name="confirmNewPassword"
           control={control}
-          returnKeyType="next"
           error={errors?.confirmNewPassword?.message}
         />
-        <Button text="XÁC NHẬN" rounded />
+        <Button text="XÁC NHẬN" onPress={handleSubmit(onConfirm)} />
       </Box>
     </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderColor: colors.primary[20],
-    borderRadius: 10,
-  },
-});
