@@ -13,6 +13,8 @@ type Props = {
   RightComponent?: ReactElement;
   onBackPress?: () => void;
   isSearch?: boolean;
+  onPressSearch?: () => void;
+  marginTop?: number;
 };
 
 export function ScreenHeader({
@@ -21,6 +23,8 @@ export function ScreenHeader({
   onBackPress,
   subTitle,
   isSearch,
+  onPressSearch,
+  marginTop,
 }: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -30,7 +34,7 @@ export function ScreenHeader({
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
-      mt={insets.top}
+      mt={marginTop ? marginTop : insets.top}
       px={16}
       py={14}
     >
@@ -46,7 +50,7 @@ export function ScreenHeader({
       </Box>
 
       {isSearch ? (
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={onPressSearch}>
           <SearchSvg />
         </TouchableOpacity>
       ) : (
