@@ -10,7 +10,15 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.k02.tthl1-mobile"
+      "bundleIdentifier": "com.k02.tthl1-mobile",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAppTransportSecurity": {
+            "NSAllowsArbitraryLoads": true,
+            "NSAllowsArbitraryLoadsInWebContent": true
+          }
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {

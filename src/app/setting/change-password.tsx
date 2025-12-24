@@ -1,5 +1,5 @@
+import Button from '@/components/common/Button';
 import { Box } from '@/components/common/Layout/Box';
-import { Text } from '@/components/common/Text/Text';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
@@ -49,9 +49,9 @@ export default function ChangePasswordScreen() {
   });
 
   return (
-    <Box px={16}>
+    <Box bgColor={colors.white}>
       <ScreenHeader title="ĐỔI MẬT KHẨU" />
-      <Box gap={16}>
+      <Box mt={16} px={16} gap={16}>
         <Input
           as={TextField}
           name="currentPassword"
@@ -76,16 +76,7 @@ export default function ChangePasswordScreen() {
           returnKeyType="next"
           error={errors?.confirmNewPassword?.message}
         />
-        <Box
-          bgColor={colors.primary[20]}
-          px={16}
-          py={12}
-          alignItems="center"
-          borderRadius={50}
-          onPress={handleSubmit(data => {})}
-        >
-          <Text color={colors.white}>XÁC NHẬN</Text>
-        </Box>
+        <Button text="XÁC NHẬN" rounded />
       </Box>
     </Box>
   );

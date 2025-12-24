@@ -1,3 +1,17 @@
+import Button from '@/components/common/Button';
+import { Box } from '@/components/common/Layout/Box';
+import { Text } from '@/components/common/Text/Text';
+import Input from '@/components/common/TextField/Input';
+import TextField from '@/components/common/TextField/TextField';
+import { ForgotPasswordModal } from '@/features/login/ForgotPasswordModal';
+import { useLogin } from '@/hooks/useAuth';
+import { colors } from '@/theme/colors';
+import { FontSize } from '@/theme/fonts';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Image,
   StyleSheet,
@@ -5,19 +19,6 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { Box } from '@/components/common/Layout/Box';
-import { Text } from '@/components/common/Text/Text';
-import Input from '@/components/common/TextField/Input';
-import TextField from '@/components/common/TextField/TextField';
-import { ButtonLogin } from '@/features/login/ButtonLogin';
-import { ForgotPasswordModal } from '@/features/login/ForgotPasswordModal';
-import { colors } from '@/theme/colors';
-import { FontSize } from '@/theme/fonts';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 type FormData = {
@@ -31,9 +32,12 @@ const changePasswordSchema = z.object({
 });
 
 export default function LoginScreen() {
+  const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const { mutateAsync: loginRequest, isPending: isLoginPending } = useLogin();
   const [openModal, setOpenModal] = useState(false);
+
+  const { width, height } = useWindowDimensions();
 
   const {
     control,
@@ -47,6 +51,24 @@ export default function LoginScreen() {
       password: '',
     },
   });
+
+  const onLogin = async (data: FormData) => {
+    await loginRequest(
+      { email: data.username, password: data.password },
+      {
+        onSuccess: data => {
+          if (data.status === 200) {
+            router.replace('/(tabs)');
+            return;
+          }
+        },
+        onError: error => {
+          console.log('error: ', error);
+        },
+      }
+    );
+  };
+
   return (
     <LinearGradient
       colors={['#E4DFBDB2', '#E4DFBDB2']}
@@ -56,8 +78,8 @@ export default function LoginScreen() {
         source={require('@/assets/images/background-splash-image.png')}
         style={styles.logoAbsolute}
         resizeMode="contain"
-        width={screenWidth}
-        height={screenHeight}
+        width={width}
+        height={height}
       />
       <Box style={styles.titleContainer} pt={insets.top} pb={insets.bottom}>
         <Image
@@ -76,22 +98,26 @@ export default function LoginScreen() {
         </Box>
 
         <Box mt={36}>
-          {/* <FormInputLabel label="Tên đăng nhập" autoFocus />
-          <FormInputLabel label="Mật khẩu" isPassword /> */}
           <Input
-            placeholder="Nhập tên đăng nhập của bạn"
             as={TextField}
             name="username"
             control={control}
+            label="Tên đăng nhập"
+            placeholder="Nhập tên đăng nhập của bạn"
+            labelColor={colors.text[2]}
+            autoFocus
+            keyboardType='email-address'
           />
+          <Box h={12} />
           <Input
-            placeholder="Nhập mật khẩu của bạn"
             as={TextField}
             name="password"
             isPassword
             control={control}
+            label="Mật khẩu"
+            placeholder="Nhập mật khẩu của bạn"
+            labelColor={colors.text[2]}
           />
-          <Box h={12} />
           <TouchableOpacity
             activeOpacity={0.7}
             style={styles.forgotPass}
@@ -101,7 +127,12 @@ export default function LoginScreen() {
               Quên mật khẩu?
             </Text>
           </TouchableOpacity>
-          <ButtonLogin />
+          <Button
+            text="Đăng nhập"
+            size="medium"
+            loading={isLoginPending}
+            onPress={handleSubmit(onLogin)}
+          />
         </Box>
         <ForgotPasswordModal
           isOpen={openModal}

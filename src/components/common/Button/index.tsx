@@ -9,6 +9,7 @@ import type {
 
 import { Box } from '@/components/common/Layout/Box';
 import { colors } from '@/theme/colors';
+import { FontSize } from '@/theme/fonts';
 import { Text } from '../Text/Text';
 import Spinner from './Spinner';
 import type { IconProps } from './buttonRenderUtils';
@@ -123,6 +124,7 @@ function Button({
             >
               <Text
                 selectable={false}
+                fontSize={FontSize.LARGE}
                 fontWeight={variant === 'text' ? 'semibold' : 'bold'}
                 align={noIcon ? 'center' : 'left'}
                 color={textColor}

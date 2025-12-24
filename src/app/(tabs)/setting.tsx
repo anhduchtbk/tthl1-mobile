@@ -8,15 +8,17 @@ import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { Image, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function SettingScreen() {
-  const insets = useSafeAreaInsets();
   const router = useRouter();
 
   const onPressChangePassword = () => {
     // Handle change password action
     router.push('/setting/change-password');
+  };
+
+  const onLogOut = () => {
+    router.replace('/auth');
   };
 
   return (
@@ -52,7 +54,7 @@ export default function SettingScreen() {
             <Text fontSize={14}>Đổi mật khẩu</Text>
           </Box>
 
-          <Box style={styles.btAva}>
+          <Box style={styles.btAva} onPress={onLogOut}>
             <HomeColorSvg />
             <Text fontSize={14}>Đăng xuất</Text>
           </Box>
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderWidth: 4,
-    borderRadius: 20,
+    borderRadius: 40,
     borderColor: colors.white,
   },
   btAva: {
