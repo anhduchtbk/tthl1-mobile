@@ -11,7 +11,13 @@ export interface LoginResponse {
   };
   status: number;
   data: {
-    user: any;
+    email: string;
     token: string;
+    role: {
+      id: number;
+      name: string;
+      description: string;
+      isActive: boolean;
+    }
   };
 }

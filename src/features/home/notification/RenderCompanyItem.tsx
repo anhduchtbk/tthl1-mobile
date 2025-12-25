@@ -1,13 +1,16 @@
 import StarSvg from '@/assets/icons/star-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatNotificationAmount } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type ItemProps = {
+  notificationAmount: number;
   companyFullname: string;
+  facilityFullname: string;
   companyAmount: number;
   commanderAmount: number;
   commanderFullname: string;
@@ -17,22 +20,54 @@ type RenderItemProps = {
   item: ItemProps;
 };
 
-export function RenderMilitaryItem({ item }: RenderItemProps) {
+export function RenderCompanyItem({ item }: RenderItemProps) {
   const router = useRouter();
 
-  const onOpenReportHistory = () => {
-    router.push('/military-number/military-history-report');
+  const onOpenDetail = () => {
+    router.push('/home/notification/facility-request');
   };
 
-  const onReportNumber = () => {
-    router.push('/military-number/report-number');
+  const onOpenHistory = () => {
+    router.push('/home/notification/history-request');
   };
 
   return (
-    <Box style={styles.card}>
+    <Box
+      style={[
+        styles.card,
+        {
+          backgroundColor: item.notificationAmount
+            ? 'rgba(56, 103, 248, 0.15)'
+            : colors.white,
+        },
+      ]}
+    >
+      {item.notificationAmount ? (
+        <Box
+          w={18}
+          h={18}
+          borderRadius={18}
+          pos="absolute"
+          top={8}
+          right={8}
+          bgColor={colors.red}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize={10} color={colors.white} fontWeight="bold">
+            {formatNotificationAmount(item.notificationAmount)}
+          </Text>
+        </Box>
+      ) : (
+        <></>
+      )}
       <Box flex={1}>
-        <Text color={colors.text[3]} fontWeight="bold">
+        <Text color={colors.text[1]} fontWeight="bold">
           {item.companyFullname}
+        </Text>
+        <Box h={4} />
+        <Text color={colors.text[3]} fontWeight="bold">
+          Yêu cầu mượn {item.facilityFullname}
         </Text>
         <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
           <Text color={colors.text[1]} fontSize={11}>
@@ -47,27 +82,31 @@ export function RenderMilitaryItem({ item }: RenderItemProps) {
         <Box flex={1} flexDirection="row" alignItems="center" gap={6} mt={10}>
           <StarSvg />
           <Text color={colors.text[1]} fontSize={11}>
-            Đại đội trưởng: {item.commanderFullname}
+            Người yêu cầu: Đại uý {item.commanderFullname}
           </Text>
         </Box>
       </Box>
-      <Box gap={12} alignItems="center">
+      <Box flexDirection="row" alignItems="center" gap={8}>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}
-          onPress={onOpenReportHistory}
+          onPress={onOpenDetail}
         >
-          <Text fontSize={FontSize.SMALL} color={colors.primary[20]}>
-            Lịch sử báo QS
+          <Text
+            fontSize={FontSize.SMALL}
+            color={colors.primary[20]}
+            align="center"
+          >
+            Chi tiết yêu cầu
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
-          style={styles.containerBox}
-          onPress={onReportNumber}
+          style={[styles.containerBox, { backgroundColor: colors.blue }]}
+          onPress={onOpenHistory}
         >
-          <Text fontSize={FontSize.SMALL} color={colors.primary[20]}>
-            Báo cáo quân số
+          <Text fontSize={FontSize.SMALL} color={colors.white} align="center">
+            Lịch sử
           </Text>
         </TouchableOpacity>
       </Box>
@@ -81,9 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     gap: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
 
     padding: 12,
     marginBottom: 16,
@@ -98,10 +134,10 @@ const styles = StyleSheet.create({
   },
 
   containerBox: {
+    flex: 1,
     borderWidth: 1,
     borderColor: '#3867F8',
     borderRadius: 16,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 8,
   },
 });

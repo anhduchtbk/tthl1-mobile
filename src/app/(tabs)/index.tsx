@@ -1,8 +1,8 @@
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    useWindowDimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

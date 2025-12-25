@@ -1,65 +1,71 @@
+import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatBoolean, formatDate } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
 
-export function BasicInformation() {
+export function BasicInformation({
+  studentDetail,
+}: {
+  studentDetail: Student;
+}) {
   const basic = [
     {
       title: 'Quê quán',
-      value: 'Thanh Xuân, Hà Nội',
+      value: '',
     },
     {
       title: 'Nơi sinh',
-      value: 'Ba Đình, Hà Nội',
+      value: '',
     },
     {
       title: 'SĐT',
-      value: '032 808 1300',
+      value: '',
     },
     {
       title: 'Đoàn viên',
-      value: 'Có',
+      value: formatBoolean(studentDetail.isYoungUnionMember),
     },
     {
       title: 'Ngày vào đoàn',
-      value: '26/03/2020',
+      value: formatDate(studentDetail.youngUnionEnrollmentDate),
     },
     {
       title: 'Đảng viên',
-      value: 'Không',
+      value: formatBoolean(studentDetail.isPartyMember),
     },
     {
       title: 'Ngày vào đảng',
-      value: '-',
+      value: formatDate(studentDetail.partyEnrollmentDate),
     },
   ];
 
   const others = [
     {
       title: 'Chính sách',
-      value: 'Không',
+      value: studentDetail.policy,
     },
     {
       title: 'Năng khiếu',
-      value: 'IT | Bóng đá | Văn nghệ',
+      value: studentDetail.talent,
     },
     {
       title: 'Bệnh lý/Bệnh nền',
-      value: 'Tràn dịch khớp gối phải',
+      value: studentDetail.backgroundDisease,
     },
     {
       title: 'Dị ứng',
-      value: 'Tôm/Cua/Cá',
+      value: studentDetail.allergy,
     },
     {
       title: 'Lưu ý khác',
-      value: 'Học viên có sức khoẻ yếu',
+      value: studentDetail.note,
     },
     {
       title: 'Cán bộ chỉ huy',
-      value: 'Đại uý Nguyễn Văn A',
+      value: '',
     },
   ];
 
@@ -84,7 +90,7 @@ export function BasicInformation() {
 
 interface RowItem {
   title: string;
-  value: string;
+  value: string | null;
 }
 
 type RowItemProps = PropsWithChildren<{
@@ -106,7 +112,7 @@ const RenderListItem = ({ listItem }: RowItemProps) => {
               {item.title}:
             </Text>
             <Text fontSize={14} color={colors.text[3]}>
-              {item.value}
+              {item.value || '-'}
             </Text>
           </Box>
         );

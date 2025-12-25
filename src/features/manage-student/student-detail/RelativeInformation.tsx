@@ -1,71 +1,54 @@
+import { FamilyMember } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatFamilyRole, formatPhoneNumber } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { PropsWithChildren } from 'react';
-import { StyleSheet } from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
 
-export function RelativeInformation() {
-  const basic = [
-    {
-      relationship: 'Bố',
+export function RelativeInformation({
+  familyMembers,
+}: {
+  familyMembers: FamilyMember[];
+}) {
+  const basic = familyMembers.flatMap(item => {
+    return {
+      relationship: formatFamilyRole(item.familyRole),
       infos: [
         {
           title: 'Họ và tên',
-          value: 'Nguyễn Văn A',
+          type: 'fullName',
+          value: item.fullName,
         },
         {
           title: 'Ngày sinh',
-          value: '01/01/1970',
+          type: 'birthday',
+          value: '',
         },
         {
           title: 'Nơi sinh',
-          value: 'Ba Đình, Hà Nội',
+          type: 'birthPlace',
+          value: item.birthPlace,
         },
         {
           title: 'Nghề nghiệp',
-          value: 'Công an',
+          type: 'job',
+          value: item.job,
         },
         {
           title: 'Chức vụ',
-          value: 'Trưởng phòng PX01 - CATP Hà Nội',
+          type: 'jobRank',
+          value: item.jobRank,
         },
         {
           title: 'SĐT',
-          value: '032 808 1300',
+          type: 'phoneNumber',
+          value: formatPhoneNumber(item.phoneNumber),
         },
       ],
-    },
-    {
-      relationship: 'Mẹ',
-      infos: [
-        {
-          title: 'Họ và tên',
-          value: 'Nguyễn Văn A',
-        },
-        {
-          title: 'Ngày sinh',
-          value: '01/01/1970',
-        },
-        {
-          title: 'Nơi sinh',
-          value: 'Ba Đình, Hà Nội',
-        },
-        {
-          title: 'Nghề nghiệp',
-          value: 'Công an',
-        },
-        {
-          title: 'Chức vụ',
-          value: 'Trưởng phòng PX01 - CATP Hà Nội',
-        },
-        {
-          title: 'SĐT',
-          value: '032 808 1300',
-        },
-      ],
-    },
-  ];
+    };
+  });
 
   return (
     <Box pt={16}>
@@ -90,7 +73,8 @@ export function RelativeInformation() {
 
 interface RowItem {
   title: string;
-  value: string;
+  type: string;
+  value: string | null;
 }
 
 type RowItemProps = PropsWithChildren<{
@@ -130,9 +114,15 @@ const RenderListItem = ({ item }: RowItemProps) => {
               <Text fontSize={14} fontWeight="bold" color={colors.text[3]}>
                 {item.title}:
               </Text>
-              <Text fontSize={14} color={colors.text[3]}>
-                {item.value}
-              </Text>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                disabled={item.type !== 'phoneNumber'}
+                onPress={() => Linking.openURL(`tel: ${item.value}`)}
+              >
+                <Text fontSize={14} color={colors.text[3]}>
+                  {item.value || '-'}
+                </Text>
+              </TouchableOpacity>
             </Box>
           );
         })}

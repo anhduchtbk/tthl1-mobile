@@ -6,6 +6,7 @@ export default function NotificationLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="history-request" />
+      <Stack.Screen name="facility-request" />
     </Stack>
   );
 }

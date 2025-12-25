@@ -1,10 +1,9 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
-import { FontSize } from '@/theme/fonts';
-import { useRouter } from 'expo-router';
-import { PropsWithChildren, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { ScrollView } from 'react-native';
+import { RenderRequestItem } from '../notification/RenderRequestItem';
 
 export function FacilityInformation() {
   const [typeIndex, setTypeIndex] = useState(1);
@@ -16,50 +15,62 @@ export function FacilityInformation() {
       infos: [
         {
           title: 'Đơn vị yêu cầu',
+          type: 'requestedUnit',
           value: 'C2 - VB2',
         },
         {
           title: 'Người yêu cầu',
+          type: 'requester',
           value: 'Đại đội trưởng: Đại uý Nguyễn Văn A',
         },
         {
           title: 'SĐT',
+          type: 'phoneNumber',
           value: '032 808 1300',
         },
         {
           title: 'Tên vật chất',
+          type: 'facilityFullname',
           value: 'Súng tiểu liên AK-47',
         },
         {
           title: 'Lần mượn',
+          type: 'requestTime',
           value: '01',
         },
         {
           title: 'Nơi mượn',
+          type: 'requestAddress',
           value: 'Tiểu đoàn 2',
         },
         {
           title: 'Số lượng',
+          type: 'quantity',
           value: 100,
         },
         {
           title: 'Lý do',
+          type: 'reason',
           value: 'C2 VB2 đăng ký mượn vật chất tiểu đoàn phục vụ môn bắn súng',
         },
         {
           title: 'Thời gian tạo yêu cầu',
+          type: 'createdAt',
           value: '19:00:00, 01/01/2025',
         },
         {
           title: 'Trạng thái',
+          type: 'status',
           value: 0,
         },
         {
           title: 'Thời gian phê duyệt',
+          type: 'approvalTime',
           value: '20:00:00, 01/01/2025',
         },
         {
           title: 'Người phê duyệt',
+          type: 'approver',
           value: 'Tiểu đoàn trưởng: Trung tá Nguyễn Văn A',
         },
       ],
@@ -69,50 +80,62 @@ export function FacilityInformation() {
       infos: [
         {
           title: 'Đơn vị yêu cầu',
+          type: 'requestedUnit',
           value: 'C2 - VB2',
         },
         {
           title: 'Người yêu cầu',
+          type: 'requester',
           value: 'Đại đội trưởng: Đại uý Nguyễn Văn A',
         },
         {
           title: 'SĐT',
+          type: 'phoneNumber',
           value: '032 808 1300',
         },
         {
           title: 'Tên vật chất',
+          type: 'facilityFullname',
           value: 'Súng tiểu liên AK-47',
         },
         {
           title: 'Lần mượn',
+          type: 'requestTime',
           value: '01',
         },
         {
           title: 'Nơi mượn',
+          type: 'requestAddress',
           value: 'Tiểu đoàn 2',
         },
         {
           title: 'Số lượng',
+          type: 'quantity',
           value: 100,
         },
         {
           title: 'Lý do',
+          type: 'reason',
           value: 'C2 VB2 đăng ký mượn vật chất tiểu đoàn phục vụ môn bắn súng',
         },
         {
           title: 'Thời gian tạo yêu cầu',
+          type: 'createdAt',
           value: '19:00:00, 01/01/2025',
         },
         {
           title: 'Trạng thái',
-          value: 1,
+          type: 'status',
+          value: 0,
         },
         {
           title: 'Thời gian phê duyệt',
+          type: 'approvalTime',
           value: '20:00:00, 01/01/2025',
         },
         {
           title: 'Người phê duyệt',
+          type: 'approver',
           value: 'Tiểu đoàn trưởng: Trung tá Nguyễn Văn A',
         },
       ],
@@ -184,124 +207,7 @@ export function FacilityInformation() {
           })}
         </ScrollView>
       </Box>
-      <RenderTimeItem item={basic[tabIndex]} />
+      <RenderRequestItem rowItem={basic[tabIndex]} />
     </Box>
   );
 }
-
-interface RowItem {
-  title: string;
-  value: string | number;
-}
-
-type RowItemProps = PropsWithChildren<{
-  item: {
-    timeIndex: number;
-    infos: RowItem[];
-  };
-}>;
-
-const RenderTimeItem = ({ item }: RowItemProps) => {
-  const router = useRouter();
-
-  const onOpenHistoryRequest = () => {
-    router.push('/home/notification/history-request');
-  };
-
-  return (
-    <Box style={styles.containerItem}>
-      {item.infos.map((item, index) => {
-        return (
-          <Box
-            key={index}
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="space-between"
-            gap={16}
-          >
-            <Text fontSize={14} fontWeight="bold" color={colors.text[3]}>
-              {item.title}:
-            </Text>
-            {index === 9 ? (
-              <Box
-                w={60}
-                h={22}
-                justifyContent="center"
-                alignItems="center"
-                borderWidth={item.value === 0 ? 1 : 0}
-                borderColor={colors.primary[20]}
-                borderRadius={16}
-                bgColor={
-                  item.value === 0
-                    ? colors.white
-                    : item.value === 1
-                    ? '#27C840'
-                    : '#FF5F57'
-                }
-              >
-                <Text
-                  fontSize={FontSize.SMALL}
-                  color={item.value === 0 ? colors.blue : colors.white}
-                >
-                  {item.value === 2 ? 'Từ chối' : 'Đồng ý'}
-                </Text>
-              </Box>
-            ) : (
-              <Box
-                flex={1}
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="flex-end"
-                gap={16}
-              >
-                <Text
-                  fontSize={14}
-                  color={colors.text[3]}
-                  align="right"
-                  fontWeight={index === 3 || index === 6 ? 'bold' : 'regular'}
-                >
-                  {item.value}
-                </Text>
-                {index === 0 && (
-                  <Box
-                    w={60}
-                    h={22}
-                    justifyContent="center"
-                    alignItems="center"
-                    borderWidth={1}
-                    borderColor={colors.primary[20]}
-                    borderRadius={16}
-                    onPress={onOpenHistoryRequest}
-                  >
-                    <Text fontSize={FontSize.SMALL} color={colors.blue}>
-                      Lịch sử
-                    </Text>
-                  </Box>
-                )}
-              </Box>
-            )}
-          </Box>
-        );
-      })}
-    </Box>
-  );
-};
-
-const styles = StyleSheet.create({
-  containerItem: {
-    backgroundColor: colors.white,
-    padding: 12,
-    borderRadius: 16,
-    gap: 7,
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-
-    elevation: 4,
-  },
-});

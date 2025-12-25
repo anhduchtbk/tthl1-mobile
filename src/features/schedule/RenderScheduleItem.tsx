@@ -31,10 +31,12 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight='bold'>Học viên: </Text>{item.companyAmount}
+          <Text fontWeight="bold">Học viên: </Text>
+          {item.companyAmount}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight='bold'>Chỉ huy: </Text>{item.commanderAmount}
+          <Text fontWeight="bold">Chỉ huy: </Text>
+          {item.commanderAmount}
         </Text>
       </Box>
       <Box
@@ -74,12 +76,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 16,
 
-    padding: 16,
+    padding: 12,
     marginBottom: 16,
     // iOS shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.15,
     shadowRadius: 4,
 
     // Android shadow

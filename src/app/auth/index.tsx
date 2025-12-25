@@ -10,11 +10,12 @@ import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Image,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
@@ -38,6 +39,11 @@ export default function LoginScreen() {
   const [openModal, setOpenModal] = useState(false);
 
   const { width, height } = useWindowDimensions();
+
+  const refs = {
+    username: useRef<TextInput>(null),
+    password: useRef<TextInput>(null),
+  };
 
   const {
     control,
@@ -92,7 +98,11 @@ export default function LoginScreen() {
           <Text fontSize={24} fontWeight="bold" color={colors.primary[20]}>
             Chào mừng,
           </Text>
-          <Text fontSize={FontSize.LARGE} color={colors.text['darkest']}>
+          <Text
+            fontSize={FontSize.LARGE}
+            fontWeight="medium"
+            color={colors.text['darkest']}
+          >
             Đăng nhập để bắt đầu với TTHL1 - K02 👋
           </Text>
         </Box>
@@ -100,13 +110,17 @@ export default function LoginScreen() {
         <Box mt={36}>
           <Input
             as={TextField}
+            autoFocus
             name="username"
             control={control}
             label="Tên đăng nhập"
             placeholder="Nhập tên đăng nhập của bạn"
             labelColor={colors.text[2]}
-            autoFocus
-            keyboardType='email-address'
+            keyboardType="email-address"
+            ref={refs.username}
+            returnKeyType="next"
+            onSubmitEditing={() => refs.password.current?.focus()}
+            error={errors?.username?.message}
           />
           <Box h={12} />
           <Input
@@ -117,6 +131,8 @@ export default function LoginScreen() {
             label="Mật khẩu"
             placeholder="Nhập mật khẩu của bạn"
             labelColor={colors.text[2]}
+            ref={refs.password}
+            error={errors?.password?.message}
           />
           <TouchableOpacity
             activeOpacity={0.7}

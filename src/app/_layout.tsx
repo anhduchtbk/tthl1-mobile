@@ -34,8 +34,24 @@ export default function RootLayout() {
         fontFamily="Mulish-Regular"
       />
       <AsyncFont
+        src={require('../assets/fonts/Mulish-Medium.ttf')}
+        fontFamily="Mulish-Medium"
+      />
+      <AsyncFont
+        src={require('../assets/fonts/Mulish-SemiBold.ttf')}
+        fontFamily="Mulish-SemiBold"
+      />
+      <AsyncFont
         src={require('../assets/fonts/Mulish-Bold.ttf')}
         fontFamily="Mulish-Bold"
+      />
+      <AsyncFont
+        src={require('../assets/fonts/Mulish-ExtraBold.ttf')}
+        fontFamily="Mulish-ExtraBold"
+      />
+      <AsyncFont
+        src={require('../assets/fonts/Mulish-Black.ttf')}
+        fontFamily="Mulish-Black"
       />
       <GestureHandlerRootView style={styles.container}>
         <QueryClientProvider client={queryClient}>
