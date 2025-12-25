@@ -3,10 +3,20 @@ import { Text } from '@/components/common/Text/Text';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
+import { useGetStudentList } from '@/hooks/useStudent';
+import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const LIMIT = 10;
 
 export interface StudentSearchModalProps {
   onSelect: () => void;
@@ -20,6 +30,8 @@ const StudentSearch: React.FC<StudentSearchModalProps> = ({ onSelect }) => {
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
+  const [dataInput, setDataInput] = useState<string>();
+
   const {
     control,
     handleSubmit,
@@ -29,57 +41,82 @@ const StudentSearch: React.FC<StudentSearchModalProps> = ({ onSelect }) => {
       search: '',
     },
   });
+
   const onClose = () => {
     router.back();
   };
 
+  const {
+    data,
+    isLoadingFirstPage: isLoading,
+    isRefetching,
+    refetch,
+    handleLoadMore,
+    isFetchingNextPage,
+    isEmpty,
+  } = useGetStudentList({
+    page: 1,
+    limit: LIMIT,
+    search: dataInput,
+  });
+
+  const renderLoadingFooter = () =>
+    isFetchingNextPage ? (
+      <ActivityIndicator color={colors.primary[50]} />
+    ) : null;
+
+  const handleOnChangeSearch = (value: string) => {
+    setDataInput(value);
+  };
+
   return (
-    <Box style={styles.container}>
-      <Box>
-        <Box
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          mb={16}
-          mt={16}
+    <Box bgColor={colors.white} flex={1} px={16} justifyContent="space-between">
+      <Box
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={16}
+        mt={16}
+      >
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={onClose}
+          style={{ width: 80 }}
         >
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={onClose}
-            style={{ width: 80 }}
-          >
-            <Text fontSize={17} color={'#343434'}>
-              Đóng
-            </Text>
-          </TouchableOpacity>
-          <Text fontSize={20} fontWeight="bold" color={'#333'}>
-            Tìm kiếm
+          <Text fontSize={17} color={'#343434'}>
+            Đóng
           </Text>
-          <Box w={80} />
-        </Box>
-        <Box gap={12}>
-          <Input
-            as={TextField}
-            name="search"
-            label={'Tìm kiếm'}
-            control={control}
-            placeholder="Nhập thông tin tìm kiếm"
+        </TouchableOpacity>
+        <Text fontSize={20} fontWeight="bold" color={'#333'}>
+          Tìm kiếm
+        </Text>
+        <Box w={80} />
+      </Box>
+      <Box gap={12}>
+        <Input
+          as={TextField}
+          name="search"
+          label={'Tìm kiếm'}
+          control={control}
+          placeholder="Nhập thông tin tìm kiếm"
+          onChange={value => {
+            handleOnChangeSearch(value);
+          }}
+        />
+        <Box gap={8}>
+          <Text>Kết quả tìm kiếm</Text>
+          <FlatList
+            data={data || []}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ item }) => <RenderStudentItem item={item} />}
+            contentContainerStyle={{ paddingHorizontal: 2 }}
+            ListFooterComponent={renderLoadingFooter}
+            onEndReachedThreshold={0.6}
+            onEndReached={handleLoadMore}
+            showsVerticalScrollIndicator={false}
           />
-          <Box>
-            <Text>Kết quả tìm kiếm</Text>
-            <FlatList
-              data={ListStudents}
-              renderItem={({ item }) => <RenderStudentItem item={item} />}
-              contentContainerStyle={{ paddingHorizontal: 2 }}
-            />
-          </Box>
         </Box>
       </Box>
-
-      {/*  */}
-      {/* <Box>
-          <Button text="Xác nhận" />
-        </Box> */}
     </Box>
   );
 };
@@ -89,6 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     paddingHorizontal: 16,
+    backgroundColor: colors.white,
   },
 });
 
