@@ -9,6 +9,7 @@ import type {
 
 import { Box } from '@/components/common/Layout/Box';
 import { colors } from '@/theme/colors';
+import { FontSize } from '@/theme/fonts';
 import { Text } from '../Text/Text';
 import Spinner from './Spinner';
 import type { IconProps } from './buttonRenderUtils';
@@ -65,7 +66,7 @@ function Button({
 
   const baseStyle: Record<ButtonVariant, StyleProp<ViewStyle>> = {
     primary: {
-      backgroundColor: disabled ? colors.primary[20] : colors.primary[20],
+      backgroundColor: disabled ? '#B2BDBE' : colors.primary[20],
     },
     outlined: {
       backgroundColor: 'transparent',
@@ -123,6 +124,7 @@ function Button({
             >
               <Text
                 selectable={false}
+                fontSize={FontSize.LARGE}
                 fontWeight={variant === 'text' ? 'semibold' : 'bold'}
                 align={noIcon ? 'center' : 'left'}
                 color={textColor}
@@ -169,12 +171,12 @@ const Content: React.FC<ContentProps> = ({
   ...props
 }) => {
   const paddingY = React.useMemo(() => {
-    const borderWidth = variant === 'primary' ? 0 : 2;
+    const borderWidth = variant === 'primary' ? 0 : 1;
     const paddingSize = size;
     let paddingY = {
       default: 16 - borderWidth,
       medium: 15 - borderWidth,
-      small: 14 - borderWidth,
+      small: 11 - borderWidth,
     }[paddingSize];
 
     if (hasSubtext && !loading) {

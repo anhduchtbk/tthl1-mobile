@@ -4,7 +4,13 @@ import React, { useMemo } from 'react';
 import type { ColorValue, TextProps as RNTextProps } from 'react-native';
 import { Text as RNText } from 'react-native';
 
-export type FontWeight = 'regular' | 'medium' | 'semibold' | 'bold';
+export type FontWeight =
+  | 'regular'
+  | 'medium'
+  | 'semibold'
+  | 'bold'
+  | 'extrabold'
+  | 'black';
 
 export interface TextProps extends RNTextProps {
   fontSize?: number;
@@ -16,14 +22,22 @@ export interface TextProps extends RNTextProps {
 }
 
 export const getFontFamily = (
-  fontWeight: FontWeight = 'medium',
+  fontWeight: FontWeight = 'regular',
   italic = false
 ): string => {
   switch (fontWeight) {
     case 'regular':
       return fonts.Mulish.Regular;
+    case 'medium':
+      return fonts.Mulish.Medium;
+    case 'semibold':
+      return fonts.Mulish.SemiBold;
     case 'bold':
       return fonts.Mulish.Bold;
+    case 'extrabold':
+      return fonts.Mulish.ExtraBold;
+    case 'black':
+      return fonts.Mulish.Black;
     default:
       return fonts.Mulish.Regular;
   }

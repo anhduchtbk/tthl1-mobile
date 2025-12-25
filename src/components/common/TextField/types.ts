@@ -45,4 +45,5 @@ export interface TextFieldProps extends Omit<TextInputProps, 'onChange'> {
   toolTip?: React.ReactElement<unknown> | React.ComponentType<unknown> | null;
   onPressToolTip?: () => void;
   rightLabel?: React.ReactElement<unknown> | React.ComponentType<unknown>; 
+  isRequired?: boolean;
 }

@@ -20,7 +20,7 @@ export default function ScheduleScreen() {
         />
       </Box>
 
-      <Box px={16}>
+      <Box p={16}>
         <FilterButton />
       </Box>
       <FlatList

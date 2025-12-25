@@ -4,6 +4,7 @@ import UpwardArrowSvg from '@/assets/icons/UpwardArrowSvg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
+import { FontSize } from '@/theme/fonts';
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Dropdown as DropdownElement } from 'react-native-element-dropdown';
@@ -66,7 +67,7 @@ const DropdownComponent = ({
         style={[styles.dropdown, dropdownStyle]}
         placeholderStyle={styles.dropdownPlaceholder}
         selectedTextStyle={{
-          ...styles.dropdownPlaceholder,
+          fontSize: FontSize.LARGE,
           color: colors.text[3],
         }}
         inputSearchStyle={{
@@ -110,11 +111,10 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
   },
   dropdownPlaceholder: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.placeholder,
   },
   dropdownInputSearch: {
-    fontSize: 12,
     margin: 6,
     borderRadius: 2,
   },
@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
     margin: 6,
   },
   searchInput: {
-    fontSize: 12,
-    paddingVertical: 16,
+    fontSize: 14,
+    paddingVertical: 12,
   },
 });
 

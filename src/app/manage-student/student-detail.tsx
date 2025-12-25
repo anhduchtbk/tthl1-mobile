@@ -4,17 +4,39 @@ import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { BasicInformation } from '@/features/manage-student/student-detail/BasicInformation';
 import { RelativeInformation } from '@/features/manage-student/student-detail/RelativeInformation';
 import { StudentHeader } from '@/features/manage-student/student-detail/StudentHeader';
+import { UseGetStudentDetail } from '@/hooks/useStudent';
 import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSearchParams } from 'expo-router/build/hooks';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 export default function StudentDetailScreen() {
+  const insets = useSafeAreaInsets();
+  const searchParams = useSearchParams();
+  const studentDetail = JSON.parse(searchParams.get('studentDetail') || '');
+
+  const { data } = UseGetStudentDetail(studentDetail?.id);
+
   return (
-    <LinearGradient colors={['#CAD6FF', '#FFF7DB']} style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-        <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={1} />
+    <SafeAreaView>
+      <LinearGradient
+        colors={['#CAD6FF', '#FFF7DB']}
+        style={[styles.containerLinear, { height: insets.top + 110 }]}
+      >
+        <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={0} />
+      </LinearGradient>
+      <Box
+        flex={1}
+        mt={154}
+        bgColor={colors.white}
+        borderTopLeftRadius={30}
+        borderTopRightRadius={30}
+      >
         <Box
           flex={1}
           mt={44}
@@ -37,29 +59,38 @@ export default function StudentDetailScreen() {
               style={styles.imgAvatar}
             />
           </Box>
-          <OverflowScrollView
-            contentContainerStyle={{
-              paddingVertical: 50,
-              paddingHorizontal: 16,
-            }}
-            showsVerticalScrollIndicator={false}
-          >
-            <StudentHeader />
-            <BasicInformation />
-            <RelativeInformation />
-          </OverflowScrollView>
         </Box>
-      </SafeAreaView>
-    </LinearGradient>
+        <OverflowScrollView
+          contentContainerStyle={{
+            paddingTop: 50,
+            paddingHorizontal: 16,
+          }}
+          showsVerticalScrollIndicator={false}
+        >
+          <StudentHeader studentDetail={data || studentDetail} />
+          <BasicInformation studentDetail={data || studentDetail} />
+          <RelativeInformation
+            familyMembers={studentDetail?.familyMembers || []}
+          />
+          <Box h={100} />
+        </OverflowScrollView>
+      </Box>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  containerLinear: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   imgAvatar: {
-    width: 80,
-    height: 80,
-    borderWidth: 4,
-    borderRadius: 20,
-    borderColor: colors.white,
+    width: 85,
+    height: 85,
+    borderWidth: 3,
+    borderRadius: 85,
+    borderColor: '#F7F7F7',
   },
 });

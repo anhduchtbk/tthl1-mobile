@@ -3,15 +3,18 @@ import HomeColorSvg from '@/assets/icons/home-color-svg';
 import TimetableSvg from '@/assets/icons/timetable-svg';
 import UserSvg from '@/assets/icons/user-svg';
 import { Box } from '@/components/common/Layout/Box';
+import { Text } from '@/components/common/Text/Text';
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export function FunctionList() {
   const router = useRouter();
 
   return (
     <Box mt={16} mb={32} gap={16}>
-      <Text style={styles.txtTitle}>Chức năng</Text>
+      <Text fontSize={20} fontWeight="bold" color={'#333333'}>
+        Chức năng
+      </Text>
       <Box gap={16}>
         <View style={styles.containerFList}>
           <TouchableOpacity
@@ -20,7 +23,13 @@ export function FunctionList() {
             onPress={() => router.push('/(tabs)/manage-student')}
           >
             <UserSvg />
-            <Text style={styles.txtFunction}>Quản lý học viên</Text>
+            <Text
+              style={styles.txtFunction}
+              fontWeight="medium"
+              color={'#292929'}
+            >
+              Quản lý học viên
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -28,7 +37,13 @@ export function FunctionList() {
             onPress={() => router.push('/(tabs)/military-number')}
           >
             <BookSvg />
-            <Text style={styles.txtFunction}>Điểm danh quân số</Text>
+            <Text
+              style={styles.txtFunction}
+              fontWeight="medium"
+              color={'#292929'}
+            >
+              Điểm danh quân số
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.containerFList}>
@@ -38,7 +53,13 @@ export function FunctionList() {
             onPress={() => router.push('/home/manage-facility')}
           >
             <HomeColorSvg />
-            <Text style={styles.txtFunction}>Quản lý vật chất</Text>
+            <Text
+              style={styles.txtFunction}
+              fontWeight="medium"
+              color={'#292929'}
+            >
+              Quản lý vật chất
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -46,7 +67,13 @@ export function FunctionList() {
             onPress={() => router.push('/(tabs)/schedule')}
           >
             <TimetableSvg />
-            <Text style={styles.txtFunction}>Thời khoá biểu</Text>
+            <Text
+              style={styles.txtFunction}
+              fontWeight="medium"
+              color={'#292929'}
+            >
+              Thời khoá biểu
+            </Text>
           </TouchableOpacity>
         </View>
       </Box>
@@ -87,5 +114,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     fontWeight: 500,
+    color: '#292929',
   },
 });

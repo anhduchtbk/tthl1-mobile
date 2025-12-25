@@ -3,7 +3,8 @@ import UserSvg from '@/assets/icons/user-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
-import { StudentHeader } from '@/features/manage-student/student-detail/StudentHeader';
+import { SettingHeader } from '@/features/setting/SettingHeader';
+import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -11,16 +12,27 @@ import { Image, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function SettingScreen() {
-  const insets = useSafeAreaInsets();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const clearAuth = useAuthStore(state => state.clearAuth);
 
   const onPressChangePassword = () => {
-    // Handle change password action
     router.push('/setting/change-password');
   };
 
+  const onLogOut = () => {
+    clearAuth();
+    router.replace('/auth');
+  };
+
   return (
-    <LinearGradient colors={['#CAD6FF', '#FFF7DB']} style={{ flex: 1 }}>
+    <Box flex={1}>
+      <LinearGradient
+        colors={['#CAD6FF', '#FFF7DB']}
+        style={[styles.containerLinear, { height: insets.top + 110 }]}
+      >
+        <ScreenHeader title="THÔNG TIN CỦA TÔI" />
+      </LinearGradient>
       <ScreenHeader title="THÔNG TIN CỦA TÔI" />
       <Box
         flex={1}
@@ -45,29 +57,35 @@ export default function SettingScreen() {
             style={styles.imgAvatar}
           />
         </Box>
-        <StudentHeader />
+        <SettingHeader />
         <Box gap={20}>
           <Box style={styles.btAva} onPress={onPressChangePassword}>
             <UserSvg />
             <Text fontSize={14}>Đổi mật khẩu</Text>
           </Box>
 
-          <Box style={styles.btAva}>
+          <Box style={styles.btAva} onPress={onLogOut}>
             <HomeColorSvg />
             <Text fontSize={14}>Đăng xuất</Text>
           </Box>
         </Box>
       </Box>
-    </LinearGradient>
+    </Box>
   );
 }
 
 const styles = StyleSheet.create({
+  containerLinear: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   imgAvatar: {
     width: 80,
     height: 80,
     borderWidth: 4,
-    borderRadius: 20,
+    borderRadius: 40,
     borderColor: colors.white,
   },
   btAva: {

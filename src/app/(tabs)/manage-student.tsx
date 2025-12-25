@@ -3,10 +3,13 @@ import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
 import StudentFilterBottomSheet from '@/features/manage-student/manage/StudentFilterBottomSheet';
+import { useGetStudentList } from '@/hooks/useStudent';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+
+const LIMIT = 20;
 
 export default function ManageStudentScreen() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -23,6 +26,26 @@ export default function ManageStudentScreen() {
     category: '',
   });
   const router = useRouter();
+
+  const {
+    data,
+    isLoadingFirstPage: isLoading,
+    isRefetching,
+    refetch,
+    handleLoadMore,
+    isFetchingNextPage,
+    isEmpty,
+  } = useGetStudentList({
+    page: 1,
+    limit: LIMIT,
+  });
+
+  console.log('ManageStudentScreen', data);
+
+  const renderLoadingFooter = () =>
+    isFetchingNextPage ? (
+      <ActivityIndicator color={colors.primary[50]} />
+    ) : null;
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
@@ -48,10 +71,17 @@ export default function ManageStudentScreen() {
       </Box>
 
       <FlatList
-        data={ListStudents}
+        data={data || []}
         renderItem={({ item }) => <RenderStudentItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
+        ListFooterComponent={renderLoadingFooter()}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
+        onEndReachedThreshold={0.6}
+        onEndReached={handleLoadMore}
+        showsVerticalScrollIndicator={false}
       />
 
       <StudentFilterBottomSheet
@@ -68,27 +98,3 @@ export default function ManageStudentScreen() {
     </Box>
   );
 }
-
-const ListStudents = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    fullName: 'Nguyễn Văn A - TO1',
-    dob: '01/01/2000',
-    isPartyMember: true, // dang vien
-    division: 'A1B1C1',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    fullName: 'Nguyễn Thu A - TO1',
-    dob: '01/01/2000',
-    isPartyMember: true, // dang vien
-    division: 'A5B2C3',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    fullName: 'Nguyễn Văn B - TO1',
-    dob: '01/01/2001',
-    isPartyMember: false, // dang vien
-    division: 'A4B2C2',
-  },
-];
