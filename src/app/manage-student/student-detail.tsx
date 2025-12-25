@@ -23,23 +23,26 @@ export default function StudentDetailScreen() {
   const { data } = UseGetStudentDetail(studentDetail?.id);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      edges={['top']}
+    >
       <LinearGradient
         colors={['#CAD6FF', '#FFF7DB']}
-        style={[styles.containerLinear, { height: insets.top + 110 }]}
-      >
-        <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={1} />
-      </LinearGradient>
+        style={[styles.containerLinear, { height: insets.top + 140 }]}
+      />
+      <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={1} />
       <Box
         flex={1}
-        mt={insets.top + 44}
+        mt={44}
         bgColor={colors.white}
         borderTopLeftRadius={30}
         borderTopRightRadius={30}
+        px={16}
       >
         <Box
           pos="absolute"
-          top={-40}
+          top={-42}
           left={0}
           right={0}
           alignItems="center"
@@ -53,10 +56,7 @@ export default function StudentDetailScreen() {
           />
         </Box>
         <OverflowScrollView
-          contentContainerStyle={{
-            paddingTop: 50,
-            paddingHorizontal: 16,
-          }}
+          style={{ paddingTop: 50 }}
           showsVerticalScrollIndicator={false}
         >
           <StudentHeader studentDetail={data || studentDetail} />

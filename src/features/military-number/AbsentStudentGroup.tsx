@@ -1,3 +1,4 @@
+import InfoSvg from '@/assets/icons/info-svg';
 import Dropdown from '@/components/common/Dropdown/Dropdown';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
@@ -27,10 +28,19 @@ export function AbsentStudentGroup() {
       borderColor={colors.blue}
       borderRadius={16}
     >
-      <Box bgColor={colors.white} pos="absolute" left={8} top={-10}>
+      <Box
+        bgColor={colors.white}
+        pos="absolute"
+        left={8}
+        top={-10}
+        flexDirection="row"
+        alignItems="center"
+        gap={4}
+      >
         <Text fontWeight="bold" color={colors.blue}>
           Nhóm học viên 1
         </Text>
+        <InfoSvg />
       </Box>
       <Box p={8} gap={16}>
         <Dropdown

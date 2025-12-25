@@ -5,6 +5,7 @@ import Svg, { ClipPath, Defs, G, Path, SvgProps } from "react-native-svg";
 type ActiveSvgProps = SvgProps & {
   activeColor?: ColorValue;
 };
+
 function HomeSvg({activeColor, ...props}: ActiveSvgProps) {
   return (
     <Svg fill="none" {...props}>

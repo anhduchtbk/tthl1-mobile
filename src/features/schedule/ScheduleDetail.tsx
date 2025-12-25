@@ -58,17 +58,13 @@ export function ScheduleDetail({ week }: ScheduleDetailProps) {
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    borderRadius: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-  },
   timetable: {
+    flex: 1,
     backgroundColor: '#FFFFFF',
     padding: 20,
     borderRadius: 16,
+    marginBottom: 16,
+
     shadowColor: 'rgba(0, 0, 0, 0.12)',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
