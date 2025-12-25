@@ -11,7 +11,7 @@ export function InforAccount() {
 
   return (
     <Box gap={24}>
-      <Box flexDirection="row" marginLeft={16} marginY={6} gap={8}>
+      <Box flexDirection="row" mt={6} gap={8}>
         <Image
           source={require('../../assets/images/logo.png')}
           style={styles.logo}
@@ -21,12 +21,12 @@ export function InforAccount() {
           <Text
             numberOfLines={1}
             fontWeight="bold"
-            fontSize={13}
+            fontSize={18}
             color={colors.white}
           >
             {user?.name || ''}
           </Text>
-          <Text fontSize={13} numberOfLines={1} color={colors.white}>
+          <Text numberOfLines={1} color={colors.white}>
             {user?.description || ''}
           </Text>
         </Box>
@@ -40,10 +40,10 @@ export function InforAccount() {
             alignItems="center"
             bgColor={colors.red}
             position="absolute"
-            right={-1}
-            bottom={26}
-            w={15}
-            h={15}
+            right={-6}
+            top={-6}
+            w={18}
+            h={18}
           >
             <Text color={colors.white} fontSize={8}>
               1
@@ -51,43 +51,30 @@ export function InforAccount() {
           </Box>
         </Box>
       </Box>
-      <Box
-        flexDirection="row"
-        gap={4}
-        alignItems="center"
-        backgroundColor={'#FFF7DB'}
-        borderRadius={16}
-        py={5}
-        px={20}
-      >
+      <Box bgColor={'#FFF7DB'} borderRadius={16}>
         <Image
           source={require('@/assets/images/background-banner-home.png')}
           style={styles.imgBanner}
-          resizeMode="contain"
+          resizeMode="stretch"
         />
-        <Box
-          style={{
-            flex: 1,
-            gap: 16,
-            justifyContent: 'center',
-            marginVertical: 24,
-          }}
-        >
-          <Text fontWeight="bold" fontSize={FontSize.LARGE}>
-            Trung tâm Huấn luyện và Giáo dục nghề nghiệp số 1
-          </Text>
-          <Text
-            style={{ fontWeight: 900 }}
-            fontSize={FontSize.LARGE}
-            color={colors.red}
-          >
-            TIỂU ĐOÀN 2
-          </Text>
+        <Box p={24} pb={20} flexDirection="row" alignItems="center" gap={12}>
+          <Box flex={1} gap={12}>
+            <Text fontWeight="bold" fontSize={FontSize.LARGE}>
+              Trung tâm Huấn luyện và Giáo dục nghề nghiệp số 1
+            </Text>
+            <Text
+              fontWeight="black"
+              fontSize={FontSize.LARGE}
+              color={colors.red}
+            >
+              TIỂU ĐOÀN 2
+            </Text>
+          </Box>
+          <Image
+            source={require('@/assets/images/logo.png')}
+            style={styles.imgLogo}
+          />
         </Box>
-        <Image
-          source={require('@/assets/images/logo.png')}
-          style={styles.imgLogo}
-        />
       </Box>
     </Box>
   );
@@ -99,8 +86,11 @@ const styles = StyleSheet.create({
   },
   txtTitle: {},
   logo: {
-    width: 36,
-    height: 36,
+    width: 48,
+    height: 48,
+    borderWidth: 1,
+    borderColor: '#F7F7F7',
+    borderRadius: 48,
   },
   imgLogo: {
     width: 65,
@@ -108,6 +98,9 @@ const styles = StyleSheet.create({
   },
   imgBanner: {
     position: 'absolute',
-    left: 10,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    borderRadius: 16,
   },
 });

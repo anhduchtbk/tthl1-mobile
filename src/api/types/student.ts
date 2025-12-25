@@ -1,4 +1,4 @@
-import { PaginationResponse } from "@/types/api";
+import { PaginationResponse } from '@/types/api';
 
 interface Company {
   id: number;
@@ -8,7 +8,7 @@ interface Company {
   personnelCount: number;
 }
 
-interface FamilyMember {
+export interface FamilyMember {
   id: number;
   createdAt: string;
   updatedAt: string;
@@ -44,6 +44,8 @@ export interface Student {
   enrollmentDate: string;
   graduationDate: string;
   company: Company;
+  policy: string | null;
+  talent: string | null;
   familyMembers: FamilyMember[];
 }
 

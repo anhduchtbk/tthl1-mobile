@@ -31,10 +31,12 @@ export function RenderFacilityByUnitItem({ item }: RenderItemProps) {
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight='bold'>Tổng số: </Text>{item.totalAmount}
+          <Text fontWeight="bold">Tổng số: </Text>
+          {item.totalAmount}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight='bold'>Còn lại: </Text>{item.leftAmount}
+          <Text fontWeight="bold">Còn lại: </Text>
+          {item.leftAmount}
         </Text>
       </Box>
       <Box
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
     // iOS shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.15,
     shadowRadius: 4,
 
     // Android shadow

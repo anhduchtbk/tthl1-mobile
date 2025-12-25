@@ -1,7 +1,10 @@
 export const fonts = {
   Mulish: {
-    Regular: 'Lalezar-Regular',
-    Bold: 'Mulish-Bold'
+    Regular: 'Mulish-Regular',
+    Medium: 'Mulish-Medium',
+    SemiBold: 'Mulish-Semibold',
+    Bold: 'Mulish-Bold',
+    Black: 'Mulish-Black',
   },
 } as const;
 

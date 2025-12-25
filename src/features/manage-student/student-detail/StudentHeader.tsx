@@ -1,9 +1,11 @@
+import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatDate, formatUnitRank } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 
-export function StudentHeader() {
+export function StudentHeader({ studentDetail }: { studentDetail: Student }) {
   return (
     <Box>
       <Box alignItems="center" gap={8}>
@@ -12,10 +14,14 @@ export function StudentHeader() {
           fontWeight="bold"
           color={colors.text[3]}
         >
-          Nguyễn Thị A
+          {studentDetail?.fullName}
         </Text>
-        <Text fontSize={FontSize.SMALL} color={colors.text[1]}>
-          Học viện An ninh nhân dân - T01
+        <Text
+          fontSize={FontSize.SMALL}
+          fontWeight="bold"
+          color={colors.text[1]}
+        >
+          {studentDetail?.university}
         </Text>
       </Box>
       <Box
@@ -30,7 +36,8 @@ export function StudentHeader() {
       >
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            A1B1C1
+            A{studentDetail.squad}B{studentDetail.platoon}C
+            {studentDetail.company.name}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Đơn vị
@@ -38,7 +45,7 @@ export function StudentHeader() {
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            A Trưởng
+            {formatUnitRank(studentDetail.unitRank)}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Chức vụ
@@ -46,7 +53,7 @@ export function StudentHeader() {
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            01/01/2000
+            {formatDate(studentDetail.birthday)}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Ngày sinh

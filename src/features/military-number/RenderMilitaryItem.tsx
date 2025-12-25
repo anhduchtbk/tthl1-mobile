@@ -24,7 +24,7 @@ export function RenderMilitaryItem({ item }: RenderItemProps) {
     router.push('/military-number/military-history-report');
   };
 
-   const onReportNumber = () => {
+  const onReportNumber = () => {
     router.push('/military-number/report-number');
   };
 
@@ -36,10 +36,12 @@ export function RenderMilitaryItem({ item }: RenderItemProps) {
         </Text>
         <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
           <Text color={colors.text[1]} fontSize={11}>
-            <Text fontWeight='bold'>Học viên: </Text>{item.companyAmount}
+            <Text fontWeight="bold">Học viên: </Text>
+            {item.companyAmount}
           </Text>
           <Text color={colors.text[1]} fontSize={11}>
-            <Text fontWeight='bold'>Chỉ huy: </Text>{item.commanderAmount}
+            <Text fontWeight="bold">Chỉ huy: </Text>
+            {item.commanderAmount}
           </Text>
         </Box>
         <Box flex={1} flexDirection="row" alignItems="center" gap={6} mt={10}>
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     // iOS shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.15,
     shadowRadius: 4,
 
     // Android shadow

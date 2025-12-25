@@ -37,6 +37,8 @@ export default function ManageStudentScreen() {
     limit: LIMIT,
   });
 
+  console.log('ManageStudentScreen', data);
+
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator color={colors.primary[50]} />
@@ -48,7 +50,12 @@ export default function ManageStudentScreen() {
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box bgColor={colors.white} mb={4}>
+      <Box
+        bgColor={colors.white}
+        borderBottomWidth={1}
+        borderColor={'#F5F5F5'}
+        mb={4}
+      >
         <ScreenHeader title="QUẢN LÝ HỌC VIÊN" isSearch />
       </Box>
       <Box p={16}>
