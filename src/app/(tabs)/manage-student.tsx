@@ -1,7 +1,9 @@
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
+import { RenderStudentItemSkeleton } from '@/features/manage-student/manage/RenderStudentItemSkeleton';
 import StudentFilterBottomSheet from '@/features/manage-student/manage/StudentFilterBottomSheet';
 import { useGetStudentList } from '@/hooks/useStudent';
 import { colors } from '@/theme/colors';
@@ -69,20 +71,26 @@ export default function ManageStudentScreen() {
       <Box p={16}>
         <FilterButton onOpenFilter={handleOpenModal} />
       </Box>
-
-      <FlatList
-        data={data || []}
-        renderItem={({ item }) => <RenderStudentItem item={item} />}
-        keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-        ListFooterComponent={renderLoadingFooter()}
-        refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-        }
-        onEndReachedThreshold={0.6}
-        onEndReached={handleLoadMore}
-        showsVerticalScrollIndicator={false}
-      />
+      {isLoading ? (
+        [1, 2, 3, 4].map((_, index) => {
+          return <RenderStudentItemSkeleton key={index} />;
+        })
+      ) : (
+        <FlatList
+          data={data || []}
+          renderItem={({ item }) => <RenderStudentItem item={item} />}
+          keyExtractor={(_, index) => index.toString()}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          refreshControl={
+            <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+          }
+          onEndReachedThreshold={0.6}
+          onEndReached={handleLoadMore}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={<EmptyScreen text="Chưa có học viên" />}
+          ListFooterComponent={renderLoadingFooter()}
+        />
+      )}
 
       <StudentFilterBottomSheet
         isOpen={isOpenModal}
