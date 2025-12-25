@@ -37,7 +37,7 @@ export function StudentHeader({ studentDetail }: { studentDetail: Student }) {
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
             A{studentDetail.squad}B{studentDetail.platoon}C
-            {studentDetail.company.name}
+            {studentDetail.company?.name}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Đơn vị
