@@ -40,8 +40,6 @@ export default function ManageStudentScreen() {
     limit: LIMIT,
   });
 
-  console.log('ManageStudentScreen', data);
-
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator color={colors.primary[50]} />
