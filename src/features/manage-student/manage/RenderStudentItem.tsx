@@ -65,10 +65,6 @@ export function RenderStudentItem({ item }: RenderItemProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   card: {
     flex: 1,
     backgroundColor: '#fff',
