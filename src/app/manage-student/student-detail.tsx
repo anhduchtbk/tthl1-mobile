@@ -10,7 +10,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSearchParams } from 'expo-router/build/hooks';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 export default function StudentDetailScreen() {
   const insets = useSafeAreaInsets();
@@ -20,16 +23,16 @@ export default function StudentDetailScreen() {
   const { data } = UseGetStudentDetail(studentDetail?.id);
 
   return (
-    <Box flex={1}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
       <LinearGradient
         colors={['#CAD6FF', '#FFF7DB']}
         style={[styles.containerLinear, { height: insets.top + 110 }]}
       >
-        <ScreenHeader title="CHI TIẾT HỌC VIÊN" />
+        <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={1} />
       </LinearGradient>
       <Box
         flex={1}
-        mt={154}
+        mt={insets.top + 44}
         bgColor={colors.white}
         borderTopLeftRadius={30}
         borderTopRightRadius={30}
@@ -64,7 +67,7 @@ export default function StudentDetailScreen() {
           <Box h={100} />
         </OverflowScrollView>
       </Box>
-    </Box>
+    </SafeAreaView>
   );
 }
 

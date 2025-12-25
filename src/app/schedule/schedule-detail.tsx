@@ -3,6 +3,7 @@ import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
+import { colors } from '@/theme/colors';
 import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 
@@ -16,12 +17,12 @@ export default function ScheduleDetailScreen() {
   };
 
   return (
-    <Box>
+    <Box bgColor={colors.white}>
+      <ScreenHeader
+        title="THỜI KHOÁ BIỂU"
+        RightComponent={<RightComponent />}
+      />
       <ScrollView>
-        <ScreenHeader
-          title="THỜI KHOÁ BIỂU"
-          RightComponent={<RightComponent />}
-        />
         <Box px={16} gap={16}>
           <FilterButton />
           <ScheduleDetail />

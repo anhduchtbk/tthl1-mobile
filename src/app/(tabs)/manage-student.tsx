@@ -5,6 +5,7 @@ import { RenderStudentItem } from '@/features/manage-student/manage/RenderStuden
 import StudentFilterBottomSheet from '@/features/manage-student/manage/StudentFilterBottomSheet';
 import { useGetStudentList } from '@/hooks/useStudent';
 import { colors } from '@/theme/colors';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
@@ -12,6 +13,7 @@ const LIMIT = 20;
 
 export default function ManageStudentScreen() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenSearch, setOpenSearch] = useState(false);
   const [filters, setFilters] = useState<{
     countries?: string[];
     years?: string[];
@@ -23,6 +25,7 @@ export default function ManageStudentScreen() {
     sortType: 'rating',
     category: '',
   });
+  const router = useRouter();
 
   const {
     data,
@@ -48,19 +51,25 @@ export default function ManageStudentScreen() {
     setIsOpenModal(true);
   };
 
+  const handleOpenSearch = () => {
+    // setOpenSearch(true);
+    router.push('/modal/student-search');
+  };
+
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box
-        bgColor={colors.white}
-        borderBottomWidth={1}
-        borderColor={'#F5F5F5'}
-        mb={4}
-      >
-        <ScreenHeader title="QUẢN LÝ HỌC VIÊN" isSearch />
+      <Box bgColor={colors.white} mb={4}>
+        <ScreenHeader
+          title="QUẢN LÝ HỌC VIÊN"
+          isSearch
+          onPressSearch={handleOpenSearch}
+        />
       </Box>
+
       <Box p={16}>
         <FilterButton onOpenFilter={handleOpenModal} />
       </Box>
+
       <FlatList
         data={data || []}
         renderItem={({ item }) => <RenderStudentItem item={item} />}
@@ -81,6 +90,11 @@ export default function ManageStudentScreen() {
         onSelect={handleOpenModal}
         selectedYears={filters.years}
       />
+      {/* <StudentSearchModal
+        isOpen={isOpenSearch}
+        onClose={() => setOpenSearch(false)}
+        onSelect={handleOpenSearch}
+      /> */}
     </Box>
   );
 }
