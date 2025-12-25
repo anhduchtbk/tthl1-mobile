@@ -13,7 +13,7 @@ import {
 } from 'react-native-reanimated';
 
 import useLatest from '@/hooks/useLatest';
-import { useTheme } from '@react-navigation/native';
+import { colors } from '@/theme/colors';
 import type { ButtonVariant } from './types';
 
 const iOSShadowOutputRange = {
@@ -35,7 +35,6 @@ const useButtonBehavior = ({
   variant?: ButtonVariant;
   onPressAction?: (event: GestureResponderEvent) => void;
 }) => {
-  const { colors } = useTheme();
   const maxElevationLevel = 4;
   const minElevationLevel = 0;
   const animationConfig = {
@@ -60,24 +59,24 @@ const useButtonBehavior = ({
   const variantColor = ['primary', 'secondary', 'tertiary'].includes(variant)
     ? colors.white
     : variant === 'outlined'
-      ? colors.primary
-      : colors.text;
+    ? colors.blue
+    : colors.text[3];
   const [textColor, setTextColor] = useState(
-    disabled ? colors.grey : variantColor
+    disabled ? colors.grey[60] : variantColor
   );
   useEffect(() => {
     cancelAnimation(progress);
     progress.value = withTiming(disabled ? -1 : 0, animationConfig);
-    setTextColor(disabled ? colors.grey : variantColor);
-  }, [colors.grey, variantColor, disabled, progress]);
+    setTextColor(disabled ? colors.grey[60] : variantColor);
+  }, [colors.grey[60], variantColor, disabled, progress]);
 
   const latestDisabled = useLatest(disabled);
   const runDisabledAnimation = useCallback(() => {
     if (latestDisabled.current) {
       progress.value = withTiming(-1, animationConfig);
-      setTextColor(colors.grey);
+      setTextColor(colors.grey[60]);
     }
-  }, [animationConfig, colors.grey]);
+  }, [animationConfig, colors.grey[60]]);
 
   // actions
   const onPress = (event: GestureResponderEvent) => {
@@ -115,12 +114,12 @@ const useButtonBehavior = ({
         backgroundColor: interpolateColor(
           progress.value,
           [-1, 0, 1],
-          [colors.grey, colors.background, colors.white]
+          [colors.grey[60], colors.neutral.background, colors.white]
         ),
         borderColor: interpolateColor(
           progress.value,
           [-1, 0, 1],
-          [colors.grey, colors.border, colors.grey]
+          [colors.grey[60], colors.text[3][1], colors.grey[60]]
         ),
       };
     }
@@ -148,19 +147,19 @@ const useButtonBehavior = ({
       backgroundColor: interpolateColor(
         progress.value,
         [-1, 0, 1],
-        [colors.grey, colors.background, colors.grey]
+        [colors.grey[60], colors.neutral.background, colors.grey[60]]
       ),
       borderColor: interpolateColor(
         progress.value,
         [-1, 0, 1],
-        [colors.grey, colors.border, colors.grey]
+        [colors.grey[60], colors.text[3][1], colors.grey[60]]
       ),
     };
   }, [
-    colors.background,
-    colors.grey,
+    colors.neutral.background,
+    colors.grey[60],
     colors.white,
-    colors.border,
+    colors.text[3][1],
     elevation.value,
     progress.value,
   ]);

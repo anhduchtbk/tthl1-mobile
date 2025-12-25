@@ -4,6 +4,7 @@ import { Box } from '@/components/common/Layout/Box';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { AbsentStudentGroup } from '@/features/military-number/AbsentStudentGroup';
 import { colors } from '@/theme/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef } from 'react';
@@ -18,20 +19,20 @@ const data = [
 ];
 
 type FormData = {
-  reason: string;
+  purpose: string;
   companyNumber: number;
   absentNumber: number;
 };
 
 const reportNumberSchema = z.object({
-  reason: z.string(),
+  purpose: z.string(),
   companyNumber: z.number(),
   absentNumber: z.number(),
 });
 
 const ReportNumberScreen = () => {
   const refs = {
-    reason: useRef<TextInput>(null),
+    purpose: useRef<TextInput>(null),
     companyNumber: useRef<TextInput>(null),
     absentNumber: useRef<TextInput>(null),
   };
@@ -43,7 +44,7 @@ const ReportNumberScreen = () => {
   } = useForm<FormData>({
     resolver: zodResolver(reportNumberSchema),
     defaultValues: {
-      reason: '',
+      purpose: '',
       companyNumber: 0,
       absentNumber: 0,
     },
@@ -56,7 +57,7 @@ const ReportNumberScreen = () => {
         <Dropdown
           data={data}
           control={control}
-          name="reason"
+          name="purpose"
           label={'Quân số'}
           isRequired
           placeholder={'Điểm danh'}
@@ -86,7 +87,8 @@ const ReportNumberScreen = () => {
           labelColor={colors.text[2]}
           error={errors?.absentNumber?.message}
         />
-        <Button text="Xác nhận" rounded />
+        <AbsentStudentGroup />
+        <Button text="Xác nhận" />
       </Box>
     </Box>
   );

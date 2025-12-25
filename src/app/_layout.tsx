@@ -46,6 +46,10 @@ export default function RootLayout() {
         fontFamily="Mulish-Bold"
       />
       <AsyncFont
+        src={require('../assets/fonts/Mulish-ExtraBold.ttf')}
+        fontFamily="Mulish-ExtraBold"
+      />
+      <AsyncFont
         src={require('../assets/fonts/Mulish-Black.ttf')}
         fontFamily="Mulish-Black"
       />

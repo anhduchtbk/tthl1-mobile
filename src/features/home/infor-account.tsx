@@ -4,10 +4,16 @@ import { Text } from '@/components/common/Text/Text';
 import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
-import { Image, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export function InforAccount() {
   const { user } = useAuthStore();
+  const router = useRouter();
+
+  const onOpenNotification = () => {
+    router.push('/home/notification');
+  };
 
   return (
     <Box gap={24}>
@@ -30,7 +36,7 @@ export function InforAccount() {
             {user?.description || ''}
           </Text>
         </Box>
-        <Box>
+        <TouchableOpacity activeOpacity={0.7} onPress={onOpenNotification}>
           <NotificationSvg />
           <Box
             borderRadius={100}
@@ -49,7 +55,7 @@ export function InforAccount() {
               1
             </Text>
           </Box>
-        </Box>
+        </TouchableOpacity>
       </Box>
       <Box bgColor={'#FFF7DB'} borderRadius={16}>
         <Image

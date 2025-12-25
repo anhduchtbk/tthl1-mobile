@@ -66,7 +66,7 @@ function Button({
 
   const baseStyle: Record<ButtonVariant, StyleProp<ViewStyle>> = {
     primary: {
-      backgroundColor: disabled ? colors.primary[20] : colors.primary[20],
+      backgroundColor: disabled ? '#B2BDBE' : colors.primary[20],
     },
     outlined: {
       backgroundColor: 'transparent',
@@ -171,12 +171,12 @@ const Content: React.FC<ContentProps> = ({
   ...props
 }) => {
   const paddingY = React.useMemo(() => {
-    const borderWidth = variant === 'primary' ? 0 : 2;
+    const borderWidth = variant === 'primary' ? 0 : 1;
     const paddingSize = size;
     let paddingY = {
       default: 16 - borderWidth,
       medium: 15 - borderWidth,
-      small: 14 - borderWidth,
+      small: 11 - borderWidth,
     }[paddingSize];
 
     if (hasSubtext && !loading) {

@@ -73,3 +73,7 @@ export const formatPhoneNumber = (phoneNumber: string) => {
   }
   return normalized; // Trả về nếu không khớp
 };
+
+export const formatNotificationAmount = (amount: number) => {
+  return amount > 9 ? '9+' : amount;
+};

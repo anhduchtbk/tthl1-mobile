@@ -1,15 +1,12 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { RenderRequestItem } from '@/features/home/notification/RenderRequestItem';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
-import React, { PropsWithChildren, useState } from 'react';
-import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    useWindowDimensions,
-} from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView } from 'react-native';
 
 const basic = [
   {
@@ -17,46 +14,57 @@ const basic = [
     infos: [
       {
         title: 'Người yêu cầu',
+        type: 'requester',
         value: 'Đại đội trưởng: Đại uý Nguyễn Văn A',
       },
       {
         title: 'SĐT',
+        type: 'phoneNumber',
         value: '032 808 1300',
       },
       {
         title: 'Tên vật chất',
+        type: 'facilityFullname',
         value: 'Súng tiểu liên AK-47',
       },
       {
         title: 'Lần mượn',
+        type: 'requestTime',
         value: '01',
       },
       {
         title: 'Nơi mượn',
+        type: 'requestAddress',
         value: 'Tiểu đoàn 2',
       },
       {
         title: 'Số lượng',
+        type: 'quantity',
         value: 100,
       },
       {
         title: 'Lý do',
+        type: 'reason',
         value: 'C2 VB2 đăng ký mượn vật chất tiểu đoàn phục vụ môn bắn súng',
       },
       {
         title: 'Thời gian tạo yêu cầu',
+        type: 'createdAt',
         value: '19:00:00, 01/01/2025',
       },
       {
         title: 'Trạng thái',
+        type: 'status',
         value: 0,
       },
       {
         title: 'Thời gian phê duyệt',
+        type: 'approvalTime',
         value: '20:00:00, 01/01/2025',
       },
       {
         title: 'Người phê duyệt',
+        type: 'approver',
         value: 'Tiểu đoàn trưởng: Trung tá Nguyễn Văn A',
       },
     ],
@@ -66,46 +74,57 @@ const basic = [
     infos: [
       {
         title: 'Người yêu cầu',
+        type: 'requester',
         value: 'Đại đội trưởng: Đại uý Nguyễn Văn A',
       },
       {
         title: 'SĐT',
+        type: 'phoneNumber',
         value: '032 808 1300',
       },
       {
         title: 'Tên vật chất',
+        type: 'facilityFullname',
         value: 'Súng tiểu liên AK-47',
       },
       {
         title: 'Lần mượn',
+        type: 'requestTime',
         value: '01',
       },
       {
         title: 'Nơi mượn',
+        type: 'requestAddress',
         value: 'Tiểu đoàn 2',
       },
       {
         title: 'Số lượng',
+        type: 'quantity',
         value: 100,
       },
       {
         title: 'Lý do',
+        type: 'reason',
         value: 'C2 VB2 đăng ký mượn vật chất tiểu đoàn phục vụ môn bắn súng',
       },
       {
         title: 'Thời gian tạo yêu cầu',
+        type: 'createdAt',
         value: '19:00:00, 01/01/2025',
       },
       {
         title: 'Trạng thái',
-        value: 1,
+        type: 'status',
+        value: 0,
       },
       {
         title: 'Thời gian phê duyệt',
+        type: 'approvalTime',
         value: '20:00:00, 01/01/2025',
       },
       {
         title: 'Người phê duyệt',
+        type: 'approver',
         value: 'Tiểu đoàn trưởng: Trung tá Nguyễn Văn A',
       },
     ],
@@ -153,159 +172,46 @@ export default function HistoryRequestScreen() {
           </Box>
         </Box>
         {typeIndex === 1 ? (
-          <RenderTimeItem
-            item={basic[tabIndex]}
-            tabIndex={tabIndex}
-            setTabIndex={setTabIndex}
-          />
+          <>
+            <Box py={8}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {basic.map((item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      w={80}
+                      h={36}
+                      justifyContent="center"
+                      alignItems="center"
+                      borderWidth={1}
+                      borderColor={
+                        tabIndex === index ? colors.primary[20] : colors.white
+                      }
+                      borderRadius={16}
+                      onPress={() => setTabIndex(index)}
+                    >
+                      <Text
+                        color={
+                          tabIndex === index ? colors.primary[20] : '#515151'
+                        }
+                      >
+                        Lần {item.timeIndex}
+                      </Text>
+                    </Box>
+                  );
+                })}
+              </ScrollView>
+            </Box>
+            <RenderRequestItem rowItem={basic[tabIndex]} />
+          </>
         ) : (
-          <RenderEmpty typeIndex={typeIndex} />
+          <EmptyScreen
+            text={`Đại đội 2 - VB2 không có\nlịch sử yêu cầu ${
+              typeIndex === 1 ? 'mượn' : 'trả'
+            } vật chất`}
+          />
         )}
       </Box>
     </Box>
   );
 }
-
-interface RowItem {
-  title: string;
-  value: string | number;
-}
-
-type RowItemProps = PropsWithChildren<{
-  item: {
-    timeIndex: number;
-    infos: RowItem[];
-  };
-  tabIndex: number;
-  setTabIndex: (index: number) => void;
-}>;
-
-const RenderTimeItem = ({ item, tabIndex, setTabIndex }: RowItemProps) => {
-  return (
-    <>
-      <Box py={8}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {basic.map((item, index) => {
-            return (
-              <Box
-                key={index}
-                w={80}
-                h={36}
-                justifyContent="center"
-                alignItems="center"
-                borderWidth={1}
-                borderColor={
-                  tabIndex === index ? colors.primary[20] : colors.white
-                }
-                borderRadius={16}
-                onPress={() => setTabIndex(index)}
-              >
-                <Text
-                  color={tabIndex === index ? colors.primary[20] : '#515151'}
-                >
-                  Lần {item.timeIndex}
-                </Text>
-              </Box>
-            );
-          })}
-        </ScrollView>
-      </Box>
-      <Box style={styles.containerItem}>
-        {item.infos.map((item, index) => {
-          return (
-            <Box
-              key={index}
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="space-between"
-              gap={16}
-            >
-              <Text fontWeight="bold" color={colors.text[3]}>
-                {item.title}:
-              </Text>
-              {index === 9 ? (
-                <Box
-                  w={60}
-                  h={22}
-                  justifyContent="center"
-                  alignItems="center"
-                  borderWidth={item.value === 0 ? 1 : 0}
-                  borderColor={colors.primary[20]}
-                  borderRadius={16}
-                  bgColor={
-                    item.value === 0
-                      ? colors.white
-                      : item.value === 1
-                      ? '#27C840'
-                      : '#FF5F57'
-                  }
-                >
-                  <Text
-                    fontSize={FontSize.SMALL}
-                    color={item.value === 0 ? colors.blue : colors.white}
-                  >
-                    {item.value === 2 ? 'Từ chối' : 'Đồng ý'}
-                  </Text>
-                </Box>
-              ) : (
-                <Box
-                  flex={1}
-                  flexDirection="row"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                  gap={16}
-                >
-                  <Text
-                    fontSize={14}
-                    color={colors.text[3]}
-                    align="right"
-                    fontWeight={index === 2 || index === 5 ? 'bold' : 'regular'}
-                  >
-                    {item.value}
-                  </Text>
-                </Box>
-              )}
-            </Box>
-          );
-        })}
-      </Box>
-    </>
-  );
-};
-
-const RenderEmpty = ({ typeIndex }: { typeIndex: number }) => {
-  const { width } = useWindowDimensions();
-
-  return (
-    <Box mt={50} gap={20} alignItems="center">
-      <Image
-        source={require('@/assets/images/empty-request.png')}
-        style={{ width: width * 0.67, height: width * 0.67 }}
-        resizeMode="contain"
-      />
-      <Text fontSize={FontSize.LARGE} color={'#222222'}>
-        Đại đội 2 - VB2 không có{'\n'}lịch sử yêu cầu{' '}
-        {typeIndex === 1 ? 'mượn' : 'trả'} vật chất
-      </Text>
-    </Box>
-  );
-};
-
-const styles = StyleSheet.create({
-  containerItem: {
-    backgroundColor: colors.white,
-    padding: 12,
-    borderRadius: 16,
-    gap: 7,
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-
-    elevation: 4,
-  },
-});

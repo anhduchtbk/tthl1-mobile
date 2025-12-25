@@ -13,14 +13,16 @@ type Props = {
   RightComponent?: ReactElement;
   onBackPress?: () => void;
   isSearch?: boolean;
+  subTitleBold?: boolean;
 };
 
 export function ScreenHeader({
   title,
+  subTitle,
   RightComponent,
   onBackPress,
-  subTitle,
   isSearch,
+  subTitleBold,
 }: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -39,10 +41,17 @@ export function ScreenHeader({
       </Box>
 
       <Box position="absolute" left={0} right={0} alignItems="center">
-        <Text fontWeight="bold" fontSize={18}>
+        <Text fontWeight="extrabold" fontSize={18}>
           {title}
         </Text>
-        {subTitle && <Text fontSize={18}>{subTitle}</Text>}
+        {subTitle && (
+          <Text
+            fontSize={18}
+            fontWeight={subTitleBold ? 'extrabold' : 'regular'}
+          >
+            {subTitle}
+          </Text>
+        )}
       </Box>
 
       {isSearch ? (

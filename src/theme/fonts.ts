@@ -4,6 +4,7 @@ export const fonts = {
     Medium: 'Mulish-Medium',
     SemiBold: 'Mulish-Semibold',
     Bold: 'Mulish-Bold',
+    ExtraBold: 'Mulish-ExtraBold',
     Black: 'Mulish-Black',
   },
 } as const;
