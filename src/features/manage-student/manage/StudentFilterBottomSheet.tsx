@@ -127,7 +127,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
       enableDynamicSizing={false}
     >
       <Box style={styles.container} pb={insets.bottom}>
-        <Box>
+        <Box gap={8}>
           <Box
             flexDirection="row"
             alignItems="center"
@@ -148,7 +148,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
             </Text>
             <Box w={80} />
           </Box>
-          <Box>
+          <Box gap={8}>
             <Box>
               <Text fontSize={14} fontWeight="bold">
                 Hệ đào tạo
@@ -175,7 +175,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
             </Box>
           </Box>
 
-          <Box>
+          <Box gap={8}>
             <Box>
               <Text fontSize={14} fontWeight="bold">
                 Đại đội
@@ -202,7 +202,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
             </Box>
           </Box>
 
-          <Box>
+          <Box gap={8}>
             <Box>
               <Text fontSize={14} fontWeight="bold">
                 Đảng viên
@@ -229,7 +229,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
             </Box>
           </Box>
 
-          <Box>
+          <Box gap={8}>
             <Box>
               <Text fontSize={14} fontWeight="bold">
                 Chính sách
@@ -256,7 +256,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
             </Box>
           </Box>
 
-          <Box>
+          {/* <Box>
             <Box>
               <Text fontSize={14} fontWeight="bold">
                 Năng khiếu
@@ -281,7 +281,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
                 );
               })}
             </Box>
-          </Box>
+          </Box> */}
         </Box>
 
         {/*  */}
