@@ -25,11 +25,11 @@ export function RenderStudentItem({ item }: RenderItemProps) {
   return (
     <Box style={styles.card}>
       <Text color={colors.text[3]} fontWeight="bold">
-        {item.fullName} - {item.university}
+        {item?.fullName} - {item.university}
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          Đơn vị: A{item.squad}B{item.platoon}C{item.company.name}
+          Đơn vị: A{item.squad}B{item.platoon}C{item.company?.name}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
           Ngày sinh: {formatDate(item.birthday)}

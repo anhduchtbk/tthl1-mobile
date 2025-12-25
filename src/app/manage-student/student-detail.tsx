@@ -23,42 +23,34 @@ export default function StudentDetailScreen() {
   const { data } = UseGetStudentDetail(studentDetail?.id);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
       <LinearGradient
         colors={['#CAD6FF', '#FFF7DB']}
         style={[styles.containerLinear, { height: insets.top + 110 }]}
       >
-        <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={0} />
+        <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={1} />
       </LinearGradient>
       <Box
         flex={1}
-        mt={154}
+        mt={insets.top + 44}
         bgColor={colors.white}
         borderTopLeftRadius={30}
         borderTopRightRadius={30}
       >
         <Box
-          flex={1}
-          mt={44}
-          bgColor={colors.white}
-          borderTopLeftRadius={30}
-          borderTopRightRadius={30}
+          pos="absolute"
+          top={-40}
+          left={0}
+          right={0}
+          alignItems="center"
+          zIndex={999}
         >
-          <Box
-            pos="absolute"
-            top={-40}
-            left={0}
-            right={0}
-            alignItems="center"
-            zIndex={999}
-          >
-            <Image
-              source={{
-                uri: 'https://images2.thanhnien.vn/zoom/686_429/528068263637045248/2025/3/24/chi-pu-r4-1742803995521521142964-0-0-568-908-crop-1742804234653431348943.jpg',
-              }}
-              style={styles.imgAvatar}
-            />
-          </Box>
+          <Image
+            source={{
+              uri: 'https://images2.thanhnien.vn/zoom/686_429/528068263637045248/2025/3/24/chi-pu-r4-1742803995521521142964-0-0-568-908-crop-1742804234653431348943.jpg',
+            }}
+            style={styles.imgAvatar}
+          />
         </Box>
         <OverflowScrollView
           contentContainerStyle={{
