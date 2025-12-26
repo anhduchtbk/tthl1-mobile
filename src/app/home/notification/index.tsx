@@ -67,6 +67,7 @@ export default function NotificationScreen() {
           renderItem={({ item }) => <RenderCompanyItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
         />
       ) : (
         <FlatList
@@ -74,6 +75,7 @@ export default function NotificationScreen() {
           renderItem={({ item }) => <RenderNotificationItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
         />
       )}
       <Box h={100} />

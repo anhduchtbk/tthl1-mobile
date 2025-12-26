@@ -14,10 +14,7 @@ export default function ManageFacilityScreen() {
         borderColor={'#F5F5F5'}
         mb={4}
       >
-        <ScreenHeader
-          title="QUẢN LÝ VẬT CHẤT"
-          isSearch
-        />
+        <ScreenHeader title="QUẢN LÝ VẬT CHẤT" isSearch />
       </Box>
       <Box p={16}>
         <FilterButton />
@@ -27,6 +24,7 @@ export default function ManageFacilityScreen() {
         renderItem={({ item }) => <RenderFacilityItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
+        showsVerticalScrollIndicator={false}
       />
     </Box>
   );

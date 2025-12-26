@@ -6,7 +6,7 @@ import { Animated, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Box } from '../Layout/Box';
 
 type ButtonRadioCheckProps = {
-  label: string;
+  label: string | number;
   onPress?: () => void;
   active?: boolean;
 };

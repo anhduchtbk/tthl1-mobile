@@ -1,46 +1,30 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
+import { RenderStudentItemSkeleton } from '@/features/manage-student/manage/RenderStudentItemSkeleton';
 import { useGetStudentList } from '@/hooks/useStudent';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import {
   ActivityIndicator,
   FlatList,
-  StyleSheet,
+  RefreshControl,
   TouchableOpacity,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
-export interface StudentSearchModalProps {
+export interface StudentSearchProps {
   onSelect: () => void;
 }
 
-type FormData = {
-  search?: string;
-};
-
-const StudentSearch: React.FC<StudentSearchModalProps> = ({ onSelect }) => {
-  const insets = useSafeAreaInsets();
+const StudentSearch: React.FC<StudentSearchProps> = () => {
   const router = useRouter();
 
-  const [dataInput, setDataInput] = useState<string>();
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormData>({
-    defaultValues: {
-      search: '',
-    },
-  });
+  const [keyword, setKeyword] = useState<string>();
 
   const onClose = () => {
     router.back();
@@ -53,11 +37,12 @@ const StudentSearch: React.FC<StudentSearchModalProps> = ({ onSelect }) => {
     refetch,
     handleLoadMore,
     isFetchingNextPage,
+    totalCount,
     isEmpty,
   } = useGetStudentList({
     page: 1,
     limit: LIMIT,
-    search: dataInput,
+    search: keyword,
   });
 
   const renderLoadingFooter = () =>
@@ -66,17 +51,17 @@ const StudentSearch: React.FC<StudentSearchModalProps> = ({ onSelect }) => {
     ) : null;
 
   const handleOnChangeSearch = (value: string) => {
-    setDataInput(value);
+    setKeyword(value);
   };
 
   return (
-    <Box bgColor={colors.white} flex={1} px={16} justifyContent="space-between">
+    <Box bgColor={colors.white} flex={1} justifyContent="space-between">
       <Box
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
-        mb={16}
-        mt={16}
+        my={16}
+        px={16}
       >
         <TouchableOpacity
           activeOpacity={0.7}
@@ -92,66 +77,40 @@ const StudentSearch: React.FC<StudentSearchModalProps> = ({ onSelect }) => {
         </Text>
         <Box w={80} />
       </Box>
-      <Box gap={12}>
-        <Input
-          as={TextField}
-          name="search"
+      <Box gap={12} px={16} mb={4}>
+        <TextField
           label={'Tìm kiếm'}
-          control={control}
           placeholder="Nhập thông tin tìm kiếm"
           onChange={value => {
             handleOnChangeSearch(value);
           }}
         />
-        <Box gap={8}>
-          <Text>Kết quả tìm kiếm</Text>
+        <Text>Kết quả tìm kiếm ({totalCount})</Text>
+      </Box>
+      <Box flex={1}>
+        {isLoading ? (
+          [1, 2, 3, 4].map((_, index) => {
+            return <RenderStudentItemSkeleton key={index} />;
+          })
+        ) : (
           <FlatList
             data={data || []}
-            keyExtractor={(_, index) => index.toString()}
             renderItem={({ item }) => <RenderStudentItem item={item} />}
-            contentContainerStyle={{ paddingHorizontal: 2 }}
-            ListFooterComponent={renderLoadingFooter}
+            keyExtractor={(_, index) => index.toString()}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
             onEndReachedThreshold={0.6}
             onEndReached={handleLoadMore}
             showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<EmptyScreen />}
+            ListFooterComponent={renderLoadingFooter()}
+            refreshControl={
+              <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+            }
           />
-        </Box>
+        )}
       </Box>
     </Box>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    backgroundColor: colors.white,
-  },
-});
-
-const ListStudents = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    fullName: 'Nguyễn Văn A - TO1',
-    dob: '01/01/2000',
-    isPartyMember: true, // dang vien
-    division: 'A1B1C1',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    fullName: 'Nguyễn Thu A - TO1',
-    dob: '01/01/2000',
-    isPartyMember: true, // dang vien
-    division: 'A5B2C3',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    fullName: 'Nguyễn Văn B - TO1',
-    dob: '01/01/2001',
-    isPartyMember: false, // dang vien
-    division: 'A4B2C2',
-  },
-];
 
 export default StudentSearch;

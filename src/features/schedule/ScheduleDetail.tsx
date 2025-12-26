@@ -1,93 +1,103 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { SCHEDULE_TYPE } from '@/constants/value';
 import { colors } from '@/theme/colors';
+import { useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { DayElementScrollView } from './DayElement';
-import { Schedule } from './Schedule';
+import { ScheduleItem } from './ScheduleItem';
 
 type ScheduleDetailProps = {
   week?: number;
+  isHome?: boolean;
 };
 
-export function ScheduleDetail({ week }: ScheduleDetailProps) {
+const fakeData = [
+  {
+    id: 1,
+    type: SCHEDULE_TYPE.MORNING,
+    subjectFullname: 'Kỹ thuật võ thuật CAND',
+    lessonNumber: 16,
+    isDone: true,
+    teacherFullname: 'Đại uý Nguyễn Văn A',
+  },
+  {
+    id: 2,
+    type: SCHEDULE_TYPE.AFTERNOON,
+    subjectFullname: 'Kỹ thuật võ thuật CAND',
+    lessonNumber: 3,
+    isDone: false,
+    teacherFullname: 'Đại uý Nguyễn Văn A',
+  },
+  {
+    id: 3,
+    type: SCHEDULE_TYPE.AFTERSCHOOL,
+    subjectFullname: 'Kỹ thuật võ thuật CAND',
+    lessonNumber: 4,
+    isDone: false,
+    teacherFullname: 'Đại uý Nguyễn Văn A',
+  },
+];
+
+export function ScheduleDetail({ week, isHome }: ScheduleDetailProps) {
+  const router = useRouter();
+
   return (
     <Box style={styles.timetable}>
       <Box
         flexDirection="row"
-        justifyContent="space-between"
         alignItems="center"
+        justifyContent="space-between"
       >
-        <Text fontSize={15} fontWeight="bold">
+        <Text fontSize={isHome ? 20 : 15} fontWeight="bold" color={'#333'}>
           Thời khoá biểu (C1 - VB2)
         </Text>
-        <Text fontSize={12} color={colors.primary[20]}>
-          {' '}
-          Tuần {week}{' '}
-        </Text>
+        {!isHome && (
+          <Text fontSize={12} color={colors.primary[20]}>
+            Tuần {week}{' '}
+          </Text>
+        )}
       </Box>
       <DayElementScrollView />
-      <Schedule
-        schedule="Sáng"
-        subject="Kỹ thuật võ thuật CAND"
-        lesson={16}
-        isDone={true}
-        teacher="Đại uý Nguyễn Văn A"
-        bgColor={colors.primary[40]}
-        borderColor={'#91BAFE'}
-      />
-      <Schedule
-        schedule="Chiều"
-        subject="Kỹ thuật võ thuật CAND"
-        lesson={16}
-        isDone={true}
-        teacher="Đại uý Nguyễn Văn A"
-        bgColor={colors.primary[50]}
-        borderColor={'#FEF08A'}
-      />
-      <Schedule
-        schedule="Ngoại khoá"
-        subject="Kỹ thuật võ thuật CAND"
-        lesson={16}
-        isDone={true}
-        teacher="Đại uý Nguyễn Văn A"
-        bgColor={colors.primary[70]}
-        borderColor={'#20C74B'}
-      />
+      <Box gap={8}>
+        {fakeData.map((item, index) => {
+          return <ScheduleItem item={item} key={index} />;
+        })}
+      </Box>
+      {isHome && (
+        <Box
+          h={40}
+          borderRadius={8}
+          alignItems="center"
+          justifyContent="center"
+          bgColor={colors.primary[40]}
+          borderWidth={1}
+          borderColor={colors.primary[30]}
+          onPress={() => router.push('/schedule')}
+        >
+          <Text fontWeight="semibold" color={colors.primary[10]}>
+            Xem chi tiết
+          </Text>
+        </Box>
+      )}
     </Box>
   );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    borderRadius: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-  },
   timetable: {
-    backgroundColor: '#FFFFFF',
-    padding: 20,
+    flex: 1,
+    backgroundColor: colors.white,
+    padding: 16,
+    paddingTop: 20,
     borderRadius: 16,
+    gap: 20,
+    marginBottom: 16,
+
     shadowColor: 'rgba(0, 0, 0, 0.12)',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 2,
-    gap: 20,
-  },
-  schedule: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  txtHeaderSchedule: {
-    fontFamily: 'Mulish',
-    fontWeight: 700,
-    fontSize: 20,
-  },
-  headerTimetable: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
 });

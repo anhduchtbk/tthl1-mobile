@@ -14,20 +14,8 @@ import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 const LIMIT = 20;
 
 export default function ManageStudentScreen() {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isOpenSearch, setOpenSearch] = useState(false);
-  const [filters, setFilters] = useState<{
-    countries?: string[];
-    years?: string[];
-    category?: string;
-    sortType: 'rating' | 'a-z';
-  }>({
-    countries: [],
-    years: [],
-    sortType: 'rating',
-    category: '',
-  });
   const router = useRouter();
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const {
     data,
@@ -81,28 +69,21 @@ export default function ManageStudentScreen() {
           renderItem={({ item }) => <RenderStudentItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}
-          refreshControl={
-            <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-          }
           onEndReachedThreshold={0.6}
           onEndReached={handleLoadMore}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<EmptyScreen text="Chưa có học viên" />}
           ListFooterComponent={renderLoadingFooter()}
+          refreshControl={
+            <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+          }
         />
       )}
 
       <StudentFilterBottomSheet
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
-        onSelect={handleOpenModal}
-        selectedYears={filters.years}
       />
-      {/* <StudentSearchModal
-        isOpen={isOpenSearch}
-        onClose={() => setOpenSearch(false)}
-        onSelect={handleOpenSearch}
-      /> */}
     </Box>
   );
 }
