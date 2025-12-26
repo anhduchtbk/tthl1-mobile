@@ -1,11 +1,16 @@
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import MilitaryFilterModal from '@/features/military-number/MilitaryFilterModal';
 import { RenderMilitaryItem } from '@/features/military-number/RenderMilitaryItem';
+import { RenderMilitaryItemSkeleton } from '@/features/military-number/RenderMilitaryItemSkleton';
+import { useGetCompanyList } from '@/hooks/useCompany';
 import { colors } from '@/theme/colors';
 import { useState } from 'react';
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+
+const LIMIT = 10;
 
 export default function MilitaryNumberScreen() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +18,24 @@ export default function MilitaryNumberScreen() {
   const handleOpenModal = () => {
     setIsOpen(true);
   };
+
+  const {
+    data,
+    isLoadingFirstPage: isLoading,
+    isRefetching,
+    refetch,
+    handleLoadMore,
+    isFetchingNextPage,
+    isEmpty,
+  } = useGetCompanyList({
+    page: 1,
+    limit: LIMIT,
+  });
+
+  const renderLoadingFooter = () =>
+    isFetchingNextPage ? (
+      <ActivityIndicator color={colors.primary[50]} />
+    ) : null;
 
   return (
     <Box flex={1} bgColor={colors.white}>
@@ -27,13 +50,26 @@ export default function MilitaryNumberScreen() {
       <Box px={16}>
         <FilterButton onOpenFilter={handleOpenModal} />
       </Box>
-      <FlatList
-        data={ListSchedule}
-        renderItem={({ item }) => <RenderMilitaryItem item={item} />}
-        keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-        showsVerticalScrollIndicator={false}
-      />
+      {isLoading ? (
+        Array.from({ length: 5 }, (_, index) => {
+          return <RenderMilitaryItemSkeleton key={index} />;
+        })
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <RenderMilitaryItem item={item} />}
+          keyExtractor={(_, index) => index.toString()}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          onEndReachedThreshold={0.6}
+          onEndReached={handleLoadMore}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={renderLoadingFooter}
+          ListEmptyComponent={<EmptyScreen text="Chưa có dữ liệu quân số" />}
+          refreshControl={
+            <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+          }
+        />
+      )}
 
       <MilitaryFilterModal
         isOpen={isOpen}
