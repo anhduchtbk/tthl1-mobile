@@ -51,7 +51,7 @@ export default function MilitaryNumberScreen() {
         <FilterButton onOpenFilter={handleOpenModal} />
       </Box>
       {isLoading ? (
-        [1, 2, 3, 4, 5].map((_, index) => {
+        Array.from({ length: 5 }, (_, index) => {
           return <RenderMilitaryItemSkeleton key={index} />;
         })
       ) : (
