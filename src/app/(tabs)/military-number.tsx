@@ -32,6 +32,7 @@ export default function MilitaryNumberScreen() {
         renderItem={({ item }) => <RenderMilitaryItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
+        showsVerticalScrollIndicator={false}
       />
 
       <MilitaryFilterModal

@@ -14,10 +14,7 @@ export default function ManageFacilityByUnitScreen() {
         borderColor={'#F5F5F5'}
         mb={4}
       >
-        <ScreenHeader
-          title="QUẢN LÝ VẬT CHẤT"
-          subTitle='TIỂU ĐOÀN 2'
-        />
+        <ScreenHeader title="QUẢN LÝ VẬT CHẤT" subTitle="TIỂU ĐOÀN 2" />
       </Box>
       <Box p={16}>
         <FilterButton />
@@ -27,6 +24,7 @@ export default function ManageFacilityByUnitScreen() {
         renderItem={({ item }) => <RenderFacilityByUnitItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
+        showsVerticalScrollIndicator={false}
       />
     </Box>
   );

@@ -1,3 +1,5 @@
+import { SCHEDULE_TYPE } from '@/constants/value';
+import { colors } from '@/theme/colors';
 import dayjs from 'dayjs';
 
 export const formatUnitRank = (unitRank: string) => {
@@ -50,11 +52,32 @@ export const formatGender = (value: boolean) => {
   }
 };
 
-export const formatDate = (date: string | null) => {
+export const formatDate = (date: Date | string | null) => {
   if (date) {
     return dayjs(date).format('DD/MM/YYYY');
   }
   return '--/--/----';
+};
+
+export const formatVietnameseDay = (date: Date | string | null) => {
+  switch (dayjs(date).day()) {
+    case 0:
+      return 'Chủ nhật';
+    case 1:
+      return 'Thứ hai';
+    case 2:
+      return 'Thứ ba';
+    case 3:
+      return 'Thứ tư';
+    case 4:
+      return 'Thứ năm';
+    case 5:
+      return 'Thứ sáu';
+    case 6:
+      return 'Thứ bảy';
+    default:
+      break;
+  }
 };
 
 export const formatPhoneNumber = (phoneNumber: string) => {
@@ -77,3 +100,45 @@ export const formatPhoneNumber = (phoneNumber: string) => {
 export const formatNotificationAmount = (amount: number) => {
   return amount > 9 ? '9+' : amount;
 };
+
+export const formatScheduleType = (type: SCHEDULE_TYPE) => {
+  let scheduleType, bgColor, borderColor;
+
+  switch (type) {
+    case SCHEDULE_TYPE.MORNING:
+      scheduleType = 'Sáng';
+      bgColor = colors.primary[40];
+      borderColor = '#91BAFE';
+      break;
+    case SCHEDULE_TYPE.AFTERNOON:
+      scheduleType = 'Chiều';
+      bgColor = colors.primary[50];
+      borderColor = '#FEF08A';
+      break;
+    case SCHEDULE_TYPE.AFTERSCHOOL:
+      scheduleType = 'Ngoại khoá';
+      bgColor = colors.primary[70];
+      borderColor = '#20C74B';
+      break;
+    default:
+      scheduleType = '';
+      bgColor = colors.primary[40];
+      borderColor = '#91BAFE';
+      break;
+  }
+
+  return { scheduleType, bgColor, borderColor };
+};
+
+export function getCurrentWeekDates() {
+  const startOfWeek = dayjs().startOf('week'); // Get the start of the current week
+  const daysInWeek = [];
+
+  for (let i = 0; i < 7; i++) {
+    // Add 'i' days to the start of the week and format the date
+    const day = startOfWeek.add(i + 1, 'day').format('YYYY-MM-DD');
+    daysInWeek.push(day);
+  }
+
+  return daysInWeek;
+}

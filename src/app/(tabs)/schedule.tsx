@@ -14,10 +14,7 @@ export default function ScheduleScreen() {
         borderColor={'#F5F5F5'}
         mb={4}
       >
-        <ScreenHeader
-          title="THỜI KHOÁ BIỂU"
-          isSearch
-        />
+        <ScreenHeader title="THỜI KHOÁ BIỂU" isSearch />
       </Box>
 
       <Box p={16}>
@@ -28,6 +25,7 @@ export default function ScheduleScreen() {
         renderItem={({ item }) => <RenderScheduleItem item={item} />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
+        showsVerticalScrollIndicator={false}
       />
     </Box>
   );

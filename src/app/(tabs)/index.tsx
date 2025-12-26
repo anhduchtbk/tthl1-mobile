@@ -10,7 +10,7 @@ import { Box } from '@/components/common/Layout/Box';
 import { FunctionList } from '@/features/home/function-list';
 import { HonorOfWeek } from '@/features/home/honnor';
 import { InforAccount } from '@/features/home/infor-account';
-import { Timetable } from '@/features/home/timetable';
+import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
@@ -34,7 +34,7 @@ export default function HomeScreen() {
         >
           <InforAccount />
           <FunctionList />
-          <Timetable />
+          <ScheduleDetail isHome />
           <HonorOfWeek />
           <Image
             source={require('@/assets/images/footer-home-image.png')}

@@ -70,6 +70,7 @@ const ReportNumberScreen = () => {
           control={control}
           label={'Tổng quân số'}
           placeholder={'0'}
+          placeholderTextColor={colors.placeholder}
           returnKeyType="next"
           keyboardType="number-pad"
           labelColor={colors.text[2]}
@@ -83,6 +84,7 @@ const ReportNumberScreen = () => {
           control={control}
           label={'Tổng vắng'}
           placeholder={'0'}
+          placeholderTextColor={colors.placeholder}
           keyboardType="number-pad"
           labelColor={colors.text[2]}
           error={errors?.absentNumber?.message}

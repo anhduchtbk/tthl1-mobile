@@ -4,7 +4,7 @@ import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
 import { colors } from '@/theme/colors';
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 
 export default function ScheduleDetailScreen() {
   return (
@@ -25,8 +25,8 @@ export default function ScheduleDetailScreen() {
         renderItem={({ item }) => <ScheduleDetail />}
         keyExtractor={(_, index) => index.toString()}
         contentContainerStyle={{ paddingHorizontal: 16 }}
-        showsVerticalScrollIndicator={false}
         ListFooterComponent={<Box h={100} />}
+        showsVerticalScrollIndicator={false}
       />
     </Box>
   );

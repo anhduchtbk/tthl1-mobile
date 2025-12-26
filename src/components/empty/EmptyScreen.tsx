@@ -3,7 +3,11 @@ import { Image, useWindowDimensions } from 'react-native';
 import { Box } from '../common/Layout/Box';
 import { Text } from '../common/Text/Text';
 
-export const EmptyScreen = ({ text }: { text: string }) => {
+export const EmptyScreen = ({
+  text = `Không có kết quả phù hợp,\nvui lòng thử lại`,
+}: {
+  text?: string;
+}) => {
   const { width } = useWindowDimensions();
 
   return (

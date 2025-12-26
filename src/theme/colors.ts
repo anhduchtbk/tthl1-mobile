@@ -14,6 +14,7 @@ export const colors = {
     1: '#565656',
     2: '#627A96',
     3: '#292929',
+    4: '#515151',
     darkest: '#32343D',
   },
   secondary: {
