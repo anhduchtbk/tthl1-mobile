@@ -18,9 +18,16 @@ type RowItemProps = PropsWithChildren<{
     infos: RowItem[];
   };
   isConfirm?: boolean;
+  onAcceptRequest?: () => void;
+  onRejectRequest?: () => void;
 }>;
 
-export const RenderRequestItem = ({ rowItem, isConfirm }: RowItemProps) => {
+export const RenderRequestItem = ({
+  rowItem,
+  isConfirm,
+  onAcceptRequest,
+  onRejectRequest,
+}: RowItemProps) => {
   const router = useRouter();
 
   const onOpenHistoryRequest = () => {
@@ -43,26 +50,23 @@ export const RenderRequestItem = ({ rowItem, isConfirm }: RowItemProps) => {
             </Text>
             {item.type === 'status' ? (
               <Box
-                w={60}
-                h={22}
-                justifyContent="center"
-                alignItems="center"
-                borderWidth={item.value === 0 ? 1 : 0}
-                borderColor={colors.primary[20]}
+                py={4}
+                px={10}
                 borderRadius={16}
                 bgColor={
                   item.value === 0
-                    ? colors.white
+                    ? '#FEBC2F'
                     : item.value === 1
                     ? '#27C840'
                     : '#FF5F57'
                 }
               >
-                <Text
-                  fontSize={FontSize.SMALL}
-                  color={item.value === 0 ? colors.blue : colors.white}
-                >
-                  {item.value === 2 ? 'Từ chối' : 'Đồng ý'}
+                <Text fontSize={FontSize.SMALL} color={colors.white}>
+                  {item.value === 0
+                    ? 'Chờ duyệt'
+                    : item.value === 1
+                    ? 'Đồng ý'
+                    : 'Từ chối'}
                 </Text>
               </Box>
             ) : (
@@ -109,10 +113,15 @@ export const RenderRequestItem = ({ rowItem, isConfirm }: RowItemProps) => {
       {isConfirm && (
         <Box flexDirection="row" alignItems="center" gap={8} mt={9}>
           <Box flex={1}>
-            <Button variant="outlined" text="Từ chối" size="small" />
+            <Button
+              variant="outlined"
+              text="Từ chối"
+              size="small"
+              onPress={onRejectRequest}
+            />
           </Box>
           <Box flex={1}>
-            <Button text="Xác nhận" size="small" />
+            <Button text="Xác nhận" size="small" onPress={onAcceptRequest} />
           </Box>
         </Box>
       )}
