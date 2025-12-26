@@ -30,8 +30,6 @@ export default function ManageStudentScreen() {
     limit: LIMIT,
   });
 
-  console.log(data);
-
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator color={colors.primary[50]} />
@@ -60,7 +58,7 @@ export default function ManageStudentScreen() {
         <FilterButton onOpenFilter={handleOpenModal} />
       </Box>
       {isLoading ? (
-        [1, 2, 3, 4].map((_, index) => {
+        [1, 2, 3, 4, 5].map((_, index) => {
           return <RenderStudentItemSkeleton key={index} />;
         })
       ) : (

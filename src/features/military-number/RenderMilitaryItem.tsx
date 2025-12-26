@@ -7,10 +7,8 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type ItemProps = {
-  companyFullname: string;
-  companyAmount: number;
-  commanderAmount: number;
-  commanderFullname: string;
+  name: string;
+  personnelCount: number;
 };
 
 type RenderItemProps = {
@@ -32,22 +30,21 @@ export function RenderMilitaryItem({ item }: RenderItemProps) {
     <Box style={styles.card}>
       <Box flex={1}>
         <Text color={colors.text[3]} fontWeight="bold">
-          {item.companyFullname}
+          Đại đội {item?.name}
         </Text>
         <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
           <Text color={colors.text[1]} fontSize={11}>
             <Text fontWeight="bold">Học viên: </Text>
-            {item.companyAmount}
+            {item?.personnelCount}
           </Text>
           <Text color={colors.text[1]} fontSize={11}>
             <Text fontWeight="bold">Chỉ huy: </Text>
-            {item.commanderAmount}
           </Text>
         </Box>
         <Box flex={1} flexDirection="row" alignItems="center" gap={6} mt={10}>
           <StarSvg />
           <Text color={colors.text[1]} fontSize={11}>
-            Đại đội trưởng: {item.commanderFullname}
+            Đại đội trưởng:
           </Text>
         </Box>
       </Box>
