@@ -1,4 +1,3 @@
-import SearchSvg from '@/assets/icons/search-svg';
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
@@ -8,14 +7,6 @@ import React from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 
 export default function ScheduleDetailScreen() {
-  const RightComponent = () => {
-    return (
-      <TouchableOpacity activeOpacity={0.7}>
-        <SearchSvg />
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <Box flex={1} bgColor={colors.white}>
       <Box

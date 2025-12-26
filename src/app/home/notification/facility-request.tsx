@@ -1,8 +1,10 @@
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import AcceptRequestModal from '@/features/home/notification/AcceptRequestModal';
+import RejectRequestModal from '@/features/home/notification/RejectRequestModal';
 import { RenderRequestItem } from '@/features/home/notification/RenderRequestItem';
 import { colors } from '@/theme/colors';
-import React from 'react';
+import React, { useState } from 'react';
 
 const fakeItem = {
   infos: [
@@ -60,6 +62,17 @@ const fakeItem = {
 };
 
 export default function FacilityRequestScreen() {
+  const [isOpenAcceptModal, setIsOpenAcceptModal] = useState(false);
+  const [isOpenRejectModal, setIsOpenRejectModal] = useState(false);
+
+  const onOpenAcceptModal = () => {
+    setIsOpenAcceptModal(true);
+  };
+
+  const onOpenRejectModal = () => {
+    setIsOpenRejectModal(true);
+  };
+
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader
@@ -68,8 +81,21 @@ export default function FacilityRequestScreen() {
         subTitleBold
       />
       <Box mt={20} px={16}>
-        <RenderRequestItem rowItem={fakeItem} isConfirm />
+        <RenderRequestItem
+          rowItem={fakeItem}
+          isConfirm
+          onAcceptRequest={onOpenAcceptModal}
+          onRejectRequest={onOpenRejectModal}
+        />
       </Box>
+      <RejectRequestModal
+        isVisible={isOpenRejectModal}
+        onClose={() => setIsOpenRejectModal(false)}
+      />
+      <AcceptRequestModal
+        isVisible={isOpenAcceptModal}
+        onClose={() => setIsOpenAcceptModal(false)}
+      />
     </Box>
   );
 }

@@ -24,7 +24,6 @@ export default function ManageStudentScreen() {
     refetch,
     handleLoadMore,
     isFetchingNextPage,
-    isEmpty,
   } = useGetStudentList({
     page: 1,
     limit: LIMIT,
