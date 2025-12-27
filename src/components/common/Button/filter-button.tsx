@@ -5,11 +5,19 @@ import { Text } from '../Text/Text';
 
 export default function FilterButton({
   onOpenFilter,
+  hasPadding = true,
 }: {
   onOpenFilter?: () => void;
+  hasPadding?: boolean;
 }) {
   return (
-    <Box flexDirection="row" alignItems="center" gap={8} onPress={onOpenFilter}>
+    <Box
+      flexDirection="row"
+      alignItems="center"
+      gap={8}
+      onPress={onOpenFilter}
+      p={hasPadding ? 16 : 0}
+    >
       <Text color={colors.text[3]}>Bộ lọc</Text>
       <FilterSvg width={14} height={14} />
     </Box>

@@ -31,7 +31,7 @@ export default function ManageStudentScreen() {
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[50]} />
     ) : null;
 
   const handleOpenModal = () => {
@@ -45,19 +45,14 @@ export default function ManageStudentScreen() {
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box bgColor={colors.white} mb={4}>
-        <ScreenHeader
-          title="QUẢN LÝ HỌC VIÊN"
-          isSearch
-          onPressSearch={handleOpenSearch}
-        />
-      </Box>
-
-      <Box p={16}>
-        <FilterButton onOpenFilter={handleOpenModal} />
-      </Box>
+      <ScreenHeader
+        title="QUẢN LÝ HỌC VIÊN"
+        isSearch
+        onPressSearch={handleOpenSearch}
+      />
+      <FilterButton onOpenFilter={handleOpenModal} />
       {isLoading ? (
-        [1, 2, 3, 4, 5].map((_, index) => {
+        Array.from({ length: 5 }, (_, index) => {
           return <RenderStudentItemSkeleton key={index} />;
         })
       ) : (
@@ -76,7 +71,6 @@ export default function ManageStudentScreen() {
           }
         />
       )}
-
       <StudentFilterBottomSheet
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}

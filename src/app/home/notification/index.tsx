@@ -2,6 +2,7 @@ import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import NotificationFilterBottomSheet from '@/features/home/notification/NotificationFilterBottomSheet';
 import { RenderCompanyItem } from '@/features/home/notification/RenderCompanyItem';
 import { RenderNotificationItem } from '@/features/home/notification/RenderNotificationItem';
 import { colors } from '@/theme/colors';
@@ -18,48 +19,38 @@ const typeList = [
 
 export default function NotificationScreen() {
   const [typeIndex, setTypeIndex] = useState(1);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box
-        bgColor={colors.white}
-        borderBottomWidth={1}
-        borderColor={'#F5F5F5'}
-        mb={4}
-      >
-        <ScreenHeader title="THÔNG BÁO" isSearch />
-      </Box>
-      <Box p={16} gap={16}>
-        <FilterButton />
-        <Box>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {typeList.map((item, index) => {
-              return (
-                <Box
+      <ScreenHeader title="THÔNG BÁO" isSearch />
+      <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
+      <Box px={16} mb={16}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {typeList.map((item, index) => {
+            return (
+              <Box
+                key={index}
+                alignSelf="flex-start"
+                py={8}
+                px={16}
+                borderBottomWidth={1}
+                borderBottomColor={
+                  item.id === typeIndex ? colors.primary[20] : '#F1F1F1'
+                }
+                onPress={() => setTypeIndex(item.id)}
+              >
+                <Text
                   key={index}
-                  alignSelf="flex-start"
-                  py={8}
-                  px={16}
-                  borderBottomWidth={1}
-                  borderBottomColor={
-                    item.id === typeIndex ? colors.primary[20] : '#F1F1F1'
-                  }
-                  onPress={() => setTypeIndex(item.id)}
+                  fontSize={FontSize.LARGE}
+                  color={item.id === typeIndex ? colors.primary[20] : '#515151'}
                 >
-                  <Text
-                    key={index}
-                    fontSize={FontSize.LARGE}
-                    color={
-                      item.id === typeIndex ? colors.primary[20] : '#515151'
-                    }
-                  >
-                    {item.name}
-                  </Text>
-                </Box>
-              );
-            })}
-          </ScrollView>
-        </Box>
+                  {item.name}
+                </Text>
+              </Box>
+            );
+          })}
+        </ScrollView>
       </Box>
       {typeIndex === 2 ? (
         <FlatList
@@ -79,6 +70,10 @@ export default function NotificationScreen() {
         />
       )}
       <Box h={100} />
+      <NotificationFilterBottomSheet
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+      />
     </Box>
   );
 }

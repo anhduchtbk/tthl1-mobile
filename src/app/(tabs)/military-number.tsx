@@ -2,7 +2,7 @@ import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
-import MilitaryFilterModal from '@/features/military-number/MilitaryFilterModal';
+import MilitaryFilterBottomSheet from '@/features/military-number/MilitaryFilterBottomSheet';
 import { RenderMilitaryItem } from '@/features/military-number/RenderMilitaryItem';
 import { RenderMilitaryItemSkeleton } from '@/features/military-number/RenderMilitaryItemSkleton';
 import { useGetCompanyList } from '@/hooks/useCompany';
@@ -10,13 +10,13 @@ import { colors } from '@/theme/colors';
 import { useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 export default function MilitaryNumberScreen() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleOpenModal = () => {
-    setIsOpen(true);
+    setIsOpenModal(true);
   };
 
   const {
@@ -30,26 +30,18 @@ export default function MilitaryNumberScreen() {
   } = useGetCompanyList({
     page: 1,
     limit: LIMIT,
+    // filter: ['name|$eq|1'],
   });
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[50]} />
     ) : null;
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box
-        bgColor={colors.white}
-        borderBottomWidth={1}
-        borderColor={'#F5F5F5'}
-        mb={4}
-      >
-        <ScreenHeader title="ĐIỂM DANH QUÂN SỐ" isSearch />
-      </Box>
-      <Box px={16}>
-        <FilterButton onOpenFilter={handleOpenModal} />
-      </Box>
+      <ScreenHeader title="ĐIỂM DANH QUÂN SỐ" isSearch />
+      <FilterButton onOpenFilter={handleOpenModal} />
       {isLoading ? (
         Array.from({ length: 5 }, (_, index) => {
           return <RenderMilitaryItemSkeleton key={index} />;
@@ -64,42 +56,22 @@ export default function MilitaryNumberScreen() {
           onEndReached={handleLoadMore}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={renderLoadingFooter}
-          ListEmptyComponent={<EmptyScreen text="Chưa có dữ liệu quân số" />}
+          ListEmptyComponent={
+            isEmpty ? (
+              <EmptyScreen text="Chưa có dữ liệu điểm danh quân số" />
+            ) : (
+              <></>
+            )
+          }
           refreshControl={
             <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
           }
         />
       )}
-
-      <MilitaryFilterModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onSelect={handleOpenModal}
+      <MilitaryFilterBottomSheet
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
       />
     </Box>
   );
 }
-
-const ListSchedule = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    companyFullname: 'Đại đội 1 - VB2',
-    companyAmount: 110,
-    commanderAmount: 4,
-    commanderFullname: 'Nguyễn Văn A',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    companyFullname: 'Đại đội 1 - VB2',
-    companyAmount: 110,
-    commanderAmount: 4,
-    commanderFullname: 'Nguyễn Văn A',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    companyFullname: 'Đại đội 1 - VB2',
-    companyAmount: 110,
-    commanderAmount: 4,
-    commanderFullname: 'Nguyễn Văn A',
-  },
-];

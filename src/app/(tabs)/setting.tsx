@@ -30,10 +30,8 @@ export default function SettingScreen() {
       <LinearGradient
         colors={['#CAD6FF', '#FFF7DB']}
         style={[styles.containerLinear, { height: insets.top + 110 }]}
-      >
-        <ScreenHeader title="THÔNG TIN CỦA TÔI" />
-      </LinearGradient>
-      <ScreenHeader title="THÔNG TIN CỦA TÔI" />
+      />
+      <ScreenHeader title="THÔNG TIN CỦA TÔI" hasBorderBottom={false} />
       <Box
         flex={1}
         mt={44}

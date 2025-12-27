@@ -31,27 +31,23 @@ export function RenderFacilityItem({ item }: RenderItemProps) {
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight="bold">Học viên: </Text>
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Học viên:{' '}
+          </Text>
           {item.companyAmount}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight="bold">Chỉ huy: </Text>
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Chỉ huy:{' '}
+          </Text>
           {item.commanderAmount}
         </Text>
       </Box>
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Box flex={1}>
-          <Box flexDirection="row" alignItems="center" gap={6}>
-            <StarSvg />
-            <Text color={colors.text[1]} fontSize={11}>
-              Đại đội trưởng: {item.commanderFullname}
-            </Text>
-          </Box>
-        </Box>
+      <Box flexDirection="row" alignItems="flex-end" gap={6}>
+        <StarSvg />
+        <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
+          Đại đội trưởng: {item.commanderFullname}
+        </Text>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}

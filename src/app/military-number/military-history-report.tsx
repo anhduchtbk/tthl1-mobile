@@ -34,9 +34,9 @@ export default function MilitaryNumberScreen() {
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="LỊCH SỬ BÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
+      <FilterButton />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Box px={16} gap={16}>
-          <FilterButton />
           <DayElementScrollView />
 
           <HistoryElements

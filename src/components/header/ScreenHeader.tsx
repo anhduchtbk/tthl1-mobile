@@ -16,6 +16,7 @@ type Props = {
   onPressSearch?: () => void;
   marginTop?: number;
   subTitleBold?: boolean;
+  hasBorderBottom?: boolean;
 };
 
 export function ScreenHeader({
@@ -27,6 +28,7 @@ export function ScreenHeader({
   onPressSearch,
   marginTop,
   subTitleBold,
+  hasBorderBottom = true,
 }: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -36,35 +38,49 @@ export function ScreenHeader({
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
-      mt={marginTop ? marginTop : insets.top}
+      mt={marginTop || insets.top}
       px={16}
       py={14}
+      mb={4}
+      borderBottomWidth={hasBorderBottom ? 1 : 0}
+      borderColor={'#F5F5F5'}
     >
-      <Box onPress={onBackPress ? onBackPress : router.back}>
+      <Box
+        onPress={onBackPress ? onBackPress : router.back}
+        w={24}
+        hitSlop={10}
+      >
         <LeftArrowSvg />
       </Box>
 
-      <Box position="absolute" left={0} right={0} alignItems="center">
-        <Text fontWeight="extrabold" fontSize={18}>
+      <Box>
+        <Text fontWeight="extrabold" fontSize={18} align="center">
           {title}
         </Text>
         {subTitle && (
           <Text
             fontSize={18}
             fontWeight={subTitleBold ? 'extrabold' : 'regular'}
+            align="center"
           >
             {subTitle}
           </Text>
         )}
       </Box>
 
-      {isSearch ? (
-        <TouchableOpacity activeOpacity={0.7} onPress={onPressSearch}>
-          <SearchSvg />
-        </TouchableOpacity>
-      ) : (
-        RightComponent && RightComponent
-      )}
+      <Box w={24}>
+        {isSearch ? (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={onPressSearch}
+            hitSlop={10}
+          >
+            <SearchSvg />
+          </TouchableOpacity>
+        ) : (
+          RightComponent && RightComponent
+        )}
+      </Box>
     </Box>
   );
 }

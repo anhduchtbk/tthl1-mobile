@@ -4,11 +4,16 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { ModalHeader } from '@/components/header/ModalHeader';
 import {
+  COMPANY_OPTIONS,
+  EDUCATION_OPTIONS,
+  NOTIFICATION_STATUS_OPTIONS,
+  NOTIFICATION_TYPE_OPTIONS,
+} from '@/constants/option';
+import {
   COMPANY_TYPE,
   EDUCATION_TYPE,
-  PARTY_MEMBER_TYPE,
-  POLICY_TYPE,
-  TALENT_TYPE,
+  NOTIFICATION_STATUS,
+  NOTIFICATION_TYPE,
 } from '@/constants/value';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, {
@@ -20,14 +25,8 @@ import React, {
 } from 'react';
 import { ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  COMPANY_OPTIONS,
-  EDUCATION_OPTIONS,
-  PARTY_MEMBER_OPTIONS,
-  POLICY_OPTIONS,
-} from '../../../constants/option';
 
-export interface StudentFilterBottomSheetProps {
+export interface NotificationFilterBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -35,9 +34,8 @@ export interface StudentFilterBottomSheetProps {
 type FilterType = {
   educations?: EDUCATION_TYPE[];
   companies?: COMPANY_TYPE[];
-  partyMembers?: PARTY_MEMBER_TYPE[];
-  policies?: POLICY_TYPE[];
-  talents?: TALENT_TYPE[];
+  notificationTypes?: NOTIFICATION_TYPE[];
+  statuses?: NOTIFICATION_STATUS[];
 };
 
 const fakeData = [
@@ -52,26 +50,20 @@ const fakeData = [
     options: COMPANY_OPTIONS,
   },
   {
-    filterName: 'Đảng viên',
-    filterKey: 'partyMembers',
-    options: PARTY_MEMBER_OPTIONS,
+    filterName: 'Loại thông báo',
+    filterKey: 'notificationTypes',
+    options: NOTIFICATION_TYPE_OPTIONS,
   },
   {
-    filterName: 'Chính sách',
-    filterKey: 'policies',
-    options: POLICY_OPTIONS,
+    filterName: 'Trạng thái',
+    filterKey: 'statuses',
+    options: NOTIFICATION_STATUS_OPTIONS,
   },
-  // {
-  //   filterName: 'Năng khiếu',
-  //   filterKey: 'talents',
-  //   options: TALENT_OPTIONS,
-  // },
 ];
 
-const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
-  isOpen,
-  onClose,
-}) => {
+const NotificationFilterBottomSheet: React.FC<
+  NotificationFilterBottomSheetProps
+> = ({ isOpen, onClose }) => {
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
@@ -80,9 +72,8 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   const [filters, setFilters] = useState<FilterType>({
     educations: [],
     companies: [],
-    partyMembers: [],
-    policies: [],
-    talents: [],
+    notificationTypes: [],
+    statuses: [],
   });
 
   useEffect(() => {
@@ -159,14 +150,6 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
                           return filters.companies?.some(
                             e => value.value === e
                           );
-                        case 'partyMembers':
-                          return filters.partyMembers?.some(
-                            e => value.value === e
-                          );
-                        case 'policies':
-                          return filters.policies?.some(e => value.value === e);
-                        // case 'talents':
-                        //   return filters.talents?.some(e => value.value === e);
                         default:
                           return false;
                       }
@@ -193,4 +176,4 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   );
 };
 
-export default StudentFilterBottomSheet;
+export default NotificationFilterBottomSheet;

@@ -3,13 +3,7 @@ import ButtonTypeSelector from '@/components/common/Button/ButtonTypeSelector';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { ModalHeader } from '@/components/header/ModalHeader';
-import {
-  COMPANY_TYPE,
-  EDUCATION_TYPE,
-  PARTY_MEMBER_TYPE,
-  POLICY_TYPE,
-  TALENT_TYPE,
-} from '@/constants/value';
+import { COMPANY_TYPE, EDUCATION_TYPE } from '@/constants/value';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, {
   useCallback,
@@ -23,11 +17,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   COMPANY_OPTIONS,
   EDUCATION_OPTIONS,
-  PARTY_MEMBER_OPTIONS,
-  POLICY_OPTIONS,
-} from '../../../constants/option';
+  WEEK_OPTIONS,
+} from '../../constants/option';
 
-export interface StudentFilterBottomSheetProps {
+export interface ScheduleFilterBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -35,9 +28,7 @@ export interface StudentFilterBottomSheetProps {
 type FilterType = {
   educations?: EDUCATION_TYPE[];
   companies?: COMPANY_TYPE[];
-  partyMembers?: PARTY_MEMBER_TYPE[];
-  policies?: POLICY_TYPE[];
-  talents?: TALENT_TYPE[];
+  weeks?: number[];
 };
 
 const fakeData = [
@@ -52,23 +43,13 @@ const fakeData = [
     options: COMPANY_OPTIONS,
   },
   {
-    filterName: 'Đảng viên',
-    filterKey: 'partyMembers',
-    options: PARTY_MEMBER_OPTIONS,
+    filterName: 'Tuần',
+    filterKey: 'weeks',
+    options: WEEK_OPTIONS,
   },
-  {
-    filterName: 'Chính sách',
-    filterKey: 'policies',
-    options: POLICY_OPTIONS,
-  },
-  // {
-  //   filterName: 'Năng khiếu',
-  //   filterKey: 'talents',
-  //   options: TALENT_OPTIONS,
-  // },
 ];
 
-const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
+const ScheduleFilterBottomSheet: React.FC<ScheduleFilterBottomSheetProps> = ({
   isOpen,
   onClose,
 }) => {
@@ -80,9 +61,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   const [filters, setFilters] = useState<FilterType>({
     educations: [],
     companies: [],
-    partyMembers: [],
-    policies: [],
-    talents: [],
+    weeks: [],
   });
 
   useEffect(() => {
@@ -159,18 +138,13 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
                           return filters.companies?.some(
                             e => value.value === e
                           );
-                        case 'partyMembers':
-                          return filters.partyMembers?.some(
-                            e => value.value === e
-                          );
-                        case 'policies':
-                          return filters.policies?.some(e => value.value === e);
-                        // case 'talents':
-                        //   return filters.talents?.some(e => value.value === e);
+                        case 'weeks':
+                          return filters.weeks?.some(e => value.value === e);
                         default:
                           return false;
                       }
                     })();
+
                     return (
                       <ButtonTypeSelector
                         key={idx}
@@ -193,4 +167,4 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   );
 };
 
-export default StudentFilterBottomSheet;
+export default ScheduleFilterBottomSheet;

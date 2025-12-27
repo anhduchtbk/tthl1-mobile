@@ -31,7 +31,11 @@ export default function StudentDetailScreen() {
         colors={['#CAD6FF', '#FFF7DB']}
         style={[styles.containerLinear, { height: insets.top + 140 }]}
       />
-      <ScreenHeader title="CHI TIẾT HỌC VIÊN" marginTop={1} />
+      <ScreenHeader
+        title="CHI TIẾT HỌC VIÊN"
+        marginTop={1}
+        hasBorderBottom={false}
+      />
       <Box
         flex={1}
         mt={44}

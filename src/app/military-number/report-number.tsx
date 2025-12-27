@@ -4,6 +4,7 @@ import { Box } from '@/components/common/Layout/Box';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { REPORT_NUMBER_OPTIONS } from '@/constants/option';
 import { AbsentStudentGroup } from '@/features/military-number/AbsentStudentGroup';
 import { colors } from '@/theme/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,12 +12,6 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextInput } from 'react-native';
 import { z } from 'zod';
-
-const data = [
-  { label: 'Điểm danh thể dục buổi sáng', value: '1' },
-  { label: 'Điểm danh Ăn cơm sáng', value: '2' },
-  { label: 'Điểm danh Học buổi sáng (Võ thuật CAND)', value: '3' },
-];
 
 type FormData = {
   purpose: string;
@@ -55,10 +50,10 @@ const ReportNumberScreen = () => {
       <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
       <Box mt={20} px={16} gap={16}>
         <Dropdown
-          data={data}
+          data={REPORT_NUMBER_OPTIONS}
           control={control}
           name="purpose"
-          label={'Quân số'}
+          label={'Mốc điểm danh'}
           isRequired
           placeholder={'Điểm danh'}
           searchPlaceholder={'Tìm kiếm'}
@@ -73,7 +68,6 @@ const ReportNumberScreen = () => {
           placeholderTextColor={colors.placeholder}
           returnKeyType="next"
           keyboardType="number-pad"
-          labelColor={colors.text[2]}
           onSubmitEditing={() => refs.absentNumber.current?.focus()}
           error={errors?.companyNumber?.message}
         />
@@ -86,7 +80,6 @@ const ReportNumberScreen = () => {
           placeholder={'0'}
           placeholderTextColor={colors.placeholder}
           keyboardType="number-pad"
-          labelColor={colors.text[2]}
           error={errors?.absentNumber?.message}
         />
         <AbsentStudentGroup />

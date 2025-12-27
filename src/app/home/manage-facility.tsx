@@ -8,17 +8,8 @@ import { FlatList } from 'react-native';
 export default function ManageFacilityScreen() {
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box
-        bgColor={colors.white}
-        borderBottomWidth={1}
-        borderColor={'#F5F5F5'}
-        mb={4}
-      >
-        <ScreenHeader title="QUẢN LÝ VẬT CHẤT" isSearch />
-      </Box>
-      <Box p={16}>
-        <FilterButton />
-      </Box>
+      <ScreenHeader title="QUẢN LÝ VẬT CHẤT" isSearch />
+      <FilterButton />
       <FlatList
         data={ListSchedule}
         renderItem={({ item }) => <RenderFacilityItem item={item} />}

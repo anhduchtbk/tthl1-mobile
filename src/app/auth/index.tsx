@@ -115,7 +115,6 @@ export default function LoginScreen() {
             control={control}
             label="Tên đăng nhập"
             placeholder="Nhập tên đăng nhập của bạn"
-            labelColor={colors.text[2]}
             keyboardType="email-address"
             ref={refs.username}
             returnKeyType="next"
@@ -130,7 +129,6 @@ export default function LoginScreen() {
             control={control}
             label="Mật khẩu"
             placeholder="Nhập mật khẩu của bạn"
-            labelColor={colors.text[2]}
             ref={refs.password}
             error={errors?.password?.message}
           />

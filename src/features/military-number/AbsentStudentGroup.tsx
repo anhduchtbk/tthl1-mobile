@@ -3,7 +3,6 @@ import Dropdown from '@/components/common/Dropdown/Dropdown';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
-import { useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
 const data = [
@@ -19,8 +18,6 @@ const studentData = [
 ];
 
 export function AbsentStudentGroup() {
-  const router = useRouter();
-
   return (
     <Box
       borderWidth={1}
@@ -42,7 +39,7 @@ export function AbsentStudentGroup() {
         </Text>
         <InfoSvg />
       </Box>
-      <Box p={8} gap={16}>
+      <Box mt={4} p={8} gap={16}>
         <Dropdown
           data={data}
           name="reason"

@@ -20,14 +20,9 @@ import React, {
 } from 'react';
 import { ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  COMPANY_OPTIONS,
-  EDUCATION_OPTIONS,
-  PARTY_MEMBER_OPTIONS,
-  POLICY_OPTIONS,
-} from '../../../constants/option';
+import { COMPANY_OPTIONS, EDUCATION_OPTIONS } from '../../constants/option';
 
-export interface StudentFilterBottomSheetProps {
+export interface MilitaryFilterBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -51,24 +46,9 @@ const fakeData = [
     filterKey: 'companies',
     options: COMPANY_OPTIONS,
   },
-  {
-    filterName: 'Đảng viên',
-    filterKey: 'partyMembers',
-    options: PARTY_MEMBER_OPTIONS,
-  },
-  {
-    filterName: 'Chính sách',
-    filterKey: 'policies',
-    options: POLICY_OPTIONS,
-  },
-  // {
-  //   filterName: 'Năng khiếu',
-  //   filterKey: 'talents',
-  //   options: TALENT_OPTIONS,
-  // },
 ];
 
-const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
+const MilitaryFilterBottomSheet: React.FC<MilitaryFilterBottomSheetProps> = ({
   isOpen,
   onClose,
 }) => {
@@ -80,9 +60,6 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   const [filters, setFilters] = useState<FilterType>({
     educations: [],
     companies: [],
-    partyMembers: [],
-    policies: [],
-    talents: [],
   });
 
   useEffect(() => {
@@ -159,14 +136,6 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
                           return filters.companies?.some(
                             e => value.value === e
                           );
-                        case 'partyMembers':
-                          return filters.partyMembers?.some(
-                            e => value.value === e
-                          );
-                        case 'policies':
-                          return filters.policies?.some(e => value.value === e);
-                        // case 'talents':
-                        //   return filters.talents?.some(e => value.value === e);
                         default:
                           return false;
                       }
@@ -193,4 +162,4 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   );
 };
 
-export default StudentFilterBottomSheet;
+export default MilitaryFilterBottomSheet;

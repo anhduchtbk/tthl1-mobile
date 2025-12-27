@@ -2,18 +2,14 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import TextField from '@/components/common/TextField/TextField';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
+import { ModalHeader } from '@/components/header/ModalHeader';
 import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
 import { RenderStudentItemSkeleton } from '@/features/manage-student/manage/RenderStudentItemSkeleton';
 import { useGetStudentList } from '@/hooks/useStudent';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  TouchableOpacity,
-} from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 const LIMIT = 20;
 
@@ -47,7 +43,7 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[50]} />
     ) : null;
 
   const handleOnChangeSearch = (value: string) => {
@@ -56,26 +52,8 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
 
   return (
     <Box bgColor={colors.white} flex={1} justifyContent="space-between">
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-        my={16}
-        px={16}
-      >
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={onClose}
-          style={{ width: 80 }}
-        >
-          <Text fontSize={17} color={'#343434'}>
-            Đóng
-          </Text>
-        </TouchableOpacity>
-        <Text fontSize={20} fontWeight="bold" color={'#333'}>
-          Tìm kiếm
-        </Text>
-        <Box w={80} />
+      <Box p={16} pb={0}>
+        <ModalHeader title="Tìm kiếm" onClose={onClose} />
       </Box>
       <Box gap={12} px={16} mb={4}>
         <TextField
@@ -89,7 +67,7 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
       </Box>
       <Box flex={1}>
         {isLoading ? (
-          [1, 2, 3, 4].map((_, index) => {
+          Array.from({ length: 5 }, (_, index) => {
             return <RenderStudentItemSkeleton key={index} />;
           })
         ) : (

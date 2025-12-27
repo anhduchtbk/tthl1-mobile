@@ -22,38 +22,40 @@ export function RenderNotificationItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onReportNumber = () => {
-    router.push('/military-number/report-number');
+    router.push('/home/notification/facility-request');
   };
 
   return (
     <Box style={styles.card}>
-      <Box flex={1}>
-        <Text color={colors.text[3]} fontWeight="bold">
-          Yêu cầu mượn {item.facilityFullname}
+      <Text color={colors.text[3]} fontWeight="bold">
+        Yêu cầu mượn {item.facilityFullname}
+      </Text>
+      <Box h={4} />
+      <Text color={colors.text[1]} fontSize={11}>
+        <Text fontWeight="bold" color={colors.text[1]}>
+          Đơn vị yêu cầu:{' '}
         </Text>
-        <Box h={4} />
+        {item.companyFullname}
+      </Text>
+      <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight="bold">Đơn vị yêu cầu: </Text>
-          {item.companyFullname}
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Số lượng:{' '}
+          </Text>
+          {item.facilityAmount}
         </Text>
-        <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
-          <Text color={colors.text[1]} fontSize={11}>
-            <Text fontWeight="bold">Số lượng: </Text>
-            {item.facilityAmount}
+        <Text color={colors.text[1]} fontSize={11}>
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Lần mượn:{' '}
           </Text>
-          <Text color={colors.text[1]} fontSize={11}>
-            <Text fontWeight="bold">Lần mượn: </Text>
-            {item.commandTime}
-          </Text>
-        </Box>
-        <Box flex={1} flexDirection="row" alignItems="center" gap={6} mt={10}>
-          <StarSvg />
-          <Text color={colors.text[1]} fontSize={11}>
-            Người yêu cầu: Đại uý {item.commanderFullname}
-          </Text>
-        </Box>
+          {item.commandTime}
+        </Text>
       </Box>
-      <Box alignSelf="flex-end">
+      <Box flex={1} flexDirection="row" alignItems="flex-end" gap={6}>
+        <StarSvg />
+        <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
+          Người yêu cầu: Đại uý {item.commanderFullname}
+        </Text>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}
@@ -73,10 +75,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     borderRadius: 10,
-    gap: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
 
     padding: 12,
     marginBottom: 16,

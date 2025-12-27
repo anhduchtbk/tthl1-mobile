@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
   },
   dropdownPlaceholder: {
-    fontSize: 14,
+    fontSize: 16,
     color: colors.placeholder,
   },
   dropdownInputSearch: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     margin: 6,
   },
   searchInput: {
-    fontSize: 14,
+    fontSize: 16,
     paddingVertical: 12,
   },
 });

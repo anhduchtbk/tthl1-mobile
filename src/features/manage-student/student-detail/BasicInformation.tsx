@@ -1,6 +1,7 @@
 import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { PARTY_MEMBER_OPTIONS, POLICY_OPTIONS } from '@/constants/option';
 import { formatBoolean, formatDate } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { PropsWithChildren } from 'react';
@@ -14,11 +15,11 @@ export function BasicInformation({
   const basic = [
     {
       title: 'Quê quán',
-      value: '',
+      value: studentDetail.placeOfOrigin,
     },
     {
       title: 'Nơi sinh',
-      value: '',
+      value: studentDetail.placeOfResidence,
     },
     {
       title: 'SĐT',
@@ -34,7 +35,11 @@ export function BasicInformation({
     },
     {
       title: 'Đảng viên',
-      value: formatBoolean(studentDetail.isPartyMember),
+      value: studentDetail.isPartyMember
+        ? PARTY_MEMBER_OPTIONS.find(
+            option => option.value === studentDetail.partyMemberType
+          )?.label
+        : 'Không',
     },
     {
       title: 'Ngày vào đảng',
@@ -45,7 +50,9 @@ export function BasicInformation({
   const others = [
     {
       title: 'Chính sách',
-      value: studentDetail.policy,
+      value:
+        POLICY_OPTIONS.find(option => option.value === studentDetail.policy)
+          ?.label || '',
     },
     {
       title: 'Năng khiếu',
@@ -90,7 +97,7 @@ export function BasicInformation({
 
 interface RowItem {
   title: string;
-  value: string | null;
+  value: string | undefined | null;
 }
 
 type RowItemProps = PropsWithChildren<{
