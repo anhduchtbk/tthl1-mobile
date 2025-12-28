@@ -33,7 +33,7 @@ export function RenderScheduleItemSkeleton() {
       </Box>
       <Box
         flexDirection="row"
-        alignItems="center"
+        alignItems="flex-end"
         justifyContent="space-between"
       >
         <Skeleton
@@ -55,12 +55,12 @@ export function RenderScheduleItemSkeleton() {
 
 const styles = StyleSheet.create({
   card: {
-    flex: 1,
     backgroundColor: '#fff',
     borderRadius: 16,
 
     padding: 12,
-    marginBottom: 16,
+    margin: 16,
+    marginTop: 0,
     // iOS shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },

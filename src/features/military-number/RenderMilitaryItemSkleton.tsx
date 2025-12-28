@@ -66,7 +66,6 @@ export function RenderMilitaryItemSkeleton() {
 
 const styles = StyleSheet.create({
   card: {
-    height: 90,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 12,

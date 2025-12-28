@@ -51,7 +51,7 @@ export default function ChangePasswordScreen() {
   const onConfirm = () => {};
 
   return (
-    <Box bgColor={colors.white}>
+    <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="ĐỔI MẬT KHẨU" />
       <Box mt={16} px={16} gap={16}>
         <Input
