@@ -7,6 +7,7 @@ import DropdownComponent from './DropdownComponent';
 export type DropdownItem = {
   label: string;
   value: string;
+  dateofbirth?: string;
 };
 
 export type DropdownProps = {
@@ -20,6 +21,7 @@ export type DropdownProps = {
   isRequired?: boolean;
   onChange?: (value: string) => void;
   dropdownStyle?: ViewStyle;
+  onSearchExternal?: (text: string) => void;
 };
 
 const Dropdown = ({
@@ -32,7 +34,8 @@ const Dropdown = ({
   value: externalValue,
   isRequired,
   onChange: externalOnChange,
-  dropdownStyle
+  dropdownStyle,
+  onSearchExternal,
 }: DropdownProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const [internalValue, setInternalValue] = useState<string | null>(
@@ -44,12 +47,14 @@ const Dropdown = ({
 
   const handleChange = (item: DropdownItem) => {
     const newValue = item.value;
-    if (controllerResult) {
-      controllerResult.field.onChange(newValue);
-    } else {
-      setInternalValue(newValue);
-      externalOnChange?.(newValue);
-    }
+    setInternalValue(newValue);
+    externalOnChange?.(newValue);
+    // if (controllerResult) {
+    //   controllerResult.field.onChange(newValue);
+    // } else {
+    //   setInternalValue(newValue);
+    //   externalOnChange?.(newValue);
+    // }
     setIsFocus(false);
   };
 
@@ -70,6 +75,7 @@ const Dropdown = ({
       onBlur={() => setIsFocus(false)}
       onChange={handleChange}
       dropdownStyle={dropdownStyle}
+      onSearchExternal={onSearchExternal}
     />
   );
 };

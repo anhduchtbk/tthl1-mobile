@@ -18,14 +18,14 @@ import { z } from 'zod';
 
 type FormData = {
   purpose: string;
-  companyNumber: number;
-  absentNumber: number;
+  companyNumber?: number;
+  absentNumber?: number;
 };
 
 const reportNumberSchema = z.object({
   purpose: z.string(),
-  companyNumber: z.number(),
-  absentNumber: z.number(),
+  companyNumber: z.number().optional(),
+  absentNumber: z.number().optional(),
 });
 
 const ReportNumberScreen = () => {
@@ -46,10 +46,12 @@ const ReportNumberScreen = () => {
     mode: 'onChange',
     defaultValues: {
       purpose: '',
-      companyNumber: 0,
-      absentNumber: 0,
     },
   });
+
+  const onSubmit = (data: FormData) => {
+    console.log('Report Number Data:', data);
+  };
 
   return (
     <Box flex={1} bgColor={colors.white}>
@@ -68,7 +70,7 @@ const ReportNumberScreen = () => {
               isRequired
               placeholder={'Điểm danh'}
               searchPlaceholder={'Tìm kiếm'}
-              onChange={(value) => console.log('dddsaa', value)}
+              onChange={value => console.log('dddsaa', value)}
             />
             <Input
               as={TextField}
@@ -104,59 +106,13 @@ const ReportNumberScreen = () => {
               alignSelf="flex-end"
               justifyContent="center"
             >
-              <Dropdown
-                data={data}
-                control={control}
-                name="purpose"
-                label={'Quân số'}
-                isRequired
-                placeholder={'Điểm danh'}
-                searchPlaceholder={'Tìm kiếm'}
-              />
-              <Input
-                as={TextField}
-                isRequired
-                name="companyNumber"
-                control={control}
-                label={'Tổng quân số'}
-                placeholder={'0'}
-                placeholderTextColor={colors.placeholder}
-                returnKeyType="next"
-                keyboardType="number-pad"
-                labelColor={colors.text[2]}
-                onSubmitEditing={() => refs.absentNumber.current?.focus()}
-                error={errors?.companyNumber?.message}
-              />
-              <Input
-                as={TextField}
-                name="absentNumber"
-                ref={refs.absentNumber}
-                control={control}
-                label={'Tổng vắng'}
-                placeholder={'0'}
-                placeholderTextColor={colors.placeholder}
-                keyboardType="number-pad"
-                labelColor={colors.text[2]}
-                error={errors?.absentNumber?.message}
-              />
-              <AbsentStudentGroup />
-              <Box
-                h={24}
-                px={10}
-                borderWidth={1}
-                borderColor={colors.blue}
-                borderRadius={16}
-                alignSelf="flex-end"
-                justifyContent="center"
-              >
-                <Text fontSize={FontSize.SMALL} color={colors.blue}>
-                  Thêm nhóm HV vắng +
-                </Text>
-              </Box>
-            </ScrollView>
-          </Box>
-          <Button text="Xác nhận" />
+              <Text fontSize={FontSize.SMALL} color={colors.blue}>
+                Thêm nhóm HV vắng +
+              </Text>
+            </Box>
+          </ScrollView>
         </Box>
+        <Button text="Xác nhận" onPress={handleSubmit(onSubmit)} />
       </Box>
     </Box>
   );

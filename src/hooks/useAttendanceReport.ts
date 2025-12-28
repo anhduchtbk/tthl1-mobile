@@ -11,7 +11,9 @@ import { Company } from '@/api/types/company';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useInfinitePagination } from './useInfinitePagination';
 
-export const useGetStudentList = (params: GetListAttendanceReportsRequest) => {
+export const useGetAttendanceList = (
+  params: GetListAttendanceReportsRequest
+) => {
   return useInfinitePagination<Company, GetListAttendanceReportsRequest>({
     queryKey: [ATTENDANCE_REPORT_QUERY_KEY.listAttendanceReport, params],
     queryFn: getAttendanceList,

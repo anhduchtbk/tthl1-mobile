@@ -86,7 +86,7 @@ export enum REPORT_NUMBER_TYPE {
   DIEM_DANH_BAO_DONG_QUAN_SO = 'diem_danh_bao_dong_quan_so',
   DIEM_DANH_BAO_DONG_HANH_QUAN_DI_CHUYEN = 'diem_danh_bao_dong_hanh_quan_di_chuyen',
   DIEM_DANH_BAO_DONG_HANH_QUAN_CHIEN_DOAT = 'diem_danh_bao_dong_hanh_quan_chien_doat',
-  DIEM_DANH_BUOI_SANG = 'sáng',
-  DIEM_DANH_BUOI_CHIEU = 'chiều',
-  DIEM_DANH_BUOI_TOI = 'tối',
+  DIEM_DANH_BUOI_SANG = 'sang',
+  DIEM_DANH_BUOI_CHIEU = 'chieu',
+  DIEM_DANH_BUOI_TOI = 'toi',
 }

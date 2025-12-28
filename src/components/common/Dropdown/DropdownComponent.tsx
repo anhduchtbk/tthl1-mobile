@@ -40,6 +40,7 @@ type DropdownComponentProps = {
   onBlur: () => void;
   onChange: (item: DropdownItem) => void;
   dropdownStyle?: ViewStyle;
+  onSearchExternal?: (text: string) => void;
 };
 
 const DropdownComponent = ({
@@ -54,6 +55,7 @@ const DropdownComponent = ({
   onBlur,
   onChange,
   dropdownStyle,
+  onSearchExternal,
 }: DropdownComponentProps) => {
   return (
     <Box>
@@ -96,7 +98,30 @@ const DropdownComponent = ({
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}
-        renderInputSearch={onSearch => <SearchInput onSearch={onSearch} />}
+        renderInputSearch={onSearch => (
+          <SearchInput
+            onSearch={onSearchExternal ? onSearchExternal : onSearch}
+          />
+        )}
+        renderItem={(item: DropdownItem) => (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            py={10}
+            px={16}
+          >
+            <Text fontSize={16} color={colors.text[3]}>
+              {item.label}
+            </Text>
+
+            {item.dateofbirth && (
+              <Text fontSize={12} color={colors.text[2]}>
+                {item.dateofbirth}
+              </Text>
+            )}
+          </Box>
+        )}
       />
     </Box>
   );
