@@ -43,6 +43,7 @@ const ReportNumberScreen = () => {
     formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(reportNumberSchema),
+    mode: 'onChange',
     defaultValues: {
       purpose: '',
       companyNumber: 0,
@@ -53,41 +54,6 @@ const ReportNumberScreen = () => {
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
-      <Box mt={20} px={16} gap={16}>
-        <Dropdown
-          data={REPORT_NUMBER_OPTIONS}
-          control={control}
-          name="purpose"
-          label={'Mốc điểm danh'}
-          isRequired
-          placeholder={'Điểm danh'}
-          searchPlaceholder={'Tìm kiếm'}
-        />
-        <Input
-          as={TextField}
-          isRequired
-          name="companyNumber"
-          control={control}
-          label={'Tổng quân số'}
-          placeholder={'0'}
-          placeholderTextColor={colors.placeholder}
-          returnKeyType="next"
-          keyboardType="number-pad"
-          onSubmitEditing={() => refs.absentNumber.current?.focus()}
-          error={errors?.companyNumber?.message}
-        />
-        <Input
-          as={TextField}
-          name="absentNumber"
-          ref={refs.absentNumber}
-          control={control}
-          label={'Tổng vắng'}
-          placeholder={'0'}
-          placeholderTextColor={colors.placeholder}
-          keyboardType="number-pad"
-          error={errors?.absentNumber?.message}
-        />
-        <AbsentStudentGroup />
       <Box flex={1} mt={20} px={16} gap={16} pb={insets.bottom}>
         <Box flex={1}>
           <ScrollView
@@ -95,13 +61,14 @@ const ReportNumberScreen = () => {
             contentContainerStyle={{ flex: 1, gap: 16 }}
           >
             <Dropdown
-              data={data}
+              data={REPORT_NUMBER_OPTIONS}
               control={control}
               name="purpose"
-              label={'Quân số'}
+              label={'Mốc điểm danh'}
               isRequired
               placeholder={'Điểm danh'}
               searchPlaceholder={'Tìm kiếm'}
+              onChange={(value) => console.log('dddsaa', value)}
             />
             <Input
               as={TextField}
@@ -113,7 +80,6 @@ const ReportNumberScreen = () => {
               placeholderTextColor={colors.placeholder}
               returnKeyType="next"
               keyboardType="number-pad"
-              labelColor={colors.text[2]}
               onSubmitEditing={() => refs.absentNumber.current?.focus()}
               error={errors?.companyNumber?.message}
             />
@@ -126,7 +92,6 @@ const ReportNumberScreen = () => {
               placeholder={'0'}
               placeholderTextColor={colors.placeholder}
               keyboardType="number-pad"
-              labelColor={colors.text[2]}
               error={errors?.absentNumber?.message}
             />
             <AbsentStudentGroup />
@@ -136,7 +101,7 @@ const ReportNumberScreen = () => {
               borderWidth={1}
               borderColor={colors.blue}
               borderRadius={16}
-              alignSelf='flex-end'
+              alignSelf="flex-end"
               justifyContent="center"
             >
               <Text fontSize={FontSize.SMALL} color={colors.blue}>

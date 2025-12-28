@@ -17,32 +17,34 @@ export function RenderMilitaryItemSkeleton() {
       alignItems="center"
       justifyContent="space-between"
     >
-      <Skeleton
-        width={width * 0.37}
-        height={18}
-        radius={8}
-        colors={skeletonColor}
-      />
-      <Box flexDirection="row" alignItems="center" mt={4} mb={10} gap={24}>
+      <Box>
         <Skeleton
-          width={width * 0.19}
-          height={14}
+          width={width * 0.37}
+          height={18}
           radius={8}
           colors={skeletonColor}
         />
+        <Box flexDirection="row" alignItems="center" mt={4} mb={10} gap={24}>
+          <Skeleton
+            width={width * 0.19}
+            height={14}
+            radius={8}
+            colors={skeletonColor}
+          />
+          <Skeleton
+            width={width * 0.14}
+            height={14}
+            radius={8}
+            colors={skeletonColor}
+          />
+        </Box>
         <Skeleton
-          width={width * 0.14}
-          height={14}
+          width={width * 0.5}
+          height={13}
           radius={8}
           colors={skeletonColor}
         />
       </Box>
-      <Skeleton
-        width={width * 0.5}
-        height={13}
-        radius={8}
-        colors={skeletonColor}
-      />
       <Box gap={12} alignItems="center">
         <Skeleton
           width={width * 0.3}
@@ -63,7 +65,6 @@ export function RenderMilitaryItemSkeleton() {
 
 const styles = StyleSheet.create({
   card: {
-    height: 90,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 12,
