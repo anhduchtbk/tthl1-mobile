@@ -18,14 +18,14 @@ import { z } from 'zod';
 
 type FormData = {
   purpose: string;
-  companyNumber: number;
-  absentNumber: number;
+  companyNumber?: number;
+  absentNumber?: number;
 };
 
 const reportNumberSchema = z.object({
   purpose: z.string(),
-  companyNumber: z.number(),
-  absentNumber: z.number(),
+  companyNumber: z.number().optional(),
+  absentNumber: z.number().optional(),
 });
 
 const ReportNumberScreen = () => {
@@ -46,10 +46,12 @@ const ReportNumberScreen = () => {
     mode: 'onChange',
     defaultValues: {
       purpose: '',
-      companyNumber: 0,
-      absentNumber: 0,
     },
   });
+
+  const onSubmit = (data: FormData) => {
+    console.log('Report Number Data:', data);
+  };
 
   return (
     <Box flex={1} bgColor={colors.white}>
@@ -68,7 +70,7 @@ const ReportNumberScreen = () => {
               isRequired
               placeholder={'Điểm danh'}
               searchPlaceholder={'Tìm kiếm'}
-              onChange={(value) => console.log('dddsaa', value)}
+              onChange={value => console.log('dddsaa', value)}
             />
             <Input
               as={TextField}
@@ -110,7 +112,7 @@ const ReportNumberScreen = () => {
             </Box>
           </ScrollView>
         </Box>
-        <Button text="Xác nhận" />
+        <Button text="Xác nhận" onPress={handleSubmit(onSubmit)} />
       </Box>
     </Box>
   );

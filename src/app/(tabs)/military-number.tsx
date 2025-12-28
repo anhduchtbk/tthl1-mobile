@@ -33,6 +33,8 @@ export default function MilitaryNumberScreen() {
     // filter: ['name|$eq|1'],
   });
 
+  console.log('data military number', data);
+
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator size={'small'} color={colors.primary[50]} />
@@ -48,7 +50,7 @@ export default function MilitaryNumberScreen() {
         })
       ) : (
         <FlatList
-          data={data}
+          data={data ? data : []}
           renderItem={({ item }) => <RenderMilitaryItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}

@@ -67,52 +67,64 @@ export const NOTIFICATION_STATUS_OPTIONS = [
 ];
 
 export const REPORT_NUMBER_OPTIONS = [
+  // {
+  //   label: 'Điểm danh thể dục buổi sáng',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_THE_DUC_BUOI_SANG,
+  // },
+  // { label: 'Điểm danh Ăn sáng', value: REPORT_NUMBER_TYPE.DIEM_DANH_AN_SANG },
+  // {
+  //   label: 'Điểm danh học buổi sáng (giờ 1)',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_SANG,
+  // },
+  // {
+  //   label: 'Điểm danh học buổi sáng (giờ 2)',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_SANG_2,
+  // },
+  // { label: 'Điểm danh ăn trưa', value: REPORT_NUMBER_TYPE.DIEM_DANH_AN_TRUA },
+  // {
+  //   label: 'Điểm danh ngủ trưa',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_NGHI_TRUA,
+  // },
+  // {
+  //   label: 'Điểm danh học buổi chiều (giờ 1)',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_CHIEU,
+  // },
+  // {
+  //   label: 'Điểm danh học buổi chiều (giờ 2)',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_CHIEU_2,
+  // },
+  // {
+  //   label: 'Điểm danh ngoại khoá',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_NGOAI_KHOA,
+  // },
+  // { label: 'Điểm danh ăn tối', value: REPORT_NUMBER_TYPE.DIEM_DANH_AN_TOI },
+  // {
+  //   label: 'Điểm danh sinh hoạt tối',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_SINH_HOAT_TOI,
+  // },
+  // { label: 'Điểm danh ngủ tối', value: REPORT_NUMBER_TYPE.DIEM_DANH_NGHI_TOI },
+  // {
+  //   label: 'Điểm danh báo động quân số',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_BAO_DONG_QUAN_SO,
+  // },
+  // {
+  //   label: 'Điểm danh báo động hành quân di chuyển',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_BAO_DONG_HANH_QUAN_DI_CHUYEN,
+  // },
+  // {
+  //   label: 'Điểm danh báo động hành quân chiến đấu',
+  //   value: REPORT_NUMBER_TYPE.DIEM_DANH_BAO_DONG_HANH_QUAN_CHIEN_DOAT,
+  // },
   {
-    label: 'Điểm danh thể dục buổi sáng',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_THE_DUC_BUOI_SANG,
+    label: 'Điểm danh buổi sáng',
+    value: REPORT_NUMBER_TYPE.DIEM_DANH_BUOI_SANG,
   },
-  { label: 'Điểm danh Ăn sáng', value: REPORT_NUMBER_TYPE.DIEM_DANH_AN_SANG },
   {
-    label: 'Điểm danh học buổi sáng (giờ 1)',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_SANG,
+    label: 'Điểm danh buổi chiều',
+    value: REPORT_NUMBER_TYPE.DIEM_DANH_BUOI_CHIEU,
   },
   {
-    label: 'Điểm danh học buổi sáng (giờ 2)',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_SANG_2,
-  },
-  { label: 'Điểm danh ăn trưa', value: REPORT_NUMBER_TYPE.DIEM_DANH_AN_TRUA },
-  {
-    label: 'Điểm danh ngủ trưa',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_NGHI_TRUA,
-  },
-  {
-    label: 'Điểm danh học buổi chiều (giờ 1)',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_CHIEU,
-  },
-  {
-    label: 'Điểm danh học buổi chiều (giờ 2)',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_HOC_BUOI_CHIEU_2,
-  },
-  {
-    label: 'Điểm danh ngoại khoá',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_NGOAI_KHOA,
-  },
-  { label: 'Điểm danh ăn tối', value: REPORT_NUMBER_TYPE.DIEM_DANH_AN_TOI },
-  {
-    label: 'Điểm danh sinh hoạt tối',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_SINH_HOAT_TOI,
-  },
-  { label: 'Điểm danh ngủ tối', value: REPORT_NUMBER_TYPE.DIEM_DANH_NGHI_TOI },
-  {
-    label: 'Điểm danh báo động quân số',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_BAO_DONG_QUAN_SO,
-  },
-  {
-    label: 'Điểm danh báo động hành quân di chuyển',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_BAO_DONG_HANH_QUAN_DI_CHUYEN,
-  },
-  {
-    label: 'Điểm danh báo động hành quân chiến đấu',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_BAO_DONG_HANH_QUAN_CHIEN_DOAT,
+    label: 'Điểm danh buổi tối',
+    value: REPORT_NUMBER_TYPE.DIEM_DANH_BUOI_TOI,
   },
 ];
