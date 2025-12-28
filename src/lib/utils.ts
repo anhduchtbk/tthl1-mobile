@@ -1,4 +1,4 @@
-import { SCHEDULE_TYPE } from '@/constants/value';
+import { HISTORY_TYPE, SCHEDULE_TYPE } from '@/constants/value';
 import { colors } from '@/theme/colors';
 import dayjs from 'dayjs';
 
@@ -64,17 +64,17 @@ export const formatVietnameseDay = (date: Date | string | null) => {
     case 0:
       return 'Chủ nhật';
     case 1:
-      return 'Thứ hai';
+      return 'Thứ 2';
     case 2:
-      return 'Thứ ba';
+      return 'Thứ 3';
     case 3:
-      return 'Thứ tư';
+      return 'Thứ 4';
     case 4:
-      return 'Thứ năm';
+      return 'Thứ 5';
     case 5:
-      return 'Thứ sáu';
+      return 'Thứ 6';
     case 6:
-      return 'Thứ bảy';
+      return 'Thứ 7';
     default:
       break;
   }
@@ -117,6 +117,35 @@ export const formatScheduleType = (type: SCHEDULE_TYPE) => {
       break;
     case SCHEDULE_TYPE.AFTERSCHOOL:
       scheduleType = 'Ngoại khoá';
+      bgColor = colors.primary[70];
+      borderColor = '#20C74B';
+      break;
+    default:
+      scheduleType = '';
+      bgColor = colors.primary[40];
+      borderColor = '#91BAFE';
+      break;
+  }
+
+  return { scheduleType, bgColor, borderColor };
+};
+
+export const formatHistoryType = (type: HISTORY_TYPE) => {
+  let scheduleType, bgColor, borderColor;
+
+  switch (type) {
+    case HISTORY_TYPE.MORNING:
+      scheduleType = 'Điểm danh sáng';
+      bgColor = colors.primary[40];
+      borderColor = '#91BAFE';
+      break;
+    case HISTORY_TYPE.AFTERNOON:
+      scheduleType = 'Điểm danh chiều';
+      bgColor = colors.primary[50];
+      borderColor = '#FEF08A';
+      break;
+    case HISTORY_TYPE.NIGHT:
+      scheduleType = 'Điểm danh tối';
       bgColor = colors.primary[70];
       borderColor = '#20C74B';
       break;
