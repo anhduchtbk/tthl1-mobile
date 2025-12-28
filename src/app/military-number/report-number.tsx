@@ -6,11 +6,14 @@ import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { REPORT_NUMBER_OPTIONS } from '@/constants/option';
-import { AbsentStudentGroup } from '@/features/military-number/AbsentStudentGroup';
+import {
+  AbsentGroup,
+  AbsentStudentGroup,
+} from '@/features/military-number/AbsentStudentGroup';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, TextInput } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,6 +33,38 @@ const reportNumberSchema = z.object({
 
 const ReportNumberScreen = () => {
   const insets = useSafeAreaInsets();
+  const [absentGroup, setAbsentGroup] = useState<AbsentGroup[]>([
+    {
+      id: 1,
+      reason: '',
+      students: [],
+    },
+  ]);
+  const [absentStudents, setAbsentStudents] = useState<string[]>([]);
+
+  const addAbsentGroup = () => {
+    const newGroup: AbsentGroup = {
+      id: absentGroup[absentGroup.length - 1].id + 1,
+      reason: '',
+      students: [],
+    };
+    setAbsentGroup([...absentGroup, newGroup]);
+  };
+
+  const editAbsentGroup = (
+    groupItem: AbsentGroup,
+    newGroupItem: AbsentGroup
+  ) => {
+    setAbsentGroup(
+      absentGroup.map(group =>
+        group.id === groupItem.id ? newGroupItem : group
+      )
+    );
+  };
+
+  const removeAbsentGroup = (groupItem: AbsentGroup) => {
+    setAbsentGroup(absentGroup.filter(group => group.id !== groupItem.id));
+  };
 
   const refs = {
     purpose: useRef<TextInput>(null),
@@ -39,8 +74,9 @@ const ReportNumberScreen = () => {
 
   const {
     control,
+    setValue,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(reportNumberSchema),
     mode: 'onChange',
@@ -56,63 +92,88 @@ const ReportNumberScreen = () => {
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
-      <Box flex={1} mt={20} px={16} gap={16} pb={insets.bottom}>
+      <Box flex={1} mt={20} gap={16} pb={insets.bottom}>
         <Box flex={1}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ flex: 1, gap: 16 }}
+            contentContainerStyle={{ gap: 16 }}
           >
-            <Dropdown
-              data={REPORT_NUMBER_OPTIONS}
-              control={control}
-              name="purpose"
-              label={'Mốc điểm danh'}
-              isRequired
-              placeholder={'Điểm danh'}
-              searchPlaceholder={'Tìm kiếm'}
-              onChange={value => console.log('dddsaa', value)}
-            />
-            <Input
-              as={TextField}
-              isRequired
-              name="companyNumber"
-              control={control}
-              label={'Tổng quân số'}
-              placeholder={'0'}
-              placeholderTextColor={colors.placeholder}
-              returnKeyType="next"
-              keyboardType="number-pad"
-              onSubmitEditing={() => refs.absentNumber.current?.focus()}
-              error={errors?.companyNumber?.message}
-            />
-            <Input
-              as={TextField}
-              name="absentNumber"
-              ref={refs.absentNumber}
-              control={control}
-              label={'Tổng vắng'}
-              placeholder={'0'}
-              placeholderTextColor={colors.placeholder}
-              keyboardType="number-pad"
-              error={errors?.absentNumber?.message}
-            />
-            <AbsentStudentGroup />
+            <Box px={16} gap={16}>
+              <Dropdown
+                data={REPORT_NUMBER_OPTIONS}
+                control={control}
+                name="purpose"
+                label={'Mốc điểm danh'}
+                isRequired
+                placeholder={'Điểm danh'}
+                searchPlaceholder={'Tìm kiếm'}
+                onChange={value => console.log('dddsaa', value)}
+              />
+              <Input
+                as={TextField}
+                isRequired
+                name="companyNumber"
+                control={control}
+                label={'Tổng quân số'}
+                placeholder={'0'}
+                placeholderTextColor={colors.placeholder}
+                returnKeyType="next"
+                keyboardType="number-pad"
+                error={errors?.companyNumber?.message}
+                onSubmitEditing={() => refs.absentNumber.current?.focus()}
+                onChangeText={value => {
+                  const cleanValue = value.replace(/[^0-9]/g, '');
+                  setValue('companyNumber', Number(cleanValue));
+                }}
+              />
+              <Input
+                as={TextField}
+                name="absentNumber"
+                ref={refs.absentNumber}
+                control={control}
+                label={'Tổng vắng'}
+                placeholder={'0'}
+                placeholderTextColor={colors.placeholder}
+                keyboardType="number-pad"
+                error={errors?.absentNumber?.message}
+                onChangeText={value => {
+                  const cleanValue = value.replace(/[^0-9]/g, '');
+                  setValue('absentNumber', Number(cleanValue));
+                }}
+              />
+            </Box>
+            {absentGroup.map((item, index) => {
+              return (
+                <AbsentStudentGroup
+                  key={index}
+                  index={index}
+                  item={item}
+                  onEditGroup={editAbsentGroup}
+                  onRemoveGroup={removeAbsentGroup}
+                />
+              );
+            })}
             <Box
               h={24}
               px={10}
+              mx={16}
               borderWidth={1}
               borderColor={colors.blue}
               borderRadius={16}
               alignSelf="flex-end"
               justifyContent="center"
+              onPress={() => addAbsentGroup()}
             >
               <Text fontSize={FontSize.SMALL} color={colors.blue}>
                 Thêm nhóm HV vắng +
               </Text>
             </Box>
+            <Box h={100} />
           </ScrollView>
         </Box>
-        <Button text="Xác nhận" onPress={handleSubmit(onSubmit)} />
+        <Box px={16}>
+          <Button text="Xác nhận" onPress={handleSubmit(onSubmit)} />
+        </Box>
       </Box>
     </Box>
   );

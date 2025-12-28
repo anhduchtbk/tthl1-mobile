@@ -7,7 +7,7 @@ import DropdownComponent from './DropdownComponent';
 export type DropdownItem = {
   label: string;
   value: string;
-  dateofbirth?: string;
+  birthday?: string;
 };
 
 export type DropdownProps = {
@@ -18,10 +18,12 @@ export type DropdownProps = {
   control?: Control<any>;
   name?: Path<any>;
   value?: string;
+  values?: string[];
   isRequired?: boolean;
-  onChange?: (value: string) => void;
+  onChange?: (value: any) => void;
   dropdownStyle?: ViewStyle;
   onSearchExternal?: (text: string) => void;
+  isMultiSelect?: boolean;
 };
 
 const Dropdown = ({
@@ -32,23 +34,34 @@ const Dropdown = ({
   control,
   name,
   value: externalValue,
+  values: externalValues,
   isRequired,
   onChange: externalOnChange,
   dropdownStyle,
   onSearchExternal,
+  isMultiSelect = false,
 }: DropdownProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const [internalValue, setInternalValue] = useState<string | null>(
     externalValue || null
   );
+  const [internalValues, setInternalValues] = useState<string[]>(
+    externalValues || []
+  );
   const controllerResult =
     // eslint-disable-next-line react-hooks/rules-of-hooks
     control && name ? useController({ name, control }) : null;
 
-  const handleChange = (item: DropdownItem) => {
-    const newValue = item.value;
-    setInternalValue(newValue);
-    externalOnChange?.(newValue);
+  const handleChange = (item: string[] | DropdownItem) => {
+    console.log('handleChange', item);
+
+    if (Array.isArray(item)) {
+      setInternalValues(item);
+      externalOnChange?.(item);
+    } else {
+      setInternalValue(item.value);
+      externalOnChange?.(item.value);
+    }
     // if (controllerResult) {
     //   controllerResult.field.onChange(newValue);
     // } else {
@@ -60,6 +73,8 @@ const Dropdown = ({
 
   const currentValue = controllerResult
     ? controllerResult.field.value
+    : isMultiSelect
+    ? internalValues
     : internalValue;
 
   return (
@@ -68,7 +83,8 @@ const Dropdown = ({
       label={label}
       placeholder={placeholder}
       searchPlaceholder={searchPlaceholder}
-      value={currentValue}
+      value={isMultiSelect ? undefined : currentValue}
+      values={isMultiSelect ? currentValue : []}
       isFocus={isFocus}
       isRequired={isRequired}
       onFocus={() => setIsFocus(true)}
@@ -76,6 +92,7 @@ const Dropdown = ({
       onChange={handleChange}
       dropdownStyle={dropdownStyle}
       onSearchExternal={onSearchExternal}
+      isMultiSelect={isMultiSelect}
     />
   );
 };

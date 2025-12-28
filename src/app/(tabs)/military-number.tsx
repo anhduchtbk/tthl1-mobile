@@ -33,8 +33,6 @@ export default function MilitaryNumberScreen() {
     // filter: ['name|$eq|1'],
   });
 
-  console.log('data military number', data);
-
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator size={'small'} color={colors.primary[50]} />

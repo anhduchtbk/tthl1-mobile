@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { ColorValue } from 'react-native';
 import Svg, { Path, SvgProps } from 'react-native-svg';
+
 type ActiveSvgProps = SvgProps & {
   activeColor?: ColorValue;
 };
+
 function ManageStudentSvg({ activeColor, ...props }: ActiveSvgProps) {
   return (
     <Svg fill="none" {...props}>
