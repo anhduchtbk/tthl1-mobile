@@ -89,64 +89,65 @@ const ReportNumberScreen = () => {
           error={errors?.absentNumber?.message}
         />
         <AbsentStudentGroup />
-      <Box flex={1} mt={20} px={16} gap={16} pb={insets.bottom}>
-        <Box flex={1}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ flex: 1, gap: 16 }}
-          >
-            <Dropdown
-              data={data}
-              control={control}
-              name="purpose"
-              label={'Quân số'}
-              isRequired
-              placeholder={'Điểm danh'}
-              searchPlaceholder={'Tìm kiếm'}
-            />
-            <Input
-              as={TextField}
-              isRequired
-              name="companyNumber"
-              control={control}
-              label={'Tổng quân số'}
-              placeholder={'0'}
-              placeholderTextColor={colors.placeholder}
-              returnKeyType="next"
-              keyboardType="number-pad"
-              labelColor={colors.text[2]}
-              onSubmitEditing={() => refs.absentNumber.current?.focus()}
-              error={errors?.companyNumber?.message}
-            />
-            <Input
-              as={TextField}
-              name="absentNumber"
-              ref={refs.absentNumber}
-              control={control}
-              label={'Tổng vắng'}
-              placeholder={'0'}
-              placeholderTextColor={colors.placeholder}
-              keyboardType="number-pad"
-              labelColor={colors.text[2]}
-              error={errors?.absentNumber?.message}
-            />
-            <AbsentStudentGroup />
-            <Box
-              h={24}
-              px={10}
-              borderWidth={1}
-              borderColor={colors.blue}
-              borderRadius={16}
-              alignSelf='flex-end'
-              justifyContent="center"
+        <Box flex={1} mt={20} px={16} gap={16} pb={insets.bottom}>
+          <Box flex={1}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ flex: 1, gap: 16 }}
             >
-              <Text fontSize={FontSize.SMALL} color={colors.blue}>
-                Thêm nhóm HV vắng +
-              </Text>
-            </Box>
-          </ScrollView>
+              <Dropdown
+                data={data}
+                control={control}
+                name="purpose"
+                label={'Quân số'}
+                isRequired
+                placeholder={'Điểm danh'}
+                searchPlaceholder={'Tìm kiếm'}
+              />
+              <Input
+                as={TextField}
+                isRequired
+                name="companyNumber"
+                control={control}
+                label={'Tổng quân số'}
+                placeholder={'0'}
+                placeholderTextColor={colors.placeholder}
+                returnKeyType="next"
+                keyboardType="number-pad"
+                labelColor={colors.text[2]}
+                onSubmitEditing={() => refs.absentNumber.current?.focus()}
+                error={errors?.companyNumber?.message}
+              />
+              <Input
+                as={TextField}
+                name="absentNumber"
+                ref={refs.absentNumber}
+                control={control}
+                label={'Tổng vắng'}
+                placeholder={'0'}
+                placeholderTextColor={colors.placeholder}
+                keyboardType="number-pad"
+                labelColor={colors.text[2]}
+                error={errors?.absentNumber?.message}
+              />
+              <AbsentStudentGroup />
+              <Box
+                h={24}
+                px={10}
+                borderWidth={1}
+                borderColor={colors.blue}
+                borderRadius={16}
+                alignSelf="flex-end"
+                justifyContent="center"
+              >
+                <Text fontSize={FontSize.SMALL} color={colors.blue}>
+                  Thêm nhóm HV vắng +
+                </Text>
+              </Box>
+            </ScrollView>
+          </Box>
+          <Button text="Xác nhận" />
         </Box>
-        <Button text="Xác nhận" />
       </Box>
     </Box>
   );

@@ -50,7 +50,7 @@ export default function MilitaryNumberScreen() {
         })
       ) : (
         <FlatList
-          data={data}
+          data={data ? data : []}
           renderItem={({ item }) => <RenderMilitaryItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}
