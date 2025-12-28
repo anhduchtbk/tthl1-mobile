@@ -1,13 +1,35 @@
-import { getAttendanceList } from '@/api/attendence-report';
+import {
+  createAttendanceReport,
+  getAttendanceList,
+} from '@/api/attendence-report';
 import { ATTENDANCE_REPORT_QUERY_KEY } from '@/api/constants/attendance-report';
-import { GetListAttendanceReportsRequest } from '@/api/types/attendance-report';
-import { Student } from '@/api/types/student';
+import {
+  CreateAttendanceReport,
+  GetListAttendanceReportsRequest,
+} from '@/api/types/attendance-report';
+import { Company } from '@/api/types/company';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useInfinitePagination } from './useInfinitePagination';
 
 export const useGetStudentList = (params: GetListAttendanceReportsRequest) => {
-  return useInfinitePagination<Student, GetListAttendanceReportsRequest>({
+  return useInfinitePagination<Company, GetListAttendanceReportsRequest>({
     queryKey: [ATTENDANCE_REPORT_QUERY_KEY.listAttendanceReport, params],
     queryFn: getAttendanceList,
     initialParams: params,
+  });
+};
+
+export const useCreateAttendanceReport = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: [ATTENDANCE_REPORT_QUERY_KEY.createAttendanceReport],
+    mutationFn: (data: CreateAttendanceReport) => createAttendanceReport(data),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ATTENDANCE_REPORT_QUERY_KEY.listAttendanceReport],
+      });
+    },
   });
 };

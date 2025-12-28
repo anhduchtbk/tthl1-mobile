@@ -1,5 +1,5 @@
 import { PaginationResponse } from '@/types/api';
-import { Student } from './student';
+import { Company } from './company';
 
 export interface GetListAttendanceReportsRequest {
   order?: string;
@@ -7,4 +7,17 @@ export interface GetListAttendanceReportsRequest {
   limit?: number;
 }
 
-export type GetListAttendanceReportsResponse = PaginationResponse<Student>;
+interface AbsentGroup {
+  studentIds?: number[];
+  reseason?: string;
+}
+
+export interface CreateAttendanceReport {
+  personnelCount?: number;
+  totalAbsent?: number;
+  companyId?: number;
+  session?: string;
+  absentGroups?: AbsentGroup[];
+}
+
+export type GetListAttendanceReportsResponse = PaginationResponse<Company>;

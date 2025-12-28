@@ -57,6 +57,7 @@ const ReportNumberScreen = () => {
           isRequired
           placeholder={'Điểm danh'}
           searchPlaceholder={'Tìm kiếm'}
+          onChange={item => console.log('asdasd', item)}
         />
         <Input
           as={TextField}
