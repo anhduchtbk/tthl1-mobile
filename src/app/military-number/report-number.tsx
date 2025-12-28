@@ -79,6 +79,10 @@ const ReportNumberScreen = () => {
     },
   });
 
+  const onSubmit = (data: FormData) => {
+    console.log('Report Number Data:', data);
+  };
+
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
@@ -161,7 +165,7 @@ const ReportNumberScreen = () => {
             <Box h={100} />
           </ScrollView>
         </Box>
-        <Button text="Xác nhận" />
+        <Button text="Xác nhận" onPress={handleSubmit(onSubmit)} />
       </Box>
     </Box>
   );

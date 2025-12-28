@@ -14,46 +14,47 @@ export function RenderMilitaryItemSkeleton() {
     <Box
       style={styles.card}
       flexDirection="row"
-      alignItems="center"
       justifyContent="space-between"
+      alignItems="center"
     >
-      <Box>
+      <Box gap={7}>
         <Skeleton
-          width={width * 0.37}
+          width={width * 0.36}
           height={18}
           radius={8}
           colors={skeletonColor}
         />
-        <Box flexDirection="row" alignItems="center" mt={4} mb={10} gap={24}>
+        <Box flexDirection="row" alignItems="center" mt={4} gap={36}>
           <Skeleton
-            width={width * 0.19}
+            width={width * 0.21}
             height={14}
             radius={8}
             colors={skeletonColor}
           />
           <Skeleton
-            width={width * 0.14}
+            width={width * 0.2}
             height={14}
             radius={8}
             colors={skeletonColor}
           />
         </Box>
+
         <Skeleton
           width={width * 0.5}
           height={13}
-          radius={8}
+          radius={16}
           colors={skeletonColor}
         />
       </Box>
-      <Box gap={12} alignItems="center">
+      <Box gap={11}>
         <Skeleton
-          width={width * 0.3}
+          width={width * 0.18}
           height={24}
           radius={16}
           colors={skeletonColor}
         />
         <Skeleton
-          width={width * 0.3}
+          width={width * 0.18}
           height={24}
           radius={16}
           colors={skeletonColor}
