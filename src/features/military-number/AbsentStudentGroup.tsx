@@ -1,9 +1,9 @@
 import InfoSvg from '@/assets/icons/info-svg';
+import RemoveSvg from '@/assets/icons/remove-svg';
 import Dropdown from '@/components/common/Dropdown/Dropdown';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
-import { StyleSheet } from 'react-native';
 
 const data = [
   { label: 'Điểm danh thể dục buổi sáng', value: '1' },
@@ -17,13 +17,39 @@ const studentData = [
   { label: 'Điểm danh Học buổi sáng (Võ thuật CAND)', value: '3' },
 ];
 
-export function AbsentStudentGroup() {
+interface Student {
+  id: number;
+  fullName: string;
+  birthday: string;
+}
+
+export interface AbsentGroup {
+  id: number;
+  reason: string;
+  students: Student[];
+}
+
+type AbsentStudentGroupProps = {
+  item: AbsentGroup;
+  index: number;
+  onEditGroup: (group: AbsentGroup) => void;
+  onRemoveGroup: (group: AbsentGroup) => void;
+};
+
+export function AbsentStudentGroup({
+  item,
+  index,
+  onEditGroup,
+  onRemoveGroup,
+}: AbsentStudentGroupProps) {
   return (
     <Box
+      key={index}
       borderWidth={1}
       borderStyle="dashed"
       borderColor={colors.blue}
       borderRadius={16}
+      mx={16}
     >
       <Box
         bgColor={colors.white}
@@ -35,9 +61,17 @@ export function AbsentStudentGroup() {
         gap={4}
       >
         <Text fontWeight="bold" color={colors.blue}>
-          Nhóm học viên 1
+          Nhóm học viên {index + 1}
         </Text>
         <InfoSvg />
+      </Box>
+      <Box
+        pos="absolute"
+        right={-8}
+        top={-8}
+        onPress={() => onRemoveGroup(item)}
+      >
+        <RemoveSvg />
       </Box>
       <Box mt={4} p={8} gap={16}>
         <Dropdown
@@ -47,6 +81,7 @@ export function AbsentStudentGroup() {
           isRequired
           placeholder={'Nhập lý do'}
           searchPlaceholder={'Tìm kiếm'}
+          onChange={(value: string) => onEditGroup({ ...item, reason: value })}
         />
         <Dropdown
           data={studentData}
@@ -55,39 +90,9 @@ export function AbsentStudentGroup() {
           isRequired
           placeholder={'Tên học viên'}
           searchPlaceholder={'Tìm kiếm'}
+          // onChange={(value: string[]) => onEditGroup({ ...item, students: value })}
         />
       </Box>
     </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    gap: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-
-    padding: 12,
-    marginBottom: 16,
-    // iOS shadow
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-
-    // Android shadow
-    elevation: 6,
-  },
-
-  containerBox: {
-    borderWidth: 1,
-    borderColor: '#3867F8',
-    borderRadius: 16,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-});
