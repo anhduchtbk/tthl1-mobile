@@ -5,6 +5,13 @@ export enum SCHEDULE_TYPE {
   AFTERSCHOOL = 'afterSchool',
 }
 
+// Buổi điểm danh
+export enum HISTORY_TYPE {
+  MORNING = 'morning',
+  AFTERNOON = 'afternoon',
+  NIGHT = 'night',
+}
+
 // Hệ đào tạo
 export enum EDUCATION_TYPE {
   CHINH_QUY = 'chinh_quy',

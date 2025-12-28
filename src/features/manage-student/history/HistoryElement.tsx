@@ -1,58 +1,52 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { HISTORY_TYPE } from '@/constants/value';
+import { formatHistoryType } from '@/lib/utils';
 import { colors } from '@/theme/colors';
-import { StyleSheet } from 'react-native';
 import { PropsStudentGroup, StudentGroup } from './StudentGroup';
 
-type PropsHistoryElements = {
-  schedule: string; // tiêu đề buổi điểm danh
-  bgColor?: string;
-  borderColor?: string;
-  totalStudents?: number;
-  absentStudents?: number;
-  actualStudents?: number;
+interface History {
+  type: HISTORY_TYPE; // tiêu đề buổi điểm danh
+  totalStudents: number;
+  absentStudents: number;
+  actualStudents: number;
   listStudentGroup?: PropsStudentGroup[];
-};
+}
 
-export function HistoryElements({
-  schedule,
-  bgColor,
-  borderColor,
-  totalStudents,
-  absentStudents,
-  actualStudents,
-  listStudentGroup,
-}: PropsHistoryElements) {
+export function HistoryElement({ item }: { item: History }) {
   return (
-    <Box>
+    <Box gap={4}>
       <Box
-        backgroundColor={bgColor}
+        backgroundColor={formatHistoryType(item.type).bgColor}
         flexDirection="row"
         alignItems="center"
-        gap={12}
+        gap={8}
+        h={20}
+        mb={8}
       >
         <Box
-          borderWidth={3}
-          borderColor={borderColor}
+          w={4}
+          h={'100%'}
           borderRadius={3}
-          style={{ minHeight: 20 }}
-          backgroundColor={colors.black}
+          bgColor={formatHistoryType(item.type).borderColor}
         />
-        <Text style={styles.txtSchedule} fontSize={14} color={'#777777'}>
-          {schedule}
+        <Text fontWeight="bold" color={'#7C7C7C'}>
+          {formatHistoryType(item.type).scheduleType}
         </Text>
       </Box>
-      <Box py={8} px={4} gap={4}>
-        <Text fontWeight="bold" fontSize={14}>
-          Tổng quân số: {totalStudents}
+      <Box gap={2}>
+        <Text fontWeight="bold" color={colors.text[3]}>
+          Tổng quân số: {item.totalStudents}
         </Text>
-        <Text fontWeight="bold" fontSize={14}>
-          Vắng: {absentStudents}
+        <Text fontWeight="bold" color={colors.text[3]}>
+          Vắng: {item.absentStudents}
         </Text>
-        <Text fontWeight="bold" fontSize={14}>
-          Quân số thực tế: {actualStudents}
+        <Text fontWeight="bold" color={colors.text[3]}>
+          Quân số thực tế: {item.actualStudents}
         </Text>
-        {listStudentGroup?.map((group, index) => (
+      </Box>
+      <Box gap={8}>
+        {item.listStudentGroup?.map((group, index) => (
           <StudentGroup
             key={index}
             numberGroup={index + 1}
@@ -64,10 +58,3 @@ export function HistoryElements({
     </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  txtSchedule: {
-    fontWeight: 800,
-    lineHeight: 20,
-  },
-});

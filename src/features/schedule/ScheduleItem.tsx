@@ -34,7 +34,7 @@ export function ScheduleItem({ item }: { item: Schedule }) {
         </Text>
       </Box>
       <Box gap={2}>
-        <Text fontSize={14} fontWeight="bold" color={colors.text[3]}>
+        <Text fontWeight="bold" color={colors.text[3]}>
           {item.subjectFullname}
         </Text>
         <Text fontSize={13} color={colors.text[1]}>
