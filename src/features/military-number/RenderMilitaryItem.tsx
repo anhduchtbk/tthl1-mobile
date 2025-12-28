@@ -34,11 +34,15 @@ export function RenderMilitaryItem({ item }: RenderItemProps) {
         </Text>
         <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
           <Text color={colors.text[1]} fontSize={11}>
-            <Text fontWeight="bold">Học viên: </Text>
+            <Text fontWeight="bold" color={colors.text[1]}>
+              Học viên:{' '}
+            </Text>
             {item?.personnelCount}
           </Text>
           <Text color={colors.text[1]} fontSize={11}>
-            <Text fontWeight="bold">Chỉ huy: </Text>
+            <Text fontWeight="bold" color={colors.text[1]}>
+              Chỉ huy:{' '}
+            </Text>
           </Text>
         </Box>
         <Box flex={1} flexDirection="row" alignItems="center" gap={6} mt={10}>

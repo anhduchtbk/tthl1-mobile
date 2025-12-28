@@ -48,9 +48,7 @@ export default function ChangePasswordScreen() {
     },
   });
 
-  const onConfirm = () => {
-    
-  };
+  const onConfirm = () => {};
 
   return (
     <Box bgColor={colors.white}>
@@ -63,6 +61,7 @@ export default function ChangePasswordScreen() {
           ref={refs.currentPassword}
           name="currentPassword"
           label="Nhập mật khẩu hiện tại"
+          placeholder="Nhập mật khẩu hiện tại"
           control={control}
           returnKeyType="next"
           onSubmitEditing={() => refs.newPassword.current?.focus()}
@@ -74,6 +73,7 @@ export default function ChangePasswordScreen() {
           ref={refs.newPassword}
           name="newPassword"
           label="Nhập mật khẩu mới"
+          placeholder="Nhập mật khẩu mới"
           control={control}
           returnKeyType="next"
           onSubmitEditing={() => refs.confirmNewPassword.current?.focus()}
@@ -83,8 +83,9 @@ export default function ChangePasswordScreen() {
           as={TextField}
           isRequired
           ref={refs.confirmNewPassword}
-          label="Nhập lại mật khẩu mới"
           name="confirmNewPassword"
+          label="Nhập lại mật khẩu mới"
+          placeholder="Nhập lại mật khẩu mới"
           control={control}
           error={errors?.confirmNewPassword?.message}
         />

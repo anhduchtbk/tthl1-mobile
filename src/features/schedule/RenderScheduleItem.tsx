@@ -7,10 +7,8 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type ItemProps = {
-  companyFullname: string;
-  companyAmount: number;
-  commanderAmount: number;
-  commanderFullname: string;
+  name: string;
+  personnelCount: number;
 };
 
 type RenderItemProps = {
@@ -27,31 +25,26 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
   return (
     <Box style={styles.card}>
       <Text color={colors.text[3]} fontWeight="bold">
-        {item.companyFullname}
+        Đại đội {item?.name}
       </Text>
-      <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
+      <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight="bold">Học viên: </Text>
-          {item.companyAmount}
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Học viên:{' '}
+          </Text>
+          {item.personnelCount}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight="bold">Chỉ huy: </Text>
-          {item.commanderAmount}
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Chỉ huy:{' '}
+          </Text>
         </Text>
       </Box>
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Box flex={1}>
-          <Box flexDirection="row" alignItems="center" gap={6}>
-            <StarSvg />
-            <Text color={colors.text[1]} fontSize={11}>
-              Đại đội trưởng: {item.commanderFullname}
-            </Text>
-          </Box>
-        </Box>
+      <Box flexDirection="row" alignItems="flex-end" gap={6}>
+        <StarSvg />
+        <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
+          Đại đội trưởng:
+        </Text>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}
@@ -67,10 +60,6 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   card: {
     flex: 1,
     backgroundColor: '#fff',

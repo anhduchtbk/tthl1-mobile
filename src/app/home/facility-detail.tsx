@@ -10,14 +10,21 @@ import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function FacilityDetailScreen() {
+  const insets = useSafeAreaInsets();
+
   const [isOpenLendModal, setIsOpenLendModal] = useState(false);
   const [isOpenBackModal, setIsOpenBackModal] = useState(false);
 
   return (
-    <LinearGradient colors={['#CAD6FF', '#FFF7DB']} style={{ flex: 1 }}>
-      <ScreenHeader title="CHI TIẾT VẬT CHẤT" />
+    <Box flex={1}>
+      <LinearGradient
+        colors={['#CAD6FF', '#FFF7DB']}
+        style={[styles.containerLinear, { height: insets.top + 110 }]}
+      />
+      <ScreenHeader title="CHI TIẾT VẬT CHẤT" hasBorderBottom={false} />
       <Box
         flex={1}
         mt={44}
@@ -51,7 +58,7 @@ export default function FacilityDetailScreen() {
             onLendFacility={() => setIsOpenLendModal(true)}
             onBackFacility={() => setIsOpenBackModal(true)}
           />
-          <Box pt={16} pb={8}>
+          <Box mx={-16}>
             <FilterButton />
           </Box>
           <FacilityInformation />
@@ -65,11 +72,17 @@ export default function FacilityDetailScreen() {
         isVisible={isOpenBackModal}
         onClose={() => setIsOpenBackModal(false)}
       />
-    </LinearGradient>
+    </Box>
   );
 }
 
 const styles = StyleSheet.create({
+  containerLinear: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   imgAvatar: {
     width: 217,
     height: 80,

@@ -49,7 +49,7 @@ const TextField = forwardRef<
       value,
       mask,
       iconRightStyle,
-      labelColor,
+      labelColor = colors.text[2],
       useBottomSheetInput,
       size = 'large',
       status = 'inactive',
@@ -226,7 +226,7 @@ const TextField = forwardRef<
           alignItems={'center'}
           justifyContent={'center'}
           w={'100%'}
-          px={12}
+          px={16}
           gap={10}
           style={[
             styles.containerInput,

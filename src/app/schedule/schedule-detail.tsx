@@ -4,22 +4,13 @@ import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
 import { colors } from '@/theme/colors';
 import React from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList } from 'react-native';
 
 export default function ScheduleDetailScreen() {
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box
-        bgColor={colors.white}
-        borderBottomWidth={1}
-        borderColor={'#F5F5F5'}
-        mb={4}
-      >
-        <ScreenHeader title="THỜI KHOÁ BIỂU" isSearch />
-      </Box>
-      <Box p={16}>
-        <FilterButton />
-      </Box>
+      <ScreenHeader title="THỜI KHOÁ BIỂU" isSearch />
+      <FilterButton />
       <FlatList
         data={[1, 2]}
         renderItem={({ item }) => <ScheduleDetail />}

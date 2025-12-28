@@ -143,7 +143,7 @@ export function FacilityInformation() {
   ];
 
   return (
-    <Box pt={8}>
+    <Box>
       <Text fontSize={20} fontWeight="bold" color={'#333'}>
         Đơn vị: C2 - VB2
       </Text>

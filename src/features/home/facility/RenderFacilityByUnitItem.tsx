@@ -31,27 +31,23 @@ export function RenderFacilityByUnitItem({ item }: RenderItemProps) {
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight="bold">Tổng số: </Text>
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Tổng số:{' '}
+          </Text>
           {item.totalAmount}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
-          <Text fontWeight="bold">Còn lại: </Text>
+          <Text fontWeight="bold" color={colors.text[1]}>
+            Còn lại:{' '}
+          </Text>
           {item.leftAmount}
         </Text>
       </Box>
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Box flex={1}>
-          <Box flexDirection="row" alignItems="center" gap={6}>
-            <StarSvg />
-            <Text color={colors.text[1]} fontSize={11}>
-              Phụ trách: {item.inChargeFullname}
-            </Text>
-          </Box>
-        </Box>
+      <Box flexDirection="row" alignItems="flex-end" gap={6}>
+        <StarSvg />
+        <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
+          Phụ trách: {item.inChargeFullname}
+        </Text>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}

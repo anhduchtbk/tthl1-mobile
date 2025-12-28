@@ -1,4 +1,3 @@
-import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderFacilityByUnitItem } from '@/features/home/facility/RenderFacilityByUnitItem';
@@ -8,24 +7,16 @@ import { FlatList } from 'react-native';
 export default function ManageFacilityByUnitScreen() {
   return (
     <Box flex={1} bgColor={colors.white}>
-      <Box
-        bgColor={colors.white}
-        borderBottomWidth={1}
-        borderColor={'#F5F5F5'}
-        mb={4}
-      >
-        <ScreenHeader title="QUẢN LÝ VẬT CHẤT" subTitle="TIỂU ĐOÀN 2" />
+      <ScreenHeader title="QUẢN LÝ VẬT CHẤT" subTitle="TIỂU ĐOÀN 2" />
+      <Box flex={1} mt={16}>
+        <FlatList
+          data={ListSchedule}
+          renderItem={({ item }) => <RenderFacilityByUnitItem item={item} />}
+          keyExtractor={(_, index) => index.toString()}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
+        />
       </Box>
-      <Box p={16}>
-        <FilterButton />
-      </Box>
-      <FlatList
-        data={ListSchedule}
-        renderItem={({ item }) => <RenderFacilityByUnitItem item={item} />}
-        keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-        showsVerticalScrollIndicator={false}
-      />
     </Box>
   );
 }

@@ -55,7 +55,6 @@ const RejectRequestModal = ({ isVisible, onClose }: Props) => {
           label="Lý do"
           placeholder="Nhập lý do từ chối (không bắt buộc)"
           multiline
-          labelColor={colors.text[2]}
           inputStyle={{ height: 136, fontSize: 16 }}
         />
         <Box h={16} />
