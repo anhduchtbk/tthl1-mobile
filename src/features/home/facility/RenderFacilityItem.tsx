@@ -1,3 +1,4 @@
+import { Inventory } from '@/api/types/inventory';
 import StarSvg from '@/assets/icons/star-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
@@ -6,47 +7,45 @@ import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-type ItemProps = {
-  companyFullname: string;
-  companyAmount: number;
-  commanderAmount: number;
-  commanderFullname: string;
-};
-
 type RenderItemProps = {
-  item: ItemProps;
+  item: Inventory;
 };
 
 export function RenderFacilityItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
-    router.push('/home/manage-facility-by-unit');
+    router.push({
+      pathname: '/home/manage-facility-by-unit',
+      params: { inventory_id: item.id },
+    });
   };
 
   return (
     <Box style={styles.card}>
       <Text color={colors.text[3]} fontWeight="bold">
-        {item.companyFullname}
+        {item.name}
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
           <Text fontWeight="bold" color={colors.text[1]}>
             Học viên:{' '}
           </Text>
-          {item.companyAmount}
+          {/* {item.companyAmount} */}
         </Text>
+
         <Text color={colors.text[1]} fontSize={11}>
           <Text fontWeight="bold" color={colors.text[1]}>
             Chỉ huy:{' '}
           </Text>
-          {item.commanderAmount}
+          {/* {item.commanderAmount ? item.commanderAmount : '---'} */}
         </Text>
       </Box>
       <Box flexDirection="row" alignItems="flex-end" gap={6}>
         <StarSvg />
         <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
-          Đại đội trưởng: {item.commanderFullname}
+          Đại đội trưởng:{' '}
+          {/* {item.commanderFullname ? item.commanderFullname : '---'} */}
         </Text>
         <TouchableOpacity
           activeOpacity={0.7}

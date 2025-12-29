@@ -13,8 +13,10 @@ export const getStudentList = async (
   return response.data;
 };
 
-export const getStudentDetail = async (id: number): Promise<Student> => {
-  const response = await axiosInstance.get(`students/${id}`);
+export const getStudentDetail = async (
+  student_id: number
+): Promise<Student> => {
+  const response = await axiosInstance.get(`students/${student_id}`);
 
   return response.data;
 };

@@ -6,8 +6,10 @@ import BackFacilityModal from '@/features/home/facility/BackFacilityModal';
 import { FacilityHeader } from '@/features/home/facility/FacilityHeader';
 import { FacilityInformation } from '@/features/home/facility/FacilityInformation';
 import LendFacilityModal from '@/features/home/facility/LendFacilityModal';
+import { useGetTransactionEquipmentById } from '@/hooks/useTransaction';
 import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSearchParams } from 'expo-router/build/hooks';
 import React, { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -17,6 +19,13 @@ export default function FacilityDetailScreen() {
 
   const [isOpenLendModal, setIsOpenLendModal] = useState(false);
   const [isOpenBackModal, setIsOpenBackModal] = useState(false);
+
+  const params = useSearchParams();
+  const { data } = useGetTransactionEquipmentById(
+    Number(params.get('equipment_id'))
+  );
+
+  console.log('ddd', data);
 
   return (
     <Box flex={1}>

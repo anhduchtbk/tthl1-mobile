@@ -2,45 +2,50 @@ import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderFacilityItem } from '@/features/home/facility/RenderFacilityItem';
+import { useGetInventoryList } from '@/hooks/useInventory';
 import { colors } from '@/theme/colors';
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+
+const LIMIT = 10;
 
 export default function ManageFacilityScreen() {
+  const {
+    data,
+    isLoadingFirstPage: isLoading,
+    isRefetching,
+    refetch,
+    handleLoadMore,
+    isFetchingNextPage,
+    isEmpty,
+  } = useGetInventoryList({
+    page: 1,
+    limit: LIMIT,
+  });
+
+  const renderLoadingFooter = () =>
+    isFetchingNextPage ? (
+      <ActivityIndicator size={'small'} color={colors.primary[50]} />
+    ) : null;
+
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="QUẢN LÝ VẬT CHẤT" isSearch />
       <FilterButton />
-      <FlatList
-        data={ListSchedule}
-        renderItem={({ item }) => <RenderFacilityItem item={item} />}
-        keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-        showsVerticalScrollIndicator={false}
-      />
+      <Box flex={1}>
+        <FlatList
+          data={data || []}
+          renderItem={({ item }) => <RenderFacilityItem item={item} />}
+          keyExtractor={(_, index) => index.toString()}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+          }
+          onEndReachedThreshold={0.6}
+          onEndReached={handleLoadMore}
+          ListFooterComponent={renderLoadingFooter}
+        />
+      </Box>
     </Box>
   );
 }
-
-const ListSchedule = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    companyFullname: 'Đại đội 1 - VB2',
-    companyAmount: 110,
-    commanderAmount: 4,
-    commanderFullname: 'Nguyễn Văn A',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    companyFullname: 'Đại đội 1 - VB2',
-    companyAmount: 110,
-    commanderAmount: 4,
-    commanderFullname: 'Nguyễn Văn A',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    companyFullname: 'Đại đội 1 - VB2',
-    companyAmount: 110,
-    commanderAmount: 4,
-    commanderFullname: 'Nguyễn Văn A',
-  },
-];
