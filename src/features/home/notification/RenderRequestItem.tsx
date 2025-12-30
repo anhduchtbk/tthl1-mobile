@@ -17,6 +17,10 @@ type RowItemProps = PropsWithChildren<{
   rowItem: {
     infos: RowItem[];
   };
+  company?: {
+    id: number;
+    name: string;
+  };
   isConfirm?: boolean;
   onAcceptRequest?: () => void;
   onRejectRequest?: () => void;
@@ -24,6 +28,7 @@ type RowItemProps = PropsWithChildren<{
 
 export const RenderRequestItem = ({
   rowItem,
+  company,
   isConfirm,
   onAcceptRequest,
   onRejectRequest,
@@ -31,7 +36,10 @@ export const RenderRequestItem = ({
   const router = useRouter();
 
   const onOpenHistoryRequest = () => {
-    router.push('/home/notification/history-request');
+    router.push({
+      pathname: '/home/notification/history-request',
+      params: { company_id: company?.id },
+    });
   };
 
   return (
@@ -54,17 +62,17 @@ export const RenderRequestItem = ({
                 px={10}
                 borderRadius={16}
                 bgColor={
-                  item.value === 0
+                  item.value === 'pending'
                     ? '#FEBC2F'
-                    : item.value === 1
+                    : item.value === 'approved'
                     ? '#27C840'
                     : '#FF5F57'
                 }
               >
                 <Text fontSize={FontSize.SMALL} color={colors.white}>
-                  {item.value === 0
+                  {item.value === 'pending'
                     ? 'Chờ duyệt'
-                    : item.value === 1
+                    : item.value === 'approved'
                     ? 'Đồng ý'
                     : 'Từ chối'}
                 </Text>
@@ -87,7 +95,7 @@ export const RenderRequestItem = ({
                       : 'regular'
                   }
                 >
-                  {item.value}
+                  {item.value || '-'}
                 </Text>
                 {item.type === 'requestedUnit' && (
                   <Box

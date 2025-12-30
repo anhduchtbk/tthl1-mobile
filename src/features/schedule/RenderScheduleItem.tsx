@@ -40,11 +40,13 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
           </Text>
         </Text>
       </Box>
-      <Box flexDirection="row" alignItems="flex-end" gap={6}>
-        <StarSvg />
-        <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
-          Đại đội trưởng:
-        </Text>
+      <Box flexDirection="row" alignItems="flex-end">
+        <Box flex={1} flexDirection="row" alignItems="center" gap={6}>
+          <StarSvg />
+          <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
+            Đại đội trưởng:
+          </Text>
+        </Box>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}

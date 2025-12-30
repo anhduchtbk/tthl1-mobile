@@ -1,9 +1,9 @@
 import axiosInstance from './axios';
-import { Student } from './types/student';
+import { GetTransactionEquipmentResponse } from './types/transaction';
 
 export const getTransactionEquipmentById = async (
   equipment_id: number
-): Promise<Student> => {
+): Promise<GetTransactionEquipmentResponse> => {
   const response = await axiosInstance.get(
     `transactions/equipment/${equipment_id}`
   );

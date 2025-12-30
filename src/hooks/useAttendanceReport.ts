@@ -4,7 +4,7 @@ import {
 } from '@/api/attendence-report';
 import { ATTENDANCE_REPORT_QUERY_KEY } from '@/api/constants/attendance-report';
 import {
-  CreateAttendanceReport,
+  CreateAttendanceReportRequest,
   GetListAttendanceReportsRequest,
 } from '@/api/types/attendance-report';
 import { Company } from '@/api/types/company';
@@ -26,8 +26,8 @@ export const useCreateAttendanceReport = () => {
 
   return useMutation({
     mutationKey: [ATTENDANCE_REPORT_QUERY_KEY.createAttendanceReport],
-    mutationFn: (data: CreateAttendanceReport) => createAttendanceReport(data),
-
+    mutationFn: (data: CreateAttendanceReportRequest) =>
+      createAttendanceReport(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [ATTENDANCE_REPORT_QUERY_KEY.listAttendanceReport],

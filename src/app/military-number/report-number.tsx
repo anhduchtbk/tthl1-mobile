@@ -10,9 +10,11 @@ import {
   AbsentGroup,
   AbsentStudentGroup,
 } from '@/features/military-number/AbsentStudentGroup';
+import { useCreateAttendanceReport } from '@/hooks/useAttendanceReport';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'expo-router/build/hooks';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, TextInput } from 'react-native';
@@ -21,18 +23,21 @@ import { z } from 'zod';
 
 type FormData = {
   purpose: string;
-  companyNumber?: number;
+  companyNumber: number;
   absentNumber?: number;
 };
 
 const reportNumberSchema = z.object({
   purpose: z.string(),
-  companyNumber: z.number().optional(),
+  companyNumber: z.number(),
   absentNumber: z.number().optional(),
 });
 
 const ReportNumberScreen = () => {
   const insets = useSafeAreaInsets();
+  const searchParams = useSearchParams();
+  const companyItem = JSON.parse(searchParams.get('companyItem') || '');
+
   const [absentGroup, setAbsentGroup] = useState<AbsentGroup[]>([
     {
       id: 1,
@@ -41,6 +46,30 @@ const ReportNumberScreen = () => {
     },
   ]);
   const [absentStudents, setAbsentStudents] = useState<string[]>([]);
+  const {
+    mutateAsync: createAttendanceReportRequest,
+    isPending: isCreatePending,
+  } = useCreateAttendanceReport();
+
+  const refs = {
+    purpose: useRef<TextInput>(null),
+    companyNumber: useRef<TextInput>(null),
+    absentNumber: useRef<TextInput>(null),
+  };
+
+  const {
+    control,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(reportNumberSchema),
+    mode: 'onChange',
+    defaultValues: {
+      purpose: '',
+      companyNumber: Number(companyItem?.personnelCount),
+    },
+  });
 
   const addAbsentGroup = () => {
     const newGroup: AbsentGroup = {
@@ -66,32 +95,30 @@ const ReportNumberScreen = () => {
     setAbsentGroup(absentGroup.filter(group => group.id !== groupItem.id));
   };
 
-  const refs = {
-    purpose: useRef<TextInput>(null),
-    companyNumber: useRef<TextInput>(null),
-    absentNumber: useRef<TextInput>(null),
-  };
-
-  const {
-    control,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(reportNumberSchema),
-    mode: 'onChange',
-    defaultValues: {
-      purpose: '',
-    },
-  });
-
   const onSubmit = (data: FormData) => {
-    console.log('Report Number Data:', data);
+    console.log('Report Number Data:', data, absentGroup);
+
+    const params = {
+      personnelCount: data.companyNumber,
+      totalAbsent: data.absentNumber,
+      companyId: companyItem?.id,
+      session: data.purpose,
+      absentGroups: [],
+    };
+
+    createAttendanceReportRequest(params, {
+      onSuccess: res => {
+        console.log('createAttendanceReportRequest', res);
+      },
+    });
   };
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
+      <ScreenHeader
+        title="BÁO CÁO QUÂN SỐ"
+        subTitle={`ĐẠI ĐỘI ${companyItem.name} - `}
+      />
       <Box flex={1} mt={20} gap={16} pb={insets.bottom}>
         <Box flex={1}>
           <ScrollView
@@ -107,7 +134,6 @@ const ReportNumberScreen = () => {
                 isRequired
                 placeholder={'Điểm danh'}
                 searchPlaceholder={'Tìm kiếm'}
-                onChange={value => console.log('dddsaa', value)}
               />
               <Input
                 as={TextField}
@@ -172,7 +198,11 @@ const ReportNumberScreen = () => {
           </ScrollView>
         </Box>
         <Box px={16}>
-          <Button text="Xác nhận" onPress={handleSubmit(onSubmit)} />
+          <Button
+            text="Xác nhận"
+            onPress={handleSubmit(onSubmit)}
+            loading={isCreatePending}
+          />
         </Box>
       </Box>
     </Box>

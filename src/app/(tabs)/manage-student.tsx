@@ -16,6 +16,7 @@ const LIMIT = 20;
 export default function ManageStudentScreen() {
   const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [filters, setFilters] = useState<string[]>([]);
 
   const {
     data,
@@ -27,11 +28,12 @@ export default function ManageStudentScreen() {
   } = useGetStudentList({
     page: 1,
     limit: LIMIT,
+    filter: filters,
   });
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator size={'small'} color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[20]} />
     ) : null;
 
   const handleOpenModal = () => {
@@ -64,7 +66,7 @@ export default function ManageStudentScreen() {
           onEndReachedThreshold={0.6}
           onEndReached={handleLoadMore}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={<EmptyScreen text="Chưa có học viên" />}
+          ListEmptyComponent={<EmptyScreen text="Chưa có dữ liệu học viên" />}
           ListFooterComponent={renderLoadingFooter()}
           refreshControl={
             <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
@@ -74,6 +76,7 @@ export default function ManageStudentScreen() {
       <StudentFilterBottomSheet
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
+        onConfirm={setFilters}
       />
     </Box>
   );

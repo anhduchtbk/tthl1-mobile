@@ -23,6 +23,7 @@ import {
 export interface ScheduleFilterBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirm: (filter: string[]) => void;
 }
 
 type FilterType = {
@@ -52,13 +53,14 @@ const fakeData = [
 const ScheduleFilterBottomSheet: React.FC<ScheduleFilterBottomSheetProps> = ({
   isOpen,
   onClose,
+  onConfirm,
 }) => {
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['80%'], []);
 
-  const [filters, setFilters] = useState<FilterType>({
+  const [filterTypes, setFilterTypes] = useState<FilterType>({
     educations: [],
     companies: [],
     weeks: [],
@@ -72,25 +74,46 @@ const ScheduleFilterBottomSheet: React.FC<ScheduleFilterBottomSheetProps> = ({
     }
   }, [isOpen]);
 
-  const handleSelectItem = useCallback((type: string, value: any) => {
-    setFilters(prev => {
-      const currentValues = prev[type as keyof FilterType] as any[];
-      if (currentValues.includes(value)) {
+  const handleSelectItem = useCallback(
+    (type: string, value: any) => {
+      setFilterTypes(prev => {
+        const currentValues = prev[type as keyof FilterType] as any[];
+        if (currentValues.includes(value)) {
+          return {
+            ...prev,
+            [type]: currentValues.filter(v => v !== value),
+          };
+        }
         return {
           ...prev,
-          [type]: currentValues.filter(v => v !== value),
+          [type]: [...currentValues, value],
         };
-      }
-      return {
-        ...prev,
-        [type]: [...currentValues, value],
-      };
-    });
-  }, []);
+      });
+    },
+    [setFilterTypes]
+  );
 
   const handleSave = useCallback(() => {
+    let filters: string[] = [];
+
+    // Hệ đào tạo
+    if (filterTypes.educations && filterTypes.educations.length > 0) {
+      filterTypes.educations.map(item =>
+        filters.push(`company.course.type|$eq|${item}`)
+      );
+    }
+    // Đại đội
+    if (filterTypes.companies && filterTypes.companies.length > 0) {
+      filterTypes.companies.map(item => filters.push(`name|$eq|${item}`));
+    }
+
+    if (filterTypes.weeks && filterTypes.weeks.length > 0) {
+      filterTypes.weeks.map(item => filters.push(`week|$eq|${item}`));
+    }
+
+    onConfirm(filters);
     onClose();
-  }, [onClose]);
+  }, [filterTypes, onClose]);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -131,15 +154,17 @@ const ScheduleFilterBottomSheet: React.FC<ScheduleFilterBottomSheetProps> = ({
                     const isActive = (() => {
                       switch (filter.filterKey) {
                         case 'educations':
-                          return filters.educations?.some(
+                          return filterTypes.educations?.some(
                             e => value.value === e
                           );
                         case 'companies':
-                          return filters.companies?.some(
+                          return filterTypes.companies?.some(
                             e => value.value === e
                           );
                         case 'weeks':
-                          return filters.weeks?.some(e => value.value === e);
+                          return filterTypes.weeks?.some(
+                            e => value.value === e
+                          );
                         default:
                           return false;
                       }

@@ -51,11 +51,13 @@ export function RenderNotificationItem({ item }: RenderItemProps) {
           {item.commandTime}
         </Text>
       </Box>
-      <Box flex={1} flexDirection="row" alignItems="flex-end" gap={6}>
-        <StarSvg />
-        <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
-          Người yêu cầu: Đại uý {item.commanderFullname}
-        </Text>
+      <Box flex={1} flexDirection="row" alignItems="flex-end">
+        <Box flex={1} flexDirection="row" alignItems="center" gap={6}>
+          <StarSvg />
+          <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
+            Người yêu cầu: Đại uý {item.commanderFullname}
+          </Text>
+        </Box>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.containerBox}

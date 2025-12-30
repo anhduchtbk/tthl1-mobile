@@ -1,4 +1,4 @@
-interface Transaction {
+export interface Transaction {
   id: number;
   quantity: number;
   status: 'approved';
@@ -13,7 +13,7 @@ interface Transaction {
   updatedAt: string;
 }
 
-interface TransactionsByType {
+export interface TransactionsByType {
   type: 'borrow' | 'return';
   totalQuantity: number;
   transactions: Transaction[];
@@ -28,11 +28,14 @@ interface TransactionsByCompany {
   transactionsByType: TransactionsByType[];
 }
 
+interface TransactionEquipment {
+  id: number;
+  name: string;
+}
+
 export interface GetTransactionEquipmentResponse {
-  equipment: {
-    id: number;
-    name: string;
-  };
+  equipment: TransactionEquipment;
   totalBorrowedQuantity: number;
+  totalInventoryQuantity: number;
   transactionsByCompany: TransactionsByCompany[];
 }

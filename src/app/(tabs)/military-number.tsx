@@ -2,6 +2,13 @@ import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import {
+  COMPANY_TYPE,
+  EDUCATION_TYPE,
+  PARTY_MEMBER_TYPE,
+  POLICY_TYPE,
+  TALENT_TYPE,
+} from '@/constants/value';
 import MilitaryFilterBottomSheet from '@/features/military-number/MilitaryFilterBottomSheet';
 import { RenderMilitaryItem } from '@/features/military-number/RenderMilitaryItem';
 import { RenderMilitaryItemSkeleton } from '@/features/military-number/RenderMilitaryItemSkleton';
@@ -12,8 +19,17 @@ import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 const LIMIT = 20;
 
+type FilterType = {
+  educations?: EDUCATION_TYPE[];
+  companies?: COMPANY_TYPE[];
+  partyMembers?: PARTY_MEMBER_TYPE[];
+  policies?: POLICY_TYPE[];
+  talents?: TALENT_TYPE[];
+};
+
 export default function MilitaryNumberScreen() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [filters, setFilters] = useState<string[]>([]);
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
@@ -30,12 +46,14 @@ export default function MilitaryNumberScreen() {
   } = useGetCompanyList({
     page: 1,
     limit: LIMIT,
-    // filter: ['name|$eq|1'],
+    filter: filters,
   });
+
+  console.log(data);
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator size={'small'} color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[20]} />
     ) : null;
 
   return (
@@ -48,7 +66,7 @@ export default function MilitaryNumberScreen() {
         })
       ) : (
         <FlatList
-          data={data ? data : []}
+          data={data || []}
           renderItem={({ item }) => <RenderMilitaryItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}
@@ -71,6 +89,7 @@ export default function MilitaryNumberScreen() {
       <MilitaryFilterBottomSheet
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
+        onConfirm={setFilters}
       />
     </Box>
   );

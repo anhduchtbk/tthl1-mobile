@@ -12,18 +12,43 @@ export function RenderStudentItemSkeleton() {
 
   return (
     <Box style={styles.card}>
-      <Skeleton width={width * 0.36} height={18} radius={8} colors={skeletonColor} />
+      <Skeleton
+        width={width * 0.36}
+        height={18}
+        radius={8}
+        colors={skeletonColor}
+      />
       <Box flexDirection="row" alignItems="center" mt={4} gap={36}>
-        <Skeleton width={width * 0.21} height={14} radius={8} colors={skeletonColor} />
-        <Skeleton width={width * 0.3} height={14} radius={8} colors={skeletonColor} />
+        <Skeleton
+          width={width * 0.21}
+          height={14}
+          radius={8}
+          colors={skeletonColor}
+        />
+        <Skeleton
+          width={width * 0.3}
+          height={14}
+          radius={8}
+          colors={skeletonColor}
+        />
       </Box>
       <Box
         flexDirection="row"
-        alignItems="center"
+        alignItems="flex-end"
         justifyContent="space-between"
       >
-        <Skeleton width={width * 0.18} height={13} radius={8} colors={skeletonColor} />
-        <Skeleton width={width * 0.2} height={24} radius={16} colors={skeletonColor} />
+        <Skeleton
+          width={width * 0.18}
+          height={13}
+          radius={8}
+          colors={skeletonColor}
+        />
+        <Skeleton
+          width={width * 0.2}
+          height={24}
+          radius={16}
+          colors={skeletonColor}
+        />
       </Box>
     </Box>
   );

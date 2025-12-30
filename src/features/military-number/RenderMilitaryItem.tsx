@@ -19,11 +19,17 @@ export function RenderMilitaryItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onOpenReportHistory = () => {
-    router.push('/military-number/military-history-report');
+    router.push({
+      pathname: '/military-number/military-history-report',
+      params: { companyItem: JSON.stringify(item) },
+    });
   };
 
   const onReportNumber = () => {
-    router.push('/military-number/report-number');
+    router.push({
+      pathname: '/military-number/report-number',
+      params: { companyItem: JSON.stringify(item) },
+    });
   };
 
   return (

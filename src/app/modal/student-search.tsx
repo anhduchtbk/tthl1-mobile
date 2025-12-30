@@ -43,7 +43,7 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator size={'small'} color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[20]} />
     ) : null;
 
   const handleOnChangeSearch = (value: string) => {

@@ -1,7 +1,9 @@
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderFacilityItem } from '@/features/home/facility/RenderFacilityItem';
+import { RenderFacilityItemSkeleton } from '@/features/home/facility/RenderFacilityItemSkeleton';
 import { useGetInventoryList } from '@/hooks/useInventory';
 import { colors } from '@/theme/colors';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
@@ -24,28 +26,35 @@ export default function ManageFacilityScreen() {
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator size={'small'} color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[20]} />
     ) : null;
 
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="QUẢN LÝ VẬT CHẤT" isSearch />
       <FilterButton />
-      <Box flex={1}>
+      {isLoading ? (
+        Array.from({ length: 5 }, (_, index) => {
+          return <RenderFacilityItemSkeleton key={index} />;
+        })
+      ) : (
         <FlatList
           data={data || []}
           renderItem={({ item }) => <RenderFacilityItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}
+          onEndReachedThreshold={0.6}
+          onEndReached={handleLoadMore}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            isEmpty ? <EmptyScreen text="Chưa có dữ liệu vật chất" /> : <></>
+          }
+          ListFooterComponent={renderLoadingFooter()}
           refreshControl={
             <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
           }
-          onEndReachedThreshold={0.6}
-          onEndReached={handleLoadMore}
-          ListFooterComponent={renderLoadingFooter}
         />
-      </Box>
+      )}
     </Box>
   );
 }
