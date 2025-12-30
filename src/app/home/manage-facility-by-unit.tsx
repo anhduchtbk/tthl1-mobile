@@ -1,46 +1,42 @@
 import { Box } from '@/components/common/Layout/Box';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderFacilityByUnitItem } from '@/features/home/facility/RenderFacilityByUnitItem';
+import { RenderFacilityByUnitItemSkeleton } from '@/features/home/facility/RenderFacilityByUnitItemSkeleton';
+import { useGetInventoryListById } from '@/hooks/useInventory';
 import { colors } from '@/theme/colors';
-import { FlatList } from 'react-native';
+import { useSearchParams } from 'expo-router/build/hooks';
+import { FlatList, RefreshControl } from 'react-native';
 
 export default function ManageFacilityByUnitScreen() {
+  const params = useSearchParams();
+  const { data, isLoading, isRefetching, refetch } = useGetInventoryListById(
+    Number(params.get('inventory_id'))
+  );
+
   return (
     <Box flex={1} bgColor={colors.white}>
       <ScreenHeader title="QUẢN LÝ VẬT CHẤT" subTitle="TIỂU ĐOÀN 2" />
       <Box flex={1} mt={16}>
-        <FlatList
-          data={ListSchedule}
-          renderItem={({ item }) => <RenderFacilityByUnitItem item={item} />}
-          keyExtractor={(_, index) => index.toString()}
-          contentContainerStyle={{ paddingHorizontal: 16 }}
-          showsVerticalScrollIndicator={false}
-        />
+        {isLoading ? (
+          Array.from({ length: 5 }, (_, index) => {
+            return <RenderFacilityByUnitItemSkeleton key={index} />;
+          })
+        ) : (
+          <FlatList
+            data={data?.equipments || []}
+            renderItem={({ item }) => <RenderFacilityByUnitItem item={item} />}
+            keyExtractor={(_, index) => index.toString()}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={<Box h={100} />}
+            ListEmptyComponent={<EmptyScreen text="Chưa có dữ liệu vật chất" />}
+            refreshControl={
+              <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+            }
+          />
+        )}
       </Box>
     </Box>
   );
 }
-
-const ListSchedule = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    facilityName: 'Súng tiểu liên AK-47',
-    totalAmount: 110,
-    leftAmount: 4,
-    inChargeFullname: 'Nguyễn Văn A',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    facilityName: 'Đại đội 1 - VB2',
-    totalAmount: 110,
-    leftAmount: 4,
-    inChargeFullname: 'Nguyễn Văn A',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    facilityName: 'Đại đội 1 - VB2',
-    totalAmount: 110,
-    leftAmount: 4,
-    inChargeFullname: 'Nguyễn Văn A',
-  },
-];

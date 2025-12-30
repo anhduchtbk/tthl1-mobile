@@ -5,6 +5,7 @@ import Svg, { Path, SvgProps } from 'react-native-svg';
 type ActiveSvgProps = SvgProps & {
   activeColor?: ColorValue;
 };
+
 function TimetableIconSvg({ activeColor, ...props }: ActiveSvgProps) {
   return (
     <Svg fill="none" {...props}>

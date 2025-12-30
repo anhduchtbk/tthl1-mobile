@@ -14,6 +14,7 @@ const LIMIT = 20;
 
 export default function ScheduleScreen() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [filters, setFilters] = useState<string[]>([]);
   const {
     data,
     isLoadingFirstPage: isLoading,
@@ -25,11 +26,14 @@ export default function ScheduleScreen() {
   } = useGetCompanyList({
     page: 1,
     limit: LIMIT,
+    filter: filters,
   });
+
+  console.log(data);
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
-      <ActivityIndicator size={'small'} color={colors.primary[50]} />
+      <ActivityIndicator size={'small'} color={colors.primary[20]} />
     ) : null;
 
   return (
@@ -65,6 +69,7 @@ export default function ScheduleScreen() {
       <ScheduleFilterBottomSheet
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
+        onConfirm={setFilters}
       />
     </Box>
   );

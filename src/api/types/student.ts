@@ -69,7 +69,7 @@ export interface GetStudentListRequest {
   limit?: number;
   search?: string;
   sort?: string;
-  filter?: string;
+  filter?: string[];
 }
 
 export type GetStudentListResponse = PaginationResponse<Student>;

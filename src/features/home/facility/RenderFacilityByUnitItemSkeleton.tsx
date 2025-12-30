@@ -4,57 +4,47 @@ import { useTheme } from '@react-navigation/native';
 import { Skeleton } from 'moti/skeleton';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 
-export function RenderMilitaryItemSkeleton() {
+export function RenderFacilityByUnitItemSkeleton() {
   const { colors } = useTheme();
   const { width } = useWindowDimensions();
 
   const skeletonColor = [colors.border, colors.white, colors.border];
 
   return (
-    <Box
-      style={styles.card}
-      flexDirection="row"
-      justifyContent="space-between"
-      alignItems="center"
-    >
-      <Box gap={7}>
+    <Box style={styles.card}>
+      <Skeleton
+        width={width * 0.27}
+        height={18}
+        radius={8}
+        colors={skeletonColor}
+      />
+      <Box flexDirection="row" alignItems="center" mt={4} gap={24}>
         <Skeleton
-          width={width * 0.36}
-          height={18}
+          width={width * 0.19}
+          height={14}
           radius={8}
           colors={skeletonColor}
         />
-        <Box flexDirection="row" alignItems="center" mt={4} gap={24}>
-          <Skeleton
-            width={width * 0.21}
-            height={14}
-            radius={8}
-            colors={skeletonColor}
-          />
-          <Skeleton
-            width={width * 0.2}
-            height={14}
-            radius={8}
-            colors={skeletonColor}
-          />
-        </Box>
-
         <Skeleton
-          width={width * 0.5}
-          height={13}
-          radius={16}
+          width={width * 0.14}
+          height={14}
+          radius={8}
           colors={skeletonColor}
         />
       </Box>
-      <Box gap={11}>
+      <Box
+        flexDirection="row"
+        alignItems="flex-end"
+        justifyContent="space-between"
+      >
         <Skeleton
-          width={width * 0.28}
-          height={24}
-          radius={16}
+          width={width * 0.56}
+          height={13}
+          radius={8}
           colors={skeletonColor}
         />
         <Skeleton
-          width={width * 0.29}
+          width={width * 0.2}
           height={24}
           radius={16}
           colors={skeletonColor}
@@ -66,6 +56,7 @@ export function RenderMilitaryItemSkeleton() {
 
 const styles = StyleSheet.create({
   card: {
+    height: 83,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 12,

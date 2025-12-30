@@ -5,7 +5,7 @@ import HomeSvg from '@/assets/icons/home-svg';
 import ManageStudentSvg from '@/assets/icons/manage-student-svg';
 import PersonnelSvg from '@/assets/icons/personnel-svg';
 import SettingSvg from '@/assets/icons/setting-svg';
-import TimetableIconSvg from '@/assets/icons/time-table';
+import TimetableIconSvg from '@/assets/icons/timetable';
 import { colors } from '@/theme/colors';
 
 export default function TabLayout() {

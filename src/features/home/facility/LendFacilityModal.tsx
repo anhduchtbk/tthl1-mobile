@@ -30,14 +30,16 @@ const data = [
 
 type FormData = {
   companyName: string;
-  facilityAmount: number;
+  facilityAmount?: number;
   reason: string;
+  requester: string;
 };
 
 const reportNumberSchema = z.object({
   companyName: z.string(),
-  facilityAmount: z.number(),
+  facilityAmount: z.number().optional(),
   reason: z.string(),
+  requester: z.string(),
 });
 
 const LendFacilityModal = ({ isVisible, onClose }: Props) => {
@@ -49,8 +51,8 @@ const LendFacilityModal = ({ isVisible, onClose }: Props) => {
     resolver: zodResolver(reportNumberSchema),
     defaultValues: {
       companyName: '',
-      facilityAmount: 0,
       reason: '',
+      requester: '',
     },
   });
 
@@ -123,7 +125,6 @@ const LendFacilityModal = ({ isVisible, onClose }: Props) => {
               </Box>
             }
           />
-
           <Input
             as={TextField}
             name="reason"
@@ -136,8 +137,20 @@ const LendFacilityModal = ({ isVisible, onClose }: Props) => {
               borderColor: '#F1CFE3',
             }}
           />
+          <Input
+            as={TextField}
+            name="requester"
+            control={control}
+            label={'Người yêu cầu'}
+            placeholder={'Trung uý Nguyễn Văn A'}
+            keyboardType="number-pad"
+            innerInputWrapper={{
+              backgroundColor: colors.white,
+              borderColor: '#F1CFE3',
+            }}
+          />
         </Box>
-        <Button text="GỬI YÊU CẦU" rounded />
+        <Button text="GỬI YÊU CẦU" />
       </Box>
     </Modal>
   );

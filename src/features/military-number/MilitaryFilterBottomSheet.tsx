@@ -25,6 +25,7 @@ import { COMPANY_OPTIONS, EDUCATION_OPTIONS } from '../../constants/option';
 export interface MilitaryFilterBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirm: (filter: string[]) => void;
 }
 
 type FilterType = {
@@ -51,16 +52,38 @@ const fakeData = [
 const MilitaryFilterBottomSheet: React.FC<MilitaryFilterBottomSheetProps> = ({
   isOpen,
   onClose,
+  onConfirm,
 }) => {
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['80%'], []);
 
-  const [filters, setFilters] = useState<FilterType>({
+  const [filterTypes, setFilterTypes] = useState<FilterType>({
     educations: [],
     companies: [],
+    partyMembers: [],
+    policies: [],
+    talents: [],
   });
+
+  const handleSave = useCallback(() => {
+    let filters: string[] = [];
+
+    // Hệ đào tạo
+    if (filterTypes.educations && filterTypes.educations.length > 0) {
+      filterTypes.educations.map(item =>
+        filters.push(`company.course.type|$eq|${item}`)
+      );
+    }
+    // Đại đội
+    if (filterTypes.companies && filterTypes.companies.length > 0) {
+      filterTypes.companies.map(item => filters.push(`id|$eq|${item}`));
+    }
+
+    onConfirm(filters);
+    onClose();
+  }, [filterTypes, onClose]);
 
   useEffect(() => {
     if (isOpen) {
@@ -70,25 +93,25 @@ const MilitaryFilterBottomSheet: React.FC<MilitaryFilterBottomSheetProps> = ({
     }
   }, [isOpen]);
 
-  const handleSelectItem = useCallback((type: string, value: any) => {
-    setFilters(prev => {
-      const currentValues = prev[type as keyof FilterType] as any[];
-      if (currentValues.includes(value)) {
-        return {
-          ...prev,
-          [type]: currentValues.filter(v => v !== value),
-        };
-      }
-      return {
-        ...prev,
-        [type]: [...currentValues, value],
-      };
-    });
-  }, []);
-
-  const handleSave = useCallback(() => {
-    onClose();
-  }, [onClose]);
+  const handleSelectItem = useCallback(
+    (type: string, value: any) => {
+      setFilterTypes(prev => {
+        const currentValues = prev[type as keyof FilterType] as any[];
+        if (currentValues.includes(value)) {
+          return {
+            ...prev,
+            [type]: currentValues.filter(v => v !== value),
+          };
+        } else {
+          return {
+            ...prev,
+            [type]: [...currentValues, value],
+          };
+        }
+      });
+    },
+    [setFilterTypes]
+  );
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -129,11 +152,11 @@ const MilitaryFilterBottomSheet: React.FC<MilitaryFilterBottomSheetProps> = ({
                     const isActive = (() => {
                       switch (filter.filterKey) {
                         case 'educations':
-                          return filters.educations?.some(
+                          return filterTypes.educations?.some(
                             e => value.value === e
                           );
                         case 'companies':
-                          return filters.companies?.some(
+                          return filterTypes.companies?.some(
                             e => value.value === e
                           );
                         default:

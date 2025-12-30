@@ -12,10 +12,10 @@ export const useGetStudentList = (params: GetStudentListRequest) => {
   });
 };
 
-export const UseGetStudentDetail = (id: number) => {
+export const UseGetStudentDetail = (student_id: number) => {
   return useQuery({
-    queryKey: [STUDENT_QUERY_KEY.studentDetail, id],
-    queryFn: () => getStudentDetail(id),
-    enabled: !!id,
+    queryKey: [STUDENT_QUERY_KEY.studentDetail, student_id],
+    queryFn: () => getStudentDetail(student_id),
+    enabled: !!student_id,
   });
 };

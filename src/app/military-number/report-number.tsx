@@ -10,9 +10,11 @@ import {
   AbsentGroup,
   AbsentStudentGroup,
 } from '@/features/military-number/AbsentStudentGroup';
+import { useCreateAttendanceReport } from '@/hooks/useAttendanceReport';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'expo-router/build/hooks';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, TextInput } from 'react-native';
@@ -21,18 +23,21 @@ import { z } from 'zod';
 
 type FormData = {
   purpose: string;
-  companyNumber?: number;
+  companyNumber: number;
   absentNumber?: number;
 };
 
 const reportNumberSchema = z.object({
   purpose: z.string(),
-  companyNumber: z.number().optional(),
+  companyNumber: z.number(),
   absentNumber: z.number().optional(),
 });
 
 const ReportNumberScreen = () => {
   const insets = useSafeAreaInsets();
+  const searchParams = useSearchParams();
+  const companyItem = JSON.parse(searchParams.get('companyItem') || '');
+
   const [absentGroup, setAbsentGroup] = useState<AbsentGroup[]>([
     {
       id: 1,
@@ -40,25 +45,11 @@ const ReportNumberScreen = () => {
       students: [],
     },
   ]);
-
-  const addAbsentGroup = () => {
-    const newGroup: AbsentGroup = {
-      id: absentGroup[absentGroup.length - 1].id + 1,
-      reason: '',
-      students: [],
-    };
-    setAbsentGroup([...absentGroup, newGroup]);
-  };
-
-  const editAbsentGroup = (groupItem: AbsentGroup) => {
-    setAbsentGroup(
-      absentGroup.map(group => (group.id === groupItem.id ? groupItem : group))
-    );
-  };
-
-  const removeAbsentGroup = (groupItem: AbsentGroup) => {
-    setAbsentGroup(absentGroup.filter(group => group.id !== groupItem.id));
-  };
+  const [absentStudents, setAbsentStudents] = useState<string[]>([]);
+  const {
+    mutateAsync: createAttendanceReportRequest,
+    isPending: isCreatePending,
+  } = useCreateAttendanceReport();
 
   const refs = {
     purpose: useRef<TextInput>(null),
@@ -76,23 +67,65 @@ const ReportNumberScreen = () => {
     mode: 'onChange',
     defaultValues: {
       purpose: '',
+      companyNumber: Number(companyItem?.personnelCount),
     },
   });
 
+  const addAbsentGroup = () => {
+    const newGroup: AbsentGroup = {
+      id: absentGroup[absentGroup.length - 1].id + 1,
+      reason: '',
+      students: [],
+    };
+    setAbsentGroup([...absentGroup, newGroup]);
+  };
+
+  const editAbsentGroup = (
+    groupItem: AbsentGroup,
+    newGroupItem: AbsentGroup
+  ) => {
+    setAbsentGroup(
+      absentGroup.map(group =>
+        group.id === groupItem.id ? newGroupItem : group
+      )
+    );
+  };
+
+  const removeAbsentGroup = (groupItem: AbsentGroup) => {
+    setAbsentGroup(absentGroup.filter(group => group.id !== groupItem.id));
+  };
+
   const onSubmit = (data: FormData) => {
-    console.log('Report Number Data:', data);
+    console.log('Report Number Data:', data, absentGroup);
+
+    const params = {
+      personnelCount: data.companyNumber,
+      totalAbsent: data.absentNumber,
+      companyId: companyItem?.id,
+      session: data.purpose,
+      absentGroups: [],
+    };
+
+    createAttendanceReportRequest(params, {
+      onSuccess: res => {
+        console.log('createAttendanceReportRequest', res);
+      },
+    });
   };
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="BÁO CÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
+      <ScreenHeader
+        title="BÁO CÁO QUÂN SỐ"
+        subTitle={`ĐẠI ĐỘI ${companyItem.name} - `}
+      />
       <Box flex={1} mt={20} gap={16} pb={insets.bottom}>
         <Box flex={1}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ gap: 16 }}
           >
-            <Box mx={16}>
+            <Box px={16} gap={16}>
               <Dropdown
                 data={REPORT_NUMBER_OPTIONS}
                 control={control}
@@ -101,7 +134,6 @@ const ReportNumberScreen = () => {
                 isRequired
                 placeholder={'Điểm danh'}
                 searchPlaceholder={'Tìm kiếm'}
-                onChange={value => console.log('dddsaa', value)}
               />
               <Input
                 as={TextField}
@@ -165,7 +197,13 @@ const ReportNumberScreen = () => {
             <Box h={100} />
           </ScrollView>
         </Box>
-        <Button text="Xác nhận" onPress={handleSubmit(onSubmit)} />
+        <Box px={16}>
+          <Button
+            text="Xác nhận"
+            onPress={handleSubmit(onSubmit)}
+            loading={isCreatePending}
+          />
+        </Box>
       </Box>
     </Box>
   );

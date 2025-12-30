@@ -1,12 +1,15 @@
+import { GetTransactionEquipmentResponse } from '@/api/types/transaction';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 
 export function FacilityHeader({
+  facilityDetail,
   onLendFacility,
   onBackFacility,
 }: {
+  facilityDetail: GetTransactionEquipmentResponse;
   onLendFacility: () => void;
   onBackFacility: () => void;
 }) {
@@ -18,10 +21,10 @@ export function FacilityHeader({
           fontWeight="bold"
           color={colors.text[3]}
         >
-          Súng tiểu liên AK-47
+          {facilityDetail?.equipment?.name || '-'}
         </Text>
         <Text fontSize={FontSize.SMALL} color={colors.text[1]}>
-          Thuộc quản lý của Tiều đoàn 2 - TTHL1
+          Thuộc quản lý của {'-'}
         </Text>
       </Box>
 
@@ -37,7 +40,7 @@ export function FacilityHeader({
       >
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            500
+            {facilityDetail?.totalInventoryQuantity || 0}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Tổng số
@@ -45,7 +48,7 @@ export function FacilityHeader({
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            400
+            {facilityDetail?.totalBorrowedQuantity || 0}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Đã bàn giao
@@ -53,7 +56,8 @@ export function FacilityHeader({
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            100
+            {facilityDetail?.totalInventoryQuantity -
+              facilityDetail?.totalBorrowedQuantity || 0}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Còn lại

@@ -12,7 +12,7 @@ interface AbsentGroup {
   reseason?: string;
 }
 
-export interface CreateAttendanceReport {
+export interface CreateAttendanceReportRequest {
   personnelCount?: number;
   totalAbsent?: number;
   companyId?: number;

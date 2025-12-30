@@ -24,41 +24,37 @@ interface Student {
 export interface AbsentGroup {
   id: number;
   reason: string;
-  students: Student[];
+  students: string[];
 }
 
 type AbsentStudentGroupProps = {
   item: AbsentGroup;
   index: number;
-  onEditGroup: (group: AbsentGroup) => void;
+  onEditGroup: (item: AbsentGroup, newItem: AbsentGroup) => void;
   onRemoveGroup: (group: AbsentGroup) => void;
 };
 
-export function AbsentStudentGroup({ item, index, onEditGroup, onRemoveGroup }: AbsentStudentGroupProps) {
+export function AbsentStudentGroup({
+  item,
+  index,
+  onEditGroup,
+  onRemoveGroup,
+}: AbsentStudentGroupProps) {
   const [keyword, setKeyword] = useState<string>();
 
-  const {
-    data,
-    isLoadingFirstPage: isLoading,
-    isRefetching,
-    refetch,
-    handleLoadMore,
-    isFetchingNextPage,
-    totalCount,
-    isEmpty,
-  } = useGetStudentList({
+  const { data } = useGetStudentList({
     page: 1,
     limit: LIMIT,
     search: keyword,
   });
 
   const studentData =
-    data?.map((student: any) => ({
+    data?.map((student: Student) => ({
       label: student.fullName,
-      value: student.id,
-      dateofbirth: student.birthday,
+      value: `${student.id}`,
+      birthday: student.birthday,
     })) ?? [];
-  console.log('studentData', studentData);
+
   return (
     <Box
       key={index}
@@ -82,32 +78,38 @@ export function AbsentStudentGroup({ item, index, onEditGroup, onRemoveGroup }: 
         </Text>
         <InfoSvg />
       </Box>
-      <Box
-        pos="absolute"
-        right={-8}
-        top={-8}
-        onPress={() => onRemoveGroup(item)}
-      >
-        <RemoveSvg />
-      </Box>
+      {index > 0 && (
+        <Box
+          pos="absolute"
+          right={-8}
+          top={-8}
+          onPress={() => onRemoveGroup(item)}
+        >
+          <RemoveSvg />
+        </Box>
+      )}
       <Box mt={4} p={8} gap={16}>
         <Dropdown
           data={data_reason}
-          name="reason"
           label={'Lý do nghỉ'}
           isRequired
           placeholder={'Nhập lý do'}
           searchPlaceholder={'Tìm kiếm'}
-          onChange={(value: string) => onEditGroup({ ...item, reason: value })}
+          onChange={(value: string) =>
+            onEditGroup(item, { ...item, reason: value })
+          }
         />
         <Dropdown
           data={studentData}
-          name="absentStudent"
           label={'Học viên vắng'}
           isRequired
+          isMultiSelect
           placeholder={'Tên học viên'}
           searchPlaceholder={'Tìm kiếm'}
           onSearchExternal={text => setKeyword(text)}
+          onChange={(values: string[]) =>
+            onEditGroup(item, { ...item, students: values })
+          }
         />
       </Box>
     </Box>

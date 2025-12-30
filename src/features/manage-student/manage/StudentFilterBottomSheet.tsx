@@ -30,6 +30,7 @@ import {
 export interface StudentFilterBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirm: (filter: string[]) => void;
 }
 
 type FilterType = {
@@ -71,13 +72,14 @@ const fakeData = [
 const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
   isOpen,
   onClose,
+  onConfirm,
 }) => {
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['80%'], []);
 
-  const [filters, setFilters] = useState<FilterType>({
+  const [filterTypes, setFilterTypes] = useState<FilterType>({
     educations: [],
     companies: [],
     partyMembers: [],
@@ -93,25 +95,53 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
     }
   }, [isOpen]);
 
-  const handleSelectItem = useCallback((type: string, value: any) => {
-    setFilters(prev => {
-      const currentValues = prev[type as keyof FilterType] as any[];
-      if (currentValues.includes(value)) {
-        return {
-          ...prev,
-          [type]: currentValues.filter(v => v !== value),
-        };
-      }
-      return {
-        ...prev,
-        [type]: [...currentValues, value],
-      };
-    });
-  }, []);
+  const handleSelectItem = useCallback(
+    (type: string, value: any) => {
+      setFilterTypes(prev => {
+        const currentValues = prev[type as keyof FilterType] as any[];
+        if (currentValues.includes(value)) {
+          return {
+            ...prev,
+            [type]: currentValues.filter(v => v !== value),
+          };
+        } else {
+          return {
+            ...prev,
+            [type]: [...currentValues, value],
+          };
+        }
+      });
+    },
+    [setFilterTypes]
+  );
 
   const handleSave = useCallback(() => {
+    let filters: string[] = [];
+
+    // Hệ đào tạo
+    if (filterTypes.educations && filterTypes.educations.length > 0) {
+      filterTypes.educations.map(item =>
+        filters.push(`company.course.type|$eq|${item}`)
+      );
+    }
+    // Đại đội
+    if (filterTypes.companies && filterTypes.companies.length > 0) {
+      filterTypes.companies.map(item => filters.push(`company.id|$eq|${item}`));
+    }
+    // Đảng viên
+    if (filterTypes.partyMembers && filterTypes.partyMembers.length > 0) {
+      filterTypes.partyMembers.map(item =>
+        filters.push(`partyMemberType|$eq|${item}`)
+      );
+    }
+    // Chính sách
+    if (filterTypes.policies && filterTypes.policies.length > 0) {
+      filterTypes.policies.map(item => filters.push(`policy|$eq|${item}`));
+    }
+
+    onConfirm(filters);
     onClose();
-  }, [onClose]);
+  }, [filterTypes, onClose]);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -148,25 +178,27 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
               <Box key={index} gap={8} mb={8}>
                 <Text fontWeight="bold">{filter.filterName}</Text>
                 <Box flexDirection="row" gap={8} flexWrap="wrap">
-                  {filter.options.map((value, idx) => {
+                  {filter.options.map((option, idx) => {
                     const isActive = (() => {
                       switch (filter.filterKey) {
                         case 'educations':
-                          return filters.educations?.some(
-                            e => value.value === e
+                          return filterTypes.educations?.some(
+                            e => option.value === e
                           );
                         case 'companies':
-                          return filters.companies?.some(
-                            e => value.value === e
+                          return filterTypes.companies?.some(
+                            e => option.value === e
                           );
                         case 'partyMembers':
-                          return filters.partyMembers?.some(
-                            e => value.value === e
+                          return filterTypes.partyMembers?.some(
+                            e => option.value === e
                           );
                         case 'policies':
-                          return filters.policies?.some(e => value.value === e);
+                          return filterTypes.policies?.some(
+                            e => option.value === e
+                          );
                         // case 'talents':
-                        //   return filters.talents?.some(e => value.value === e);
+                        //   return filter.talents?.some(e => option.value === e);
                         default:
                           return false;
                       }
@@ -174,10 +206,10 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
                     return (
                       <ButtonTypeSelector
                         key={idx}
-                        label={value.label}
+                        label={option.label}
                         active={isActive}
                         onPress={() => {
-                          handleSelectItem(filter.filterKey, value.value);
+                          handleSelectItem(filter.filterKey, option.value);
                         }}
                       />
                     );
