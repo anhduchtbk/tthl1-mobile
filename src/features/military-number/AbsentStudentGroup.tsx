@@ -3,16 +3,20 @@ import RemoveSvg from '@/assets/icons/remove-svg';
 import Dropdown from '@/components/common/Dropdown/Dropdown';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import TextField from '@/components/common/TextField/TextField';
 import { useGetStudentList } from '@/hooks/useStudent';
 import { colors } from '@/theme/colors';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Animated } from 'react-native';
 
 const LIMIT = 200;
 
 const data_reason = [
-  { label: 'Điểm danh thể dục buổi sáng', value: '1' },
-  { label: 'Điểm danh Ăn cơm sáng', value: '2' },
-  { label: 'Điểm danh Học buổi sáng (Võ thuật CAND)', value: '3' },
+  { label: 'Quân y', value: '1' },
+  { label: 'Nghỉ tranh thủ', value: '2' },
+  { label: 'Văn nghệ', value: '3' },
+  { label: 'NV đoàn thanh niên', value: '4' },
+  { label: 'Khác', value: '5' },
 ];
 
 interface Student {
@@ -25,6 +29,7 @@ export interface AbsentGroup {
   id: number;
   reason: string;
   students: string[];
+  otherReason?: string;
 }
 
 type AbsentStudentGroupProps = {
@@ -32,6 +37,7 @@ type AbsentStudentGroupProps = {
   index: number;
   onEditGroup: (item: AbsentGroup, newItem: AbsentGroup) => void;
   onRemoveGroup: (group: AbsentGroup) => void;
+  handleChangeReasonTxt?: (value: string) => void;
 };
 
 export function AbsentStudentGroup({
@@ -39,6 +45,7 @@ export function AbsentStudentGroup({
   index,
   onEditGroup,
   onRemoveGroup,
+  handleChangeReasonTxt,
 }: AbsentStudentGroupProps) {
   const [keyword, setKeyword] = useState<string>();
 
@@ -54,6 +61,24 @@ export function AbsentStudentGroup({
       value: `${student.id}`,
       birthday: student.birthday,
     })) ?? [];
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (item.reason === '5') {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [item.reason]);
 
   return (
     <Box
@@ -99,6 +124,21 @@ export function AbsentStudentGroup({
             onEditGroup(item, { ...item, reason: value })
           }
         />
+        <Animated.View style={{ opacity: fadeAnim }}>
+          {item.reason === '5' && (
+            <TextField
+              label="Lý do khác"
+              placeholder="Nhập lý do..."
+              placeholderTextColor={colors.placeholder}
+              returnKeyType="next"
+              onChangeText={handleChangeReasonTxt}
+              multiline
+              numberOfLines={4}
+              inputStyle={{ minHeight: 80 }}
+            />
+          )}
+        </Animated.View>
+
         <Dropdown
           data={studentData}
           label={'Học viên vắng'}

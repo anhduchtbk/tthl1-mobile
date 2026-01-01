@@ -15,7 +15,7 @@ import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'expo-router/build/hooks';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, TextInput } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -43,8 +43,11 @@ const ReportNumberScreen = () => {
       id: 1,
       reason: '',
       students: [],
+      otherReason: '',
     },
   ]);
+
+  console.log('absent', absentGroup);
   const {
     mutateAsync: createAttendanceReportRequest,
     isPending: isCreatePending,
@@ -75,20 +78,21 @@ const ReportNumberScreen = () => {
       id: absentGroup[absentGroup.length - 1].id + 1,
       reason: '',
       students: [],
+      otherReason: '',
     };
     setAbsentGroup([...absentGroup, newGroup]);
   };
 
-  const editAbsentGroup = (
-    groupItem: AbsentGroup,
-    newGroupItem: AbsentGroup
-  ) => {
-    setAbsentGroup(
-      absentGroup.map(group =>
-        group.id === groupItem.id ? newGroupItem : group
-      )
-    );
-  };
+  const editAbsentGroup = useCallback(
+    (groupItem: AbsentGroup, newGroupItem: AbsentGroup) => {
+      setAbsentGroup(
+        absentGroup.map(group =>
+          group.id === groupItem.id ? newGroupItem : group
+        )
+      );
+    },
+    [absentGroup]
+  );
 
   const removeAbsentGroup = (groupItem: AbsentGroup) => {
     setAbsentGroup(absentGroup.filter(group => group.id !== groupItem.id));
@@ -175,6 +179,9 @@ const ReportNumberScreen = () => {
                   item={item}
                   onEditGroup={editAbsentGroup}
                   onRemoveGroup={removeAbsentGroup}
+                  handleChangeReasonTxt={text => {
+                    editAbsentGroup(item, { ...item, otherReason: text });
+                  }}
                 />
               );
             })}
