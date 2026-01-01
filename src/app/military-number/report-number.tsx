@@ -45,7 +45,6 @@ const ReportNumberScreen = () => {
       students: [],
     },
   ]);
-  const [absentStudents, setAbsentStudents] = useState<string[]>([]);
   const {
     mutateAsync: createAttendanceReportRequest,
     isPending: isCreatePending,
