@@ -1,3 +1,4 @@
+import { Company } from '@/api/types/company';
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { DateTimePickerModal } from '@/components/common/Modal/DateTimePickerModal';
@@ -7,6 +8,7 @@ import { HistoryElement } from '@/features/manage-student/history/HistoryElement
 import MilitaryHistoryFilterBottomSheet from '@/features/military-number/military-history-report/MilitaryHistoryFilterBottomSheet';
 import { DayElementScrollView } from '@/features/schedule/DayElement';
 import { colors } from '@/theme/colors';
+import { useSearchParams } from 'expo-router/build/hooks';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
 
@@ -44,6 +46,11 @@ const fakeData = [
 ];
 
 export default function MilitaryNumberScreen() {
+  const searchParams = useSearchParams();
+  const companyItem = JSON.parse(
+    searchParams.get('companyItem') || ''
+  ) as Company;
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenDateModal, setIsOpenDateModal] = useState(false);
 
@@ -53,7 +60,7 @@ export default function MilitaryNumberScreen() {
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="LỊCH SỬ BÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
+      <ScreenHeader title="LỊCH SỬ BÁO QUÂN SỐ" subTitle={`ĐẠI ĐỘI ${companyItem.name} - `} />
       <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Box px={16} gap={16}>

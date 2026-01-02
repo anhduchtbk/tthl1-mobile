@@ -5,7 +5,7 @@ import {
   GetListAttendanceReportsResponse,
 } from './types/attendance-report';
 
-export const getAttendanceList = async (
+export const getAttendanceReportList = async (
   params: GetListAttendanceReportsRequest
 ): Promise<GetListAttendanceReportsResponse> => {
   const response = await axiosInstance.get('attendance-reports', { params });

@@ -23,6 +23,16 @@ export interface Equipment {
   note: string;
 }
 
+export interface Manager {
+  id: number;
+  email: string;
+  fullName: string;
+  role: {
+    id: number;
+    name: string;
+  }
+}
+
 export interface GetInventoryListByIdRequest {
   id: number;
 }
@@ -32,6 +42,7 @@ export interface GetInventoryListByIdResponse {
   name: string;
   description: string;
   equipments: Equipment[];
+  manager: Manager;
 }
 
 export type GetListInventoryResponse = PaginationResponse<Inventory>;

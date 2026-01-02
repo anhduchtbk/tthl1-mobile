@@ -39,3 +39,35 @@ export interface GetTransactionEquipmentResponse {
   totalInventoryQuantity: number;
   transactionsByCompany: TransactionsByCompany[];
 }
+
+export interface CreateTransactionRequest {
+  trainingEquipmentId: number;
+  type: 'BORROW' | 'RETURN';
+  quantity: number;
+  reason: string;
+}
+
+export interface CreateTransactionResponse {
+  id: number;
+  quantity: number;
+  transactionType: 'BORROW' | 'RETURN';
+  status: 'pending' | 'approved' | 'rejected';
+  reason: string;
+  rejectReason: string;
+  user: {
+    id: number;
+    email: string;
+  };
+  trainingEquipment: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  approvedBy: {
+    id: number;
+    email: string;
+  };
+  approvedAt: string;
+  createdAt: string;
+  updatedAt: string;
+}

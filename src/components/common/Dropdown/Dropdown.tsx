@@ -24,6 +24,7 @@ export type DropdownProps = {
   dropdownStyle?: ViewStyle;
   onSearchExternal?: (text: string) => void;
   isMultiSelect?: boolean;
+  error?: string;
 };
 
 const Dropdown = ({
@@ -40,6 +41,7 @@ const Dropdown = ({
   dropdownStyle,
   onSearchExternal,
   isMultiSelect = false,
+  error,
 }: DropdownProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const [internalValue, setInternalValue] = useState<string | null>(
@@ -93,6 +95,7 @@ const Dropdown = ({
       dropdownStyle={dropdownStyle}
       onSearchExternal={onSearchExternal}
       isMultiSelect={isMultiSelect}
+      error={error}
     />
   );
 };
