@@ -1,46 +1,36 @@
+import { Company } from '@/api/types/company';
+import { Timetable } from '@/api/types/timetable';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { SCHEDULE_TYPE } from '@/constants/value';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { DayElementScrollView } from './DayElement';
+import { DayHeaderScrollView } from './DayHeader';
 import { ScheduleItem } from './ScheduleItem';
 
 type ScheduleDetailProps = {
-  week?: number;
+  item: {
+    weekIndex: number;
+    startOfWeek: string;
+    days: {
+      date: string;
+      items: Timetable[];
+    }[];
+  };
+  companyItem?: Company;
   isHome?: boolean;
 };
 
-const fakeData = [
-  {
-    id: 1,
-    type: SCHEDULE_TYPE.MORNING,
-    subjectFullname: 'Kỹ thuật võ thuật CAND',
-    lessonNumber: 16,
-    isDone: true,
-    teacherFullname: 'Đại uý Nguyễn Văn A',
-  },
-  {
-    id: 2,
-    type: SCHEDULE_TYPE.AFTERNOON,
-    subjectFullname: 'Kỹ thuật võ thuật CAND',
-    lessonNumber: 3,
-    isDone: false,
-    teacherFullname: 'Đại uý Nguyễn Văn A',
-  },
-  {
-    id: 3,
-    type: SCHEDULE_TYPE.AFTERSCHOOL,
-    subjectFullname: 'Kỹ thuật võ thuật CAND',
-    lessonNumber: 4,
-    isDone: false,
-    teacherFullname: 'Đại uý Nguyễn Văn A',
-  },
-];
-
-export function ScheduleDetail({ week, isHome }: ScheduleDetailProps) {
+export function ScheduleDetail({
+  item,
+  companyItem,
+  isHome,
+}: ScheduleDetailProps) {
   const router = useRouter();
+  const [selectedDate, setSelectedDate] = useState<string>(
+    item?.days[0]?.date || ''
+  );
 
   return (
     <Box style={styles.timetable}>
@@ -50,19 +40,26 @@ export function ScheduleDetail({ week, isHome }: ScheduleDetailProps) {
         justifyContent="space-between"
       >
         <Text fontSize={isHome ? 20 : 15} fontWeight="bold" color={'#333'}>
-          Thời khoá biểu (C1 - VB2)
+          Thời khoá biểu (C
+          {companyItem?.name || item?.days?.[0]?.items?.[0]?.company?.name} - )
         </Text>
         {!isHome && (
           <Text fontSize={12} color={colors.primary[20]}>
-            Tuần {week}{' '}
+            Tuần {item?.weekIndex}
           </Text>
         )}
       </Box>
-      <DayElementScrollView />
+      <DayHeaderScrollView
+        startOfWeek={item?.startOfWeek}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
       <Box gap={8}>
-        {fakeData.map((item, index) => {
-          return <ScheduleItem item={item} key={index} />;
-        })}
+        {item?.days
+          .find(day => day.date === selectedDate)
+          ?.items.map((timetable, index) => {
+            return <ScheduleItem item={timetable} key={index} />;
+          })}
       </Box>
       {isHome && (
         <Box

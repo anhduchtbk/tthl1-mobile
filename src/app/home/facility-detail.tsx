@@ -7,7 +7,7 @@ import { FacilityHeader } from '@/features/home/facility/FacilityHeader';
 import { FacilityInformation } from '@/features/home/facility/FacilityInformation';
 import LendFacilityModal from '@/features/home/facility/LendFacilityModal';
 import { useGetInventoryList } from '@/hooks/useInventory';
-import { useGetTransactionEquipmentById } from '@/hooks/useTransaction';
+import { useGetTransactionByEquipment } from '@/hooks/useTransaction';
 import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSearchParams } from 'expo-router/build/hooks';
@@ -22,7 +22,8 @@ export default function FacilityDetailScreen() {
   const [isOpenBackModal, setIsOpenBackModal] = useState(false);
 
   const params = useSearchParams();
-  const { data, isLoading } = useGetTransactionEquipmentById(
+  
+  const { data, isLoading } = useGetTransactionByEquipment(
     Number(params.get('equipment_id'))
   );
 

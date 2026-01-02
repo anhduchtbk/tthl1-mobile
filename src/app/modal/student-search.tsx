@@ -63,7 +63,7 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
             handleOnChangeSearch(value);
           }}
         />
-        <Text>Kết quả tìm kiếm ({totalCount})</Text>
+        <Text color={colors.text[2]}>Kết quả tìm kiếm ({totalCount})</Text>
       </Box>
       <Box flex={1}>
         {isLoading ? (
@@ -80,7 +80,9 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
             onEndReached={handleLoadMore}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={
-              <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+              isEmpty ? (
+                <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+              ) : null
             }
             ListFooterComponent={renderLoadingFooter()}
             refreshControl={

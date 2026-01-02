@@ -2,7 +2,7 @@
 export enum SCHEDULE_TYPE {
   MORNING = 'morning',
   AFTERNOON = 'afternoon',
-  AFTERSCHOOL = 'afterSchool',
+  EXTRA = 'extra',
 }
 
 // Buổi điểm danh

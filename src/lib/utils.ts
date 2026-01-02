@@ -13,6 +13,29 @@ export const formatUnitRank = (unitRank: string) => {
   }
 };
 
+export const formatRank = (rank: string) => {
+  switch (rank) {
+    case 'THIEU_UY':
+      return 'Thiếu uý';
+    case 'TRUNG_UY':
+      return 'Trung uý';
+    case 'THUONG_UY':
+      return 'Thượng uý';
+    case 'DAI_UY':
+      return 'Đại uý';
+    case 'THIEU_TA':
+      return 'Thiếu tá';
+    case 'TRUNG_TA':
+      return 'Trung tá';
+    case 'THUONG_TA':
+      return 'Thượng tá';
+    case 'DAI_TA':
+      return 'Đại tá';
+    default:
+      return 'Tiểu giáo viên';
+  }
+};
+
 export const formatFamilyRole = (familyRole: string) => {
   switch (familyRole) {
     case 'father':
@@ -115,7 +138,7 @@ export const formatScheduleType = (type: SCHEDULE_TYPE) => {
       bgColor = colors.primary[50];
       borderColor = '#FEF08A';
       break;
-    case SCHEDULE_TYPE.AFTERSCHOOL:
+    case SCHEDULE_TYPE.EXTRA:
       scheduleType = 'Ngoại khoá';
       bgColor = colors.primary[70];
       borderColor = '#20C74B';
@@ -159,13 +182,17 @@ export const formatHistoryType = (type: HISTORY_TYPE) => {
   return { scheduleType, bgColor, borderColor };
 };
 
-export function getCurrentWeekDates() {
-  const startOfWeek = dayjs().startOf('week'); // Get the start of the current week
+export function getCurrentWeekDates(startOfWeek?: string) {
+  const startOfWeekDate = startOfWeek
+    ? dayjs(startOfWeek)
+    : dayjs().startOf('week'); // Get the start of the current week
   const daysInWeek = [];
 
   for (let i = 0; i < 7; i++) {
     // Add 'i' days to the start of the week and format the date
-    const day = startOfWeek.add(i + 1, 'day').format('YYYY-MM-DD');
+    const day = startOfWeekDate
+      .add(startOfWeek ? i : i + 1, 'day')
+      .format('YYYY-MM-DD');
     daysInWeek.push(day);
   }
 

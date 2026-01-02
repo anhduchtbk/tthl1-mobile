@@ -21,6 +21,10 @@ type RowItemProps = PropsWithChildren<{
     id: number;
     name: string;
   };
+  equipment?: {
+    id: number;
+    name: string;
+  };
   isConfirm?: boolean;
   onAcceptRequest?: () => void;
   onRejectRequest?: () => void;
@@ -29,22 +33,29 @@ type RowItemProps = PropsWithChildren<{
 export const RenderRequestItem = ({
   rowItem,
   company,
+  equipment,
   isConfirm,
   onAcceptRequest,
   onRejectRequest,
 }: RowItemProps) => {
   const router = useRouter();
 
+  console.log('ssss', rowItem);
+  
+
   const onOpenHistoryRequest = () => {
     router.push({
       pathname: '/home/notification/history-request',
-      params: { company_id: company?.id },
+      params: {
+        companyItem: JSON.stringify(company),
+        equipmentItem: JSON.stringify(equipment),
+      },
     });
   };
 
   return (
     <Box style={styles.containerItem}>
-      {rowItem.infos.map((item, index) => {
+      {rowItem?.infos?.map((item, index) => {
         return (
           <Box
             key={index}
