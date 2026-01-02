@@ -3,9 +3,9 @@ import { Text } from '@/components/common/Text/Text';
 import TextField from '@/components/common/TextField/TextField';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ModalHeader } from '@/components/header/ModalHeader';
-import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
-import { RenderStudentItemSkeleton } from '@/features/manage-student/manage/RenderStudentItemSkeleton';
-import { useGetStudentList } from '@/hooks/useStudent';
+import { RenderScheduleItem } from '@/features/schedule/RenderScheduleItem';
+import { RenderScheduleItemSkeleton } from '@/features/schedule/RenderScheduleItemSkeleton';
+import { useGetCompanyList } from '@/hooks/useCompany';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -13,11 +13,11 @@ import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 const LIMIT = 20;
 
-export interface StudentSearchProps {
+export interface ScheduleSearchProps {
   onSelect: () => void;
 }
 
-const StudentSearch: React.FC<StudentSearchProps> = () => {
+const ScheduleSearch: React.FC<ScheduleSearchProps> = () => {
   const router = useRouter();
 
   const [keyword, setKeyword] = useState<string>();
@@ -33,9 +33,9 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
     refetch,
     handleLoadMore,
     isFetchingNextPage,
-    totalCount,
     isEmpty,
-  } = useGetStudentList({
+    totalCount,
+  } = useGetCompanyList({
     page: 1,
     limit: LIMIT,
     search: keyword,
@@ -68,19 +68,23 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
       <Box flex={1}>
         {isLoading ? (
           Array.from({ length: 5 }, (_, index) => {
-            return <RenderStudentItemSkeleton key={index} />;
+            return <RenderScheduleItemSkeleton key={index} />;
           })
         ) : (
           <FlatList
             data={data || []}
-            renderItem={({ item }) => <RenderStudentItem item={item} />}
+            renderItem={({ item }) => <RenderScheduleItem item={item} />}
             keyExtractor={(_, index) => index.toString()}
             contentContainerStyle={{ paddingHorizontal: 16 }}
             onEndReachedThreshold={0.6}
             onEndReached={handleLoadMore}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={
-              <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+              isEmpty ? (
+                <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+              ) : (
+                <></>
+              )
             }
             ListFooterComponent={renderLoadingFooter()}
             refreshControl={
@@ -93,4 +97,4 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
   );
 };
 
-export default StudentSearch;
+export default ScheduleSearch;

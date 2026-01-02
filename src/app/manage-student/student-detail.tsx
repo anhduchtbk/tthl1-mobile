@@ -33,7 +33,7 @@ export default function StudentDetailScreen() {
       />
       <ScreenHeader
         title="CHI TIẾT HỌC VIÊN"
-        marginTop={1}
+        marginTop={4}
         hasBorderBottom={false}
       />
       <Box

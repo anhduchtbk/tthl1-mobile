@@ -3,9 +3,9 @@ import { Text } from '@/components/common/Text/Text';
 import TextField from '@/components/common/TextField/TextField';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ModalHeader } from '@/components/header/ModalHeader';
-import { RenderStudentItem } from '@/features/manage-student/manage/RenderStudentItem';
-import { RenderStudentItemSkeleton } from '@/features/manage-student/manage/RenderStudentItemSkeleton';
-import { useGetStudentList } from '@/hooks/useStudent';
+import { RenderMilitaryItem } from '@/features/military-number/RenderMilitaryItem';
+import { RenderMilitaryItemSkeleton } from '@/features/military-number/RenderMilitaryItemSkleton';
+import { useGetCompanyList } from '@/hooks/useCompany';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -13,11 +13,11 @@ import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 const LIMIT = 20;
 
-export interface StudentSearchProps {
+export interface CompanySearchProps {
   onSelect: () => void;
 }
 
-const StudentSearch: React.FC<StudentSearchProps> = () => {
+const CompanySearch: React.FC<CompanySearchProps> = () => {
   const router = useRouter();
 
   const [keyword, setKeyword] = useState<string>();
@@ -35,7 +35,7 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
     isFetchingNextPage,
     totalCount,
     isEmpty,
-  } = useGetStudentList({
+  } = useGetCompanyList({
     page: 1,
     limit: LIMIT,
     search: keyword,
@@ -68,19 +68,23 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
       <Box flex={1}>
         {isLoading ? (
           Array.from({ length: 5 }, (_, index) => {
-            return <RenderStudentItemSkeleton key={index} />;
+            return <RenderMilitaryItemSkeleton key={index} />;
           })
         ) : (
           <FlatList
             data={data || []}
-            renderItem={({ item }) => <RenderStudentItem item={item} />}
+            renderItem={({ item }) => <RenderMilitaryItem item={item} />}
             keyExtractor={(_, index) => index.toString()}
             contentContainerStyle={{ paddingHorizontal: 16 }}
             onEndReachedThreshold={0.6}
             onEndReached={handleLoadMore}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={
-              <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+              isEmpty ? (
+                <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+              ) : (
+                <></>
+              )
             }
             ListFooterComponent={renderLoadingFooter()}
             refreshControl={
@@ -93,4 +97,4 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
   );
 };
 
-export default StudentSearch;
+export default CompanySearch;

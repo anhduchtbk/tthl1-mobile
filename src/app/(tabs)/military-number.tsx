@@ -14,6 +14,7 @@ import { RenderMilitaryItem } from '@/features/military-number/RenderMilitaryIte
 import { RenderMilitaryItemSkeleton } from '@/features/military-number/RenderMilitaryItemSkleton';
 import { useGetCompanyList } from '@/hooks/useCompany';
 import { colors } from '@/theme/colors';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
@@ -28,6 +29,7 @@ type FilterType = {
 };
 
 export default function MilitaryNumberScreen() {
+  const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [filters, setFilters] = useState<string[]>([]);
 
@@ -54,9 +56,17 @@ export default function MilitaryNumberScreen() {
       <ActivityIndicator size={'small'} color={colors.primary[20]} />
     ) : null;
 
+  const handlePressSearch = () => {
+    router.push('/modal/military-number');
+  };
+
   return (
     <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="ĐIỂM DANH QUÂN SỐ" isSearch />
+      <ScreenHeader
+        title="ĐIỂM DANH QUÂN SỐ"
+        isSearch
+        onPressSearch={handlePressSearch}
+      />
       <FilterButton onOpenFilter={handleOpenModal} />
       {isLoading ? (
         Array.from({ length: 5 }, (_, index) => {

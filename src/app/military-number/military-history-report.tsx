@@ -11,6 +11,7 @@ import { colors } from '@/theme/colors';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const fakeData = [
   {
@@ -100,6 +101,6 @@ export default function MilitaryNumberScreen() {
         }}
         closeModal={() => setIsOpenDateModal(false)}
       />
-    </Box>
+    </SafeAreaView>
   );
 }

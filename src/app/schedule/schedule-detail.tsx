@@ -5,11 +5,15 @@ import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
 import { colors } from '@/theme/colors';
 import React from 'react';
 import { FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ScheduleDetailScreen() {
   return (
-    <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="THỜI KHOÁ BIỂU" isSearch />
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      edges={['top']}
+    >
+      <ScreenHeader title="THỜI KHOÁ BIỂU" isSearch marginTop={4} />
       <FilterButton />
       <FlatList
         data={[1, 2]}
@@ -19,6 +23,6 @@ export default function ScheduleDetailScreen() {
         ListFooterComponent={<Box h={100} />}
         showsVerticalScrollIndicator={false}
       />
-    </Box>
+    </SafeAreaView>
   );
 }
