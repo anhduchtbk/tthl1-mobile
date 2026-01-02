@@ -9,6 +9,7 @@ import { DayElementScrollView } from '@/features/schedule/DayElement';
 import { colors } from '@/theme/colors';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const fakeData = [
   {
@@ -52,8 +53,15 @@ export default function MilitaryNumberScreen() {
   const [toDate, setToDate] = useState<Date | null>(null);
 
   return (
-    <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="LỊCH SỬ BÁO QUÂN SỐ" subTitle="ĐẠI ĐỘI 2 - VB2" />
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      edges={['top']}
+    >
+      <ScreenHeader
+        title="LỊCH SỬ BÁO QUÂN SỐ"
+        subTitle="ĐẠI ĐỘI 2 - VB2"
+        marginTop={4}
+      />
       <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Box px={16} gap={16}>
@@ -93,6 +101,6 @@ export default function MilitaryNumberScreen() {
         }}
         closeModal={() => setIsOpenDateModal(false)}
       />
-    </Box>
+    </SafeAreaView>
   );
 }

@@ -7,12 +7,14 @@ import { RenderScheduleItemSkeleton } from '@/features/schedule/RenderScheduleIt
 import ScheduleFilterBottomSheet from '@/features/schedule/ScheduleFilterBottomSheet';
 import { useGetCompanyList } from '@/hooks/useCompany';
 import { colors } from '@/theme/colors';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 const LIMIT = 20;
 
 export default function ScheduleScreen() {
+  const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [filters, setFilters] = useState<string[]>([]);
   const {
@@ -29,16 +31,22 @@ export default function ScheduleScreen() {
     filter: filters,
   });
 
-  console.log(data);
-
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator size={'small'} color={colors.primary[20]} />
     ) : null;
 
+  const handlePressSearch = () => {
+    router.push('/modal/schedule-search');
+  };
+
   return (
     <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="THỜI KHOÁ BIỂU" isSearch />
+      <ScreenHeader
+        title="THỜI KHOÁ BIỂU"
+        isSearch
+        onPressSearch={handlePressSearch}
+      />
       <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
       {isLoading ? (
         Array.from({ length: 5 }, (_, index) => {

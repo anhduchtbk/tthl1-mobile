@@ -53,8 +53,6 @@ const Dropdown = ({
     control && name ? useController({ name, control }) : null;
 
   const handleChange = (item: string[] | DropdownItem) => {
-    console.log('handleChange', item);
-
     if (Array.isArray(item)) {
       setInternalValues(item);
       externalOnChange?.(item);

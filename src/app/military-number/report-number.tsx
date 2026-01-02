@@ -18,7 +18,10 @@ import { useSearchParams } from 'expo-router/build/hooks';
 import { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, TextInput } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import { z } from 'zod';
 
 type FormData = {
@@ -47,7 +50,6 @@ const ReportNumberScreen = () => {
     },
   ]);
 
-  console.log('absent', absentGroup);
   const {
     mutateAsync: createAttendanceReportRequest,
     isPending: isCreatePending,
@@ -99,8 +101,6 @@ const ReportNumberScreen = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log('Report Number Data:', data, absentGroup);
-
     const params = {
       personnelCount: data.companyNumber,
       totalAbsent: data.absentNumber,
@@ -117,10 +117,15 @@ const ReportNumberScreen = () => {
   };
 
   return (
-    <Box flex={1} bgColor={colors.white}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      edges={['top']}
+    >
       <ScreenHeader
         title="BÁO CÁO QUÂN SỐ"
         subTitle={`ĐẠI ĐỘI ${companyItem.name} - `}
+        marginTop={4}
+        hasBorderBottom={false}
       />
       <Box flex={1} mt={20} gap={16} pb={insets.bottom}>
         <Box flex={1}>
@@ -211,7 +216,7 @@ const ReportNumberScreen = () => {
           />
         </Box>
       </Box>
-    </Box>
+    </SafeAreaView>
   );
 };
 
