@@ -8,6 +8,7 @@ import { formatDate } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { isEmpty } from 'lodash';
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import {
@@ -49,6 +50,7 @@ type DropdownComponentProps = {
   dropdownStyle?: ViewStyle;
   onSearchExternal?: (text: string) => void;
   isMultiSelect?: boolean;
+  error?: string;
 };
 
 const DropdownComponent = ({
@@ -66,6 +68,7 @@ const DropdownComponent = ({
   dropdownStyle,
   onSearchExternal,
   isMultiSelect,
+  error,
 }: DropdownComponentProps) => {
   return (
     <Box>
@@ -164,6 +167,13 @@ const DropdownComponent = ({
             return <RenderItem item={item} selected={selected} />;
           }}
         />
+      )}
+      {!isEmpty(error) && (
+        <Box mt={6}>
+          <Text color={colors.action.error} fontSize={12}>
+            {error}
+          </Text>
+        </Box>
       )}
     </Box>
   );

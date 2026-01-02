@@ -1,3 +1,8 @@
+import { Inventory } from '@/api/types/inventory';
+import {
+  CreateTransactionRequest,
+  GetTransactionEquipmentResponse,
+} from '@/api/types/transaction';
 import CloseSvg from '@/assets/icons/close-svg';
 import Button from '@/components/common/Button';
 import Dropdown from '@/components/common/Dropdown/Dropdown';
@@ -5,6 +10,8 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
+import { useCreateTransaction } from '@/hooks/useTransaction';
+import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,42 +26,84 @@ const MODAL_WIDTH = SCREEN_WIDTH * 0.9;
 
 interface Props {
   isVisible: boolean;
+  inventoryList: Inventory[];
+  facilityDetail: GetTransactionEquipmentResponse;
   onClose: () => void;
 }
 
-const data = [
-  { label: 'Điểm danh thể dục buổi sáng', value: '1' },
-  { label: 'Điểm danh Ăn cơm sáng', value: '2' },
-  { label: 'Điểm danh Học buổi sáng (Võ thuật CAND)', value: '3' },
-];
-
 type FormData = {
   companyName: string;
-  facilityAmount?: number;
+  facilityAmount: number;
   reason: string;
   requester: string;
 };
 
-const reportNumberSchema = z.object({
-  companyName: z.string(),
-  facilityAmount: z.number().optional(),
-  reason: z.string(),
-  requester: z.string(),
-});
+const LendFacilityModal = ({
+  isVisible,
+  facilityDetail,
+  inventoryList,
+  onClose,
+}: Props) => {
+  const { user } = useAuthStore();
+  const { mutateAsync: createTransaction, isPending: isCreatePending } =
+    useCreateTransaction();
 
-const LendFacilityModal = ({ isVisible, onClose }: Props) => {
+  const reportNumberSchema = z.object({
+    companyName: z.string().min(1, 'Vui lòng chọn nơi mượn vật chất'),
+    facilityAmount: z
+      .number('Số lượng không hợp lệ')
+      .min(1, 'Vui lòng nhập số lượng')
+      .gt(0, 'Số lượng phải lớn hơn 0')
+      .lt(
+        facilityDetail?.totalInventoryQuantity,
+        `Số lượng phải nhỏ hơn ${facilityDetail?.totalInventoryQuantity}`
+      ),
+    reason: z.string().min(1, 'Vui lòng nhập lý do'),
+    requester: z.string(),
+  });
+
   const {
     control,
+    setValue,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(reportNumberSchema),
+    mode: 'onChange',
     defaultValues: {
       companyName: '',
+      facilityAmount: 1,
       reason: '',
-      requester: '',
+      requester: user?.name,
     },
   });
+
+  const data = inventoryList?.map(item => {
+    return {
+      label: item.name,
+      value: `${item.id}`,
+    };
+  });
+
+  const onSubmit = (data: FormData) => {
+    console.log('Form data:', data);
+    // TODO: gọi API gửi yêu cầu
+
+    const params = {
+      trainingEquipmentId: facilityDetail?.equipment?.id,
+      type: 'BORROW',
+      quantity: data.facilityAmount,
+      reason: data.reason,
+    } as CreateTransactionRequest;
+
+    createTransaction(params, {
+      onSuccess: res => {
+        console.log('createAttendanceReportRequest', res);
+
+        onClose();
+      },
+    });
+  };
 
   return (
     <Modal
@@ -99,6 +148,8 @@ const LendFacilityModal = ({ isVisible, onClose }: Props) => {
             placeholder={'Nơi mượn vật chất'}
             searchPlaceholder={'Tìm kiếm'}
             dropdownStyle={{ borderColor: '#F1CFE3' }}
+            error={errors?.companyName?.message}
+            onChange={(value: string) => setValue('companyName', value)}
           />
           <Input
             as={TextField}
@@ -120,10 +171,15 @@ const LendFacilityModal = ({ isVisible, onClose }: Props) => {
                 py={5}
               >
                 <Text fontSize={FontSize.SMALL} color={colors.blue}>
-                  Tất cả (100)
+                  Tất cả ({facilityDetail?.totalInventoryQuantity || 0})
                 </Text>
               </Box>
             }
+            error={errors?.facilityAmount?.message}
+            onChangeText={value => {
+              const cleanValue = value.replace(/[^0-9]/g, '');
+              setValue('facilityAmount', Number(cleanValue));
+            }}
           />
           <Input
             as={TextField}
@@ -136,21 +192,28 @@ const LendFacilityModal = ({ isVisible, onClose }: Props) => {
               backgroundColor: colors.white,
               borderColor: '#F1CFE3',
             }}
+            error={errors?.reason?.message}
           />
           <Input
             as={TextField}
             name="requester"
             control={control}
             label={'Người yêu cầu'}
-            placeholder={'Trung uý Nguyễn Văn A'}
+            value={user?.name}
             keyboardType="number-pad"
             innerInputWrapper={{
               backgroundColor: colors.white,
               borderColor: '#F1CFE3',
             }}
+            error={errors?.requester?.message}
+            editable={false}
           />
         </Box>
-        <Button text="GỬI YÊU CẦU" />
+        <Button
+          text="GỬI YÊU CẦU"
+          loading={isCreatePending}
+          onPress={handleSubmit(onSubmit)}
+        />
       </Box>
     </Modal>
   );

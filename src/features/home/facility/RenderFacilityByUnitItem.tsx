@@ -1,4 +1,4 @@
-import { Equipment } from '@/api/types/inventory';
+import { Equipment, Manager } from '@/api/types/inventory';
 import StarSvg from '@/assets/icons/star-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
@@ -9,9 +9,15 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type RenderItemProps = {
   item: Equipment;
+  manager?: Manager;
+  inventoryName: string;
 };
 
-export function RenderFacilityByUnitItem({ item }: RenderItemProps) {
+export function RenderFacilityByUnitItem({
+  item,
+  manager,
+  inventoryName,
+}: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
@@ -19,6 +25,7 @@ export function RenderFacilityByUnitItem({ item }: RenderItemProps) {
       pathname: '/home/facility-detail',
       params: {
         equipment_id: item.id,
+        inventoryName,
       },
     });
   };
@@ -46,7 +53,7 @@ export function RenderFacilityByUnitItem({ item }: RenderItemProps) {
         <Box flex={1} flexDirection="row" alignItems="center" gap={6}>
           <StarSvg />
           <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
-            Phụ trách:
+            Phụ trách: {manager?.fullName || '-'}
           </Text>
         </Box>
 

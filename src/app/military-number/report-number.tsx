@@ -1,3 +1,4 @@
+import { Company } from '@/api/types/company';
 import Button from '@/components/common/Button';
 import Dropdown from '@/components/common/Dropdown/Dropdown';
 import { Box } from '@/components/common/Layout/Box';
@@ -15,7 +16,7 @@ import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'expo-router/build/hooks';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, TextInput } from 'react-native';
 import {
@@ -39,7 +40,9 @@ const reportNumberSchema = z.object({
 const ReportNumberScreen = () => {
   const insets = useSafeAreaInsets();
   const searchParams = useSearchParams();
-  const companyItem = JSON.parse(searchParams.get('companyItem') || '');
+  const companyItem = JSON.parse(
+    searchParams.get('companyItem') || ''
+  ) as Company;
 
   const [absentGroup, setAbsentGroup] = useState<AbsentGroup[]>([
     {
@@ -51,7 +54,7 @@ const ReportNumberScreen = () => {
   ]);
 
   const {
-    mutateAsync: createAttendanceReportRequest,
+    mutateAsync: createAttendanceReport,
     isPending: isCreatePending,
   } = useCreateAttendanceReport();
 
@@ -100,18 +103,32 @@ const ReportNumberScreen = () => {
     setAbsentGroup(absentGroup.filter(group => group.id !== groupItem.id));
   };
 
+  useEffect(() => {
+    setValue(
+      'absentNumber',
+      absentGroup.reduce((acc, group) => acc + group.students.length, 0)
+    );
+  }, [absentGroup, setValue]);
+
   const onSubmit = (data: FormData) => {
+    const arr = absentGroup?.map(group => ({
+      reason: group.reason,
+      studentIds: group.students.map(student => Number(student)),
+    }));
+
     const params = {
       personnelCount: data.companyNumber,
       totalAbsent: data.absentNumber,
       companyId: companyItem?.id,
       session: data.purpose,
-      absentGroups: [],
+      absentGroups: arr,
     };
 
-    createAttendanceReportRequest(params, {
+    console.log('createAttendanceReport params:', params);
+
+    createAttendanceReport(params, {
       onSuccess: res => {
-        console.log('createAttendanceReportRequest', res);
+        console.log('createAttendanceReport', res);
       },
     });
   };
@@ -142,6 +159,7 @@ const ReportNumberScreen = () => {
                 isRequired
                 placeholder={'Điểm danh'}
                 searchPlaceholder={'Tìm kiếm'}
+                onChange={(value: string) => setValue('purpose', value)}
               />
               <Input
                 as={TextField}
@@ -153,6 +171,7 @@ const ReportNumberScreen = () => {
                 placeholderTextColor={colors.placeholder}
                 returnKeyType="next"
                 keyboardType="number-pad"
+                editable={false}
                 error={errors?.companyNumber?.message}
                 onSubmitEditing={() => refs.absentNumber.current?.focus()}
                 onChangeText={value => {
@@ -170,6 +189,7 @@ const ReportNumberScreen = () => {
                 placeholderTextColor={colors.placeholder}
                 keyboardType="number-pad"
                 error={errors?.absentNumber?.message}
+                editable={false}
                 onChangeText={value => {
                   const cleanValue = value.replace(/[^0-9]/g, '');
                   setValue('absentNumber', Number(cleanValue));

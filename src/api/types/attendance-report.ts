@@ -2,9 +2,11 @@ import { PaginationResponse } from '@/types/api';
 import { Company } from './company';
 
 export interface GetListAttendanceReportsRequest {
-  order?: string;
   page?: number;
   limit?: number;
+  search?: string;
+  sort?: string;
+  filter?: string;
 }
 
 interface AbsentGroup {

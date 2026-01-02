@@ -6,6 +6,7 @@ import BackFacilityModal from '@/features/home/facility/BackFacilityModal';
 import { FacilityHeader } from '@/features/home/facility/FacilityHeader';
 import { FacilityInformation } from '@/features/home/facility/FacilityInformation';
 import LendFacilityModal from '@/features/home/facility/LendFacilityModal';
+import { useGetInventoryList } from '@/hooks/useInventory';
 import { useGetTransactionEquipmentById } from '@/hooks/useTransaction';
 import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,6 +25,11 @@ export default function FacilityDetailScreen() {
   const { data, isLoading } = useGetTransactionEquipmentById(
     Number(params.get('equipment_id'))
   );
+
+  const { data: inventoryList } = useGetInventoryList({
+    page: 1,
+    limit: 20,
+  });
 
   return (
     <Box flex={1}>
@@ -68,6 +74,7 @@ export default function FacilityDetailScreen() {
           >
             <FacilityHeader
               facilityDetail={data!}
+              inventoryName={params.get('inventoryName') || '-'}
               onLendFacility={() => setIsOpenLendModal(true)}
               onBackFacility={() => setIsOpenBackModal(true)}
             />
@@ -90,10 +97,14 @@ export default function FacilityDetailScreen() {
       </Box>
       <LendFacilityModal
         isVisible={isOpenLendModal}
+        inventoryList={inventoryList}
+        facilityDetail={data!}
         onClose={() => setIsOpenLendModal(false)}
       />
       <BackFacilityModal
         isVisible={isOpenBackModal}
+        inventoryList={inventoryList}
+        facilityDetail={data!}
         onClose={() => setIsOpenBackModal(false)}
       />
     </Box>

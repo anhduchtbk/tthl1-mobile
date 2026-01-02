@@ -12,11 +12,11 @@ import { Animated } from 'react-native';
 const LIMIT = 200;
 
 const data_reason = [
-  { label: 'Quân y', value: '1' },
-  { label: 'Nghỉ tranh thủ', value: '2' },
-  { label: 'Văn nghệ', value: '3' },
-  { label: 'NV đoàn thanh niên', value: '4' },
-  { label: 'Khác', value: '5' },
+  { label: 'Quân y', value: 'Quân y' },
+  { label: 'Nghỉ tranh thủ', value: 'Nghỉ tranh thủ' },
+  { label: 'Văn nghệ', value: 'Văn nghệ' },
+  { label: 'NV đoàn thanh niên', value: 'NV đoàn thanh niên' },
+  { label: 'Khác', value: 'others' },
 ];
 
 interface Student {
@@ -65,7 +65,7 @@ export function AbsentStudentGroup({
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (item.reason === '5') {
+    if (item.reason === 'others') {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 400,
@@ -78,7 +78,7 @@ export function AbsentStudentGroup({
         useNativeDriver: true,
       }).start();
     }
-  }, [item.reason]);
+  }, [fadeAnim, item.reason]);
 
   return (
     <Box
@@ -124,8 +124,8 @@ export function AbsentStudentGroup({
             onEditGroup(item, { ...item, reason: value })
           }
         />
-        <Animated.View style={{ opacity: fadeAnim }}>
-          {item.reason === '5' && (
+        {item.reason === 'others' && (
+          <Animated.View style={{ opacity: fadeAnim }}>
             <TextField
               label="Lý do khác"
               placeholder="Nhập lý do..."
@@ -136,8 +136,8 @@ export function AbsentStudentGroup({
               numberOfLines={4}
               inputStyle={{ minHeight: 80 }}
             />
-          )}
-        </Animated.View>
+          </Animated.View>
+        )}
 
         <Dropdown
           data={studentData}

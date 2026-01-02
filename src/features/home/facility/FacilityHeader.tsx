@@ -6,10 +6,12 @@ import { FontSize } from '@/theme/fonts';
 
 export function FacilityHeader({
   facilityDetail,
+  inventoryName,
   onLendFacility,
   onBackFacility,
 }: {
   facilityDetail: GetTransactionEquipmentResponse;
+  inventoryName: string;
   onLendFacility: () => void;
   onBackFacility: () => void;
 }) {
@@ -24,7 +26,7 @@ export function FacilityHeader({
           {facilityDetail?.equipment?.name || '-'}
         </Text>
         <Text fontSize={FontSize.SMALL} color={colors.text[1]}>
-          Thuộc quản lý của {'-'}
+          Thuộc quản lý của {inventoryName}
         </Text>
       </Box>
 
@@ -32,8 +34,6 @@ export function FacilityHeader({
         mt={14}
         py={4}
         pb={16}
-        borderBottomWidth={1}
-        borderBottomColor={'#F0F0F0'}
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"

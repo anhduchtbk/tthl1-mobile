@@ -17,7 +17,7 @@ export function RenderFacilityItem({ item }: RenderItemProps) {
   const onSeeMore = () => {
     router.push({
       pathname: '/home/manage-facility-by-unit',
-      params: { inventory_id: item.id },
+      params: { inventoryItem: JSON.stringify(item) },
     });
   };
 

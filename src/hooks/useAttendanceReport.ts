@@ -1,6 +1,6 @@
 import {
   createAttendanceReport,
-  getAttendanceList,
+  getAttendanceReportList,
 } from '@/api/attendence-report';
 import { ATTENDANCE_REPORT_QUERY_KEY } from '@/api/constants/attendance-report';
 import {
@@ -11,12 +11,12 @@ import { Company } from '@/api/types/company';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useInfinitePagination } from './useInfinitePagination';
 
-export const useGetAttendanceList = (
+export const useGetAttendanceReportList = (
   params: GetListAttendanceReportsRequest
 ) => {
   return useInfinitePagination<Company, GetListAttendanceReportsRequest>({
     queryKey: [ATTENDANCE_REPORT_QUERY_KEY.listAttendanceReport, params],
-    queryFn: getAttendanceList,
+    queryFn: getAttendanceReportList,
     initialParams: params,
   });
 };
