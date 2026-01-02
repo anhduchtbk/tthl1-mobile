@@ -79,7 +79,9 @@ const StudentSearch: React.FC<StudentSearchProps> = () => {
             onEndReachedThreshold={0.6}
             onEndReached={handleLoadMore}
             showsVerticalScrollIndicator={false}
-            ListEmptyComponent={<EmptyScreen />}
+            ListEmptyComponent={
+              <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+            }
             ListFooterComponent={renderLoadingFooter()}
             refreshControl={
               <RefreshControl refreshing={isRefetching} onRefresh={refetch} />

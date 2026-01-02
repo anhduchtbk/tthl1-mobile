@@ -80,7 +80,11 @@ const CompanySearch: React.FC<CompanySearchProps> = () => {
             onEndReached={handleLoadMore}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={
-              isEmpty ? <EmptyScreen text="Chưa có dữ liệu" /> : <></>
+              isEmpty ? (
+                <EmptyScreen text="Không có kết quả phù hợp, vui lòng thử lại" />
+              ) : (
+                <></>
+              )
             }
             ListFooterComponent={renderLoadingFooter()}
             refreshControl={
