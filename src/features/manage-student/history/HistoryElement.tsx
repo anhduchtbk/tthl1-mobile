@@ -1,3 +1,4 @@
+import { WeeklySummaryDay } from '@/app/military-number/military-history-report';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { HISTORY_TYPE } from '@/constants/value';
@@ -11,6 +12,34 @@ interface History {
   absentStudents: number;
   actualStudents: number;
   listStudentGroup?: PropsStudentGroup[];
+}
+
+export function TotalWeekElement({ item }: { item: WeeklySummaryDay }) {
+  return (
+    <Box gap={4}>
+      <Box gap={2}>
+        <Text fontWeight="bold" color={colors.text[3]}>
+          Tổng quân số: {item.total}
+        </Text>
+        <Text fontWeight="bold" color={colors.text[3]}>
+          Vắng: {item.absent}
+        </Text>
+        <Text fontWeight="bold" color={colors.text[3]}>
+          Quân số thực tế: {item.actual}
+        </Text>
+      </Box>
+      <Box gap={8}>
+        {item.groups?.map((group, index) => (
+          <StudentGroup
+            key={index}
+            numberGroup={index + 1}
+            reseasonAbsent={group.reason}
+            absentStudents={group.students}
+          />
+        ))}
+      </Box>
+    </Box>
+  );
 }
 
 export function HistoryElement({ item }: { item: History }) {

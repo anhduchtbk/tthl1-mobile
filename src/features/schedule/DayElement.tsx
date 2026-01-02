@@ -15,6 +15,16 @@ type PropsDayElement = {
   onPress?: () => void;
 };
 
+type WeekSummaryProps = {
+  isCheck: boolean;
+  week: number;
+  onPress?: () => void;
+};
+
+type PropsDayElementScroll = {
+  onChange?: (index: number) => void;
+};
+
 export function DayElement({
   value,
   isCheck,
@@ -41,26 +51,53 @@ export function DayElement({
   );
 }
 
-export function DayElementScrollView() {
+function WeekSummary({ isCheck, week, onPress }: WeekSummaryProps) {
+  return (
+    <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+      <Box
+        px={16}
+        h={48}
+        justifyContent="center"
+        borderRadius={16}
+        bgColor={isCheck ? colors.primary[40] : colors.white}
+      >
+        <Text align="center" color={isCheck ? colors.text[3] : colors.text[4]}>
+          Tổng hợp
+        </Text>
+        <Text align="center" color={isCheck ? colors.text[3] : colors.text[4]}>
+          tuần {week}
+        </Text>
+      </Box>
+    </TouchableOpacity>
+  );
+}
+
+export function DayElementScrollView({ onChange }: PropsDayElementScroll) {
   const weekDates = getCurrentWeekDates();
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleSelect = (index: number) => {
+    setSelectedIndex(index);
+    onChange?.(index);
+  };
 
   return (
-    <ScrollView
-      horizontal
-      contentContainerStyle={styles.dayContainer}
-      showsHorizontalScrollIndicator={false}
-    >
-      {weekDates.map((value, index) => {
-        return (
-          <DayElement
-            key={index}
-            value={value}
-            isCheck={selectedIndex === index}
-            onPress={() => setSelectedIndex(index)}
-          />
-        );
-      })}
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      {/* Tổng hợp */}
+      <WeekSummary
+        week={13}
+        isCheck={selectedIndex === 0}
+        onPress={() => handleSelect(0)}
+      />
+
+      {weekDates.map((date, index) => (
+        <DayElement
+          key={date}
+          value={date}
+          isCheck={selectedIndex === index + 1}
+          onPress={() => handleSelect(index + 1)}
+        />
+      ))}
     </ScrollView>
   );
 }
