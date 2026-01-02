@@ -60,8 +60,15 @@ export default function MilitaryNumberScreen() {
   const [toDate, setToDate] = useState<Date | null>(null);
 
   return (
-    <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="LỊCH SỬ BÁO QUÂN SỐ" subTitle={`ĐẠI ĐỘI ${companyItem.name} - `} />
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      edges={['top']}
+    >
+      <ScreenHeader
+        title="LỊCH SỬ BÁO QUÂN SỐ"
+        subTitle={`ĐẠI ĐỘI ${companyItem.name} - `}
+        marginTop={4}
+      />
       <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Box px={16} gap={16}>
