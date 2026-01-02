@@ -1,23 +1,14 @@
+import { Timetable } from '@/api/types/timetable';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { SCHEDULE_TYPE } from '@/constants/value';
-import { formatScheduleType } from '@/lib/utils';
+import { formatRank, formatScheduleType } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 
-export interface Schedule {
-  id: number;
-  type: SCHEDULE_TYPE;
-  subjectFullname: string;
-  lessonNumber: number;
-  isDone?: boolean;
-  teacherFullname: string;
-}
-
-export function ScheduleItem({ item }: { item: Schedule }) {
+export function ScheduleItem({ item }: { item: Timetable }) {
   return (
     <Box gap={8}>
       <Box
-        backgroundColor={formatScheduleType(item?.type).bgColor}
+        backgroundColor={formatScheduleType(item?.session).bgColor}
         flexDirection="row"
         alignItems="center"
         gap={8}
@@ -27,21 +18,23 @@ export function ScheduleItem({ item }: { item: Schedule }) {
           w={4}
           h={'100%'}
           borderRadius={3}
-          bgColor={formatScheduleType(item?.type).borderColor}
+          bgColor={formatScheduleType(item?.session).borderColor}
         />
         <Text fontWeight="bold" color={'#7C7C7C'}>
-          {formatScheduleType(item?.type).scheduleType} (7:30 - 11:00)
+          {formatScheduleType(item?.session).scheduleType} (
+          {item?.startTime?.substring(0, 5)} - {item?.endTime?.substring(0, 5)})
         </Text>
       </Box>
       <Box gap={2}>
         <Text fontWeight="bold" color={colors.text[3]}>
-          {item.subjectFullname}
+          {item?.subject?.name} ({item?.content})
         </Text>
         <Text fontSize={13} color={colors.text[1]}>
-          Buổi: {item.lessonNumber} {item.isDone ? '(XONG)' : ''}
+          Buổi: {'-'} 
+          {/* {item?.isDone ? '(XONG)' : ''} */}
         </Text>
         <Text fontSize={13} fontWeight="bold" color={colors.text[1]}>
-          CBHL: {item.teacherFullname}
+          CBHL: {formatRank(item?.teacher?.rank)} {item?.teacher?.fullName}
         </Text>
       </Box>
     </Box>

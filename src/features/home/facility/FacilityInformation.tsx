@@ -183,6 +183,7 @@ export function FacilityInformation({
       (typeIndex === 2 && returnData?.length > 0) ? (
         <RenderRequestItem
           company={company}
+          equipment={equipment}
           rowItem={
             formatData(typeIndex === 1 ? borrowData : returnData)?.[tabIndex]
           }

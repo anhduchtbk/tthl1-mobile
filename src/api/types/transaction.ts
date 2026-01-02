@@ -71,3 +71,17 @@ export interface CreateTransactionResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface UpdateTransactionStatusRequest {
+  status: 'approved' | 'rejected';
+  rejectReason?: string;
+}
+
+export interface GetTransactionEquipmentByCompanyResponse {
+  trainingEquipmentId: number;
+  trainingEquipmentName: string;
+  companyId: number;
+  companyName: string;
+  currentQuantityInCompany: number;
+  transactions: Transaction[];
+}

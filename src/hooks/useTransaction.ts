@@ -1,21 +1,21 @@
 import { TRANSACTION_QUERY_KEY } from '@/api/constants/transaction';
 import {
   createTransaction,
-  getTransactionEquipmentById,
+  getTransactionByEquipment,
+  getTransactionEquipmentByCompany,
+  updateTransactionStatus,
 } from '@/api/transaction';
 import {
   CreateTransactionRequest,
   CreateTransactionResponse,
+  UpdateTransactionStatusRequest,
 } from '@/api/types/transaction';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const useGetTransactionEquipmentById = (equipment_id: number) => {
+export const useGetTransactionByEquipment = (equipment_id: number) => {
   return useQuery({
-    queryKey: [
-      TRANSACTION_QUERY_KEY.listTransactionEquipmentById,
-      equipment_id,
-    ],
-    queryFn: () => getTransactionEquipmentById(equipment_id),
+    queryKey: [TRANSACTION_QUERY_KEY.listTransactionByEquipment, equipment_id],
+    queryFn: () => getTransactionByEquipment(equipment_id),
     enabled: !!equipment_id,
   });
 };
@@ -29,10 +29,43 @@ export const useCreateTransaction = () => {
     onSuccess: (data: CreateTransactionResponse) => {
       queryClient.invalidateQueries({
         queryKey: [
-          TRANSACTION_QUERY_KEY.listTransactionEquipmentById,
+          TRANSACTION_QUERY_KEY.listTransactionByEquipment,
           data?.trainingEquipment?.id,
         ],
       });
+    },
+  });
+};
+
+export const useGetTransactionEquipmentByCompany = (
+  equipmentId: number,
+  companyId: number
+) => {
+  return useQuery({
+    queryKey: [
+      TRANSACTION_QUERY_KEY.listTransactionEquipmentByCompany,
+      equipmentId,
+      companyId,
+    ],
+    queryFn: () => getTransactionEquipmentByCompany(equipmentId, companyId),
+    enabled: !!equipmentId && !!companyId,
+  });
+};
+
+export const useUpdateTransactionStatus = (transactionId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: [TRANSACTION_QUERY_KEY.updateTransactionStatus, transactionId],
+    mutationFn: (data: UpdateTransactionStatusRequest) =>
+      updateTransactionStatus(transactionId, data),
+    onSuccess: (data: any) => {
+      // queryClient.invalidateQueries({
+      //   queryKey: [
+      //     TRANSACTION_QUERY_KEY.listTransactionByEquipment,
+      //     data?.trainingEquipment?.id,
+      //   ],
+      // });
     },
   });
 };

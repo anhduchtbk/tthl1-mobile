@@ -19,7 +19,10 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onSeeMore = () => {
-    router.push('/schedule/schedule-detail');
+    router.push({
+      pathname: '/schedule/schedule-detail',
+      params: { companyItem: JSON.stringify(item) },
+    });
   };
 
   return (

@@ -63,7 +63,7 @@ const ScheduleSearch: React.FC<ScheduleSearchProps> = () => {
             handleOnChangeSearch(value);
           }}
         />
-        <Text>Kết quả tìm kiếm ({totalCount})</Text>
+        <Text color={colors.text[2]}>Kết quả tìm kiếm ({totalCount})</Text>
       </Box>
       <Box flex={1}>
         {isLoading ? (

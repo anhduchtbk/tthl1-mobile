@@ -11,10 +11,16 @@ import { FunctionList } from '@/features/home/function-list';
 import { HonorOfWeek } from '@/features/home/honnor';
 import { InforAccount } from '@/features/home/infor-account';
 import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
+import { useGetTimetableList } from '@/hooks/useTimetable';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
+  const { data } = useGetTimetableList({
+    page: 1,
+    limit: 21,
+  });
 
   return (
     <LinearGradient
@@ -34,7 +40,7 @@ export default function HomeScreen() {
         >
           <InforAccount />
           <FunctionList />
-          <ScheduleDetail isHome />
+          <ScheduleDetail item={formatByWeek(data || [])[0]} isHome />
           <HonorOfWeek />
           <Image
             source={require('@/assets/images/footer-home-image.png')}
@@ -73,3 +79,60 @@ const styles = StyleSheet.create({
     top: 0,
   },
 });
+
+type WeekGroup = {
+  weekIndex: number;
+  startOfWeek: string; // YYYY-MM-DD (Monday)
+  days: {
+    date: string; // YYYY-MM-DD
+    items: any[];
+  }[];
+};
+
+type Item = {
+  date: string; // YYYY-MM-DD
+  [key: string]: any;
+};
+
+function formatByWeek(items: Item[]): WeekGroup[] {
+  const weekMap = new Map<string, WeekGroup>();
+
+  items.forEach(item => {
+    const date = new Date(item.date);
+    const day = date.getDay(); // 0 (Sun) - 6 (Sat)
+
+    // Calculate Monday of the week
+    const diff = day === 0 ? -6 : 1 - day;
+    const monday = new Date(date);
+    monday.setDate(date.getDate() + diff);
+
+    const mondayKey = monday.toISOString().split('T')[0];
+
+    // Create week if not exists
+    if (!weekMap.has(mondayKey)) {
+      const days = Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        return {
+          date: d.toISOString().split('T')[0],
+          items: [],
+        };
+      });
+
+      weekMap.set(mondayKey, {
+        weekIndex: weekMap.size + 1,
+        startOfWeek: mondayKey,
+        days,
+      });
+    }
+
+    // Push item into correct day
+    const week = weekMap.get(mondayKey)!;
+    const dayEntry = week.days.find(d => d.date === item.date);
+    if (dayEntry) {
+      dayEntry.items.push(item);
+    }
+  });
+
+  return Array.from(weekMap.values());
+}
