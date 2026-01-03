@@ -35,7 +35,7 @@ export function RenderNotificationItem({ item }: RenderItemProps) {
         <Text fontWeight="bold" color={colors.text[1]}>
           Đơn vị yêu cầu:{' '}
         </Text>
-        {item.companyFullname}
+        {item.companyFullname} - 
       </Text>
       <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>

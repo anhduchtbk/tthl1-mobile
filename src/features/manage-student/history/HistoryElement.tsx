@@ -1,13 +1,13 @@
 import { WeeklySummaryDay } from '@/app/military-number/military-history-report';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { HISTORY_TYPE } from '@/constants/value';
+import { REPORT_NUMBER_TYPE } from '@/constants/value';
 import { formatHistoryType } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { PropsStudentGroup, StudentGroup } from './StudentGroup';
 
-interface History {
-  type: HISTORY_TYPE; // tiêu đề buổi điểm danh
+export interface History {
+  type: REPORT_NUMBER_TYPE; // tiêu đề buổi điểm danh
   totalStudents: number;
   absentStudents: number;
   actualStudents: number;

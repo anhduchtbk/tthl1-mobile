@@ -1,58 +1,86 @@
-import { HISTORY_TYPE, SCHEDULE_TYPE } from '@/constants/value';
+import {
+  EDUCATION_TYPE,
+  RANK_TYPE,
+  REPORT_NUMBER_TYPE,
+  SCHEDULE_TYPE,
+} from '@/constants/value';
 import { colors } from '@/theme/colors';
 import dayjs from 'dayjs';
 
 export const formatUnitRank = (unitRank: string) => {
   switch (unitRank) {
-    case 'platoon_leader':
-      return 'B trưởng';
-    case 'suqad_leader':
+    case 'tieu_doi_pho':
+      return 'A phó';
+    case 'tieu_doi_truong':
       return 'A trưởng';
+    case 'trung_doi_pho':
+      return 'B phó';
+    case 'trung_doi_truong':
+      return 'B trưởng';
+    case 'thanh_vien':
+      return 'Thành viên';
     default:
-      return 'Học viên';
+      return 'Thành viên';
   }
 };
 
-export const formatRank = (rank: string) => {
+export const formatRank = (rank?: RANK_TYPE) => {
   switch (rank) {
-    case 'THIEU_UY':
+    case RANK_TYPE.BINH_NHI:
+      return 'Binh nhi';
+    case RANK_TYPE.BINH_NHAT:
+      return 'Binh nhat';
+    case RANK_TYPE.THIEU_UY:
       return 'Thiếu uý';
-    case 'TRUNG_UY':
+    case RANK_TYPE.TRUNG_UY:
       return 'Trung uý';
-    case 'THUONG_UY':
+    case RANK_TYPE.THUONG_UY:
       return 'Thượng uý';
-    case 'DAI_UY':
+    case RANK_TYPE.DAI_UY:
       return 'Đại uý';
-    case 'THIEU_TA':
+    case RANK_TYPE.THIEU_TA:
       return 'Thiếu tá';
-    case 'TRUNG_TA':
+    case RANK_TYPE.TRUNG_TA:
       return 'Trung tá';
-    case 'THUONG_TA':
+    case RANK_TYPE.THUONG_TA:
       return 'Thượng tá';
-    case 'DAI_TA':
+    case RANK_TYPE.DAI_TA:
       return 'Đại tá';
     default:
       return 'Tiểu giáo viên';
   }
 };
 
+export const formatEducation = (education?: EDUCATION_TYPE) => {
+  switch (education) {
+    case EDUCATION_TYPE.CHINH_QUY:
+      return 'Chính quy';
+    case EDUCATION_TYPE.TRUNG_CAP:
+      return 'Trung cấp';
+    case EDUCATION_TYPE.VB2:
+      return 'VB2';
+    default:
+      return '';
+  }
+};
+
 export const formatFamilyRole = (familyRole: string) => {
   switch (familyRole) {
-    case 'father':
+    case 'bo':
       return 'Bố';
-    case 'mother':
+    case 'me':
       return 'Mẹ';
-    case 'husband':
+    case 'chong':
       return 'Chồng';
-    case 'wife':
+    case 'vo':
       return 'Vợ';
-    case 'older_brother':
+    case 'anh trai':
       return 'Anh trai';
-    case 'younger_brother':
+    case 'em trai':
       return 'Em trai';
-    case 'older_sister':
+    case 'chi gai':
       return 'Chị gái';
-    case 'younger_sister':
+    case 'em gai':
       return 'Em gái';
     default:
       return 'Thân nhân';
@@ -75,7 +103,7 @@ export const formatGender = (value: boolean) => {
   }
 };
 
-export const formatDate = (date: Date | string | null) => {
+export const formatDate = (date?: Date | string | null) => {
   if (date) {
     return dayjs(date).format('DD/MM/YYYY');
   }
@@ -153,21 +181,21 @@ export const formatScheduleType = (type: SCHEDULE_TYPE) => {
   return { scheduleType, bgColor, borderColor };
 };
 
-export const formatHistoryType = (type: HISTORY_TYPE) => {
+export const formatHistoryType = (type: REPORT_NUMBER_TYPE) => {
   let scheduleType, bgColor, borderColor;
 
   switch (type) {
-    case HISTORY_TYPE.MORNING:
+    case REPORT_NUMBER_TYPE.MORNING:
       scheduleType = 'Điểm danh sáng';
       bgColor = colors.primary[40];
       borderColor = '#91BAFE';
       break;
-    case HISTORY_TYPE.AFTERNOON:
+    case REPORT_NUMBER_TYPE.AFTERNOON:
       scheduleType = 'Điểm danh chiều';
       bgColor = colors.primary[50];
       borderColor = '#FEF08A';
       break;
-    case HISTORY_TYPE.NIGHT:
+    case REPORT_NUMBER_TYPE.EVENING:
       scheduleType = 'Điểm danh tối';
       bgColor = colors.primary[70];
       borderColor = '#20C74B';

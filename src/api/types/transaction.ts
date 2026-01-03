@@ -1,7 +1,9 @@
+import { STATUS_TYPE } from "@/constants/value";
+
 export interface Transaction {
   id: number;
   quantity: number;
-  status: 'approved';
+  status: STATUS_TYPE;
   type: 'borrow' | 'return';
   reason: string;
   user: {
@@ -51,7 +53,7 @@ export interface CreateTransactionResponse {
   id: number;
   quantity: number;
   transactionType: 'BORROW' | 'RETURN';
-  status: 'pending' | 'approved' | 'rejected';
+  status: STATUS_TYPE;
   reason: string;
   rejectReason: string;
   user: {
@@ -73,7 +75,7 @@ export interface CreateTransactionResponse {
 }
 
 export interface UpdateTransactionStatusRequest {
-  status: 'approved' | 'rejected';
+  status: STATUS_TYPE;
   rejectReason?: string;
 }
 

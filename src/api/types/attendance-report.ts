@@ -6,7 +6,7 @@ export interface GetListAttendanceReportsRequest {
   limit?: number;
   search?: string;
   sort?: string;
-  filter?: string;
+  filter?: string[];
 }
 
 interface AbsentGroup {

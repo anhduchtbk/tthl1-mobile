@@ -1,18 +1,15 @@
+import { Company } from '@/api/types/company';
 import StarSvg from '@/assets/icons/star-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-type ItemProps = {
-  name: string;
-  personnelCount: number;
-};
-
 type RenderItemProps = {
-  item: ItemProps;
+  item: Company;
 };
 
 export function RenderScheduleItem({ item }: RenderItemProps) {
@@ -28,7 +25,7 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
   return (
     <Box style={styles.card}>
       <Text color={colors.text[3]} fontWeight="bold">
-        Đại đội {item?.name}
+        Đại đội {item?.name} - {formatEducation(item?.course?.type)}
       </Text>
       <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>

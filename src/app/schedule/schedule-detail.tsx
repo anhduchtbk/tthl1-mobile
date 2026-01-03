@@ -6,6 +6,7 @@ import { ScreenHeader } from '@/components/header/ScreenHeader';
 import MilitaryHistoryFilterBottomSheet from '@/features/military-number/military-history-report/MilitaryHistoryFilterBottomSheet';
 import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
 import { useGetTimetableByCompanyList } from '@/hooks/useTimetable';
+import { formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'expo-router/build/hooks';
@@ -32,6 +33,11 @@ export default function ScheduleDetailScreen() {
     toDate: dayjs(toDate).format('YYYY-MM-DD'),
   });
 
+  const reversedData = React.useMemo(
+    () => formatByWeek(data || []).reverse(),
+    [data]
+  );
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: colors.white }}
@@ -39,8 +45,9 @@ export default function ScheduleDetailScreen() {
     >
       <ScreenHeader
         title="THỜI KHOÁ BIỂU"
-        subTitle={`ĐẠI ĐỘI ${companyItem.name} - `}
-        isSearch
+        subTitle={`ĐẠI ĐỘI ${companyItem.name} - ${formatEducation(
+          companyItem?.course?.type
+        )}`}
         marginTop={4}
       />
 
@@ -51,15 +58,14 @@ export default function ScheduleDetailScreen() {
         </Box>
       ) : (
         <FlatList
-          data={formatByWeek(data || [])}
+          data={reversedData}
           renderItem={({ item }) => (
             <ScheduleDetail item={item} companyItem={companyItem} />
           )}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}
-          ListHeaderComponent={<Box h={100} />}
+          ListFooterComponent={<Box h={100} />}
           showsVerticalScrollIndicator={false}
-          inverted
         />
       )}
       <MilitaryHistoryFilterBottomSheet
@@ -78,7 +84,13 @@ export default function ScheduleDetailScreen() {
       />
       <DateTimePickerModal
         isVisible={isOpenDateModal}
-        value={new Date()}
+        value={
+          dateType === 'from' && fromDate
+            ? fromDate
+            : dateType === 'to' && toDate
+            ? toDate
+            : new Date()
+        }
         dateMode="date"
         onChange={(newDate: Date) => {
           if (dateType === 'from') {

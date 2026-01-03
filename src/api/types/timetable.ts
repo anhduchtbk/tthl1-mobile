@@ -48,7 +48,7 @@ export interface GetTimetableListRequest {
   limit?: number;
   search?: string;
   sort?: string;
-  filter?: string;
+  filter?: string[];
 }
 
 export type GetTimetableListResponse = PaginationResponse<Timetable>;

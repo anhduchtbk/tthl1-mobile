@@ -14,11 +14,7 @@ import React, {
 } from 'react';
 import { ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  COMPANY_OPTIONS,
-  EDUCATION_OPTIONS,
-  WEEK_OPTIONS,
-} from '../../constants/option';
+import { COMPANY_OPTIONS, EDUCATION_OPTIONS } from '../../constants/option';
 
 export interface ScheduleFilterBottomSheetProps {
   isOpen: boolean;
@@ -43,11 +39,11 @@ const fakeData = [
     filterKey: 'companies',
     options: COMPANY_OPTIONS,
   },
-  {
-    filterName: 'Tuần',
-    filterKey: 'weeks',
-    options: WEEK_OPTIONS,
-  },
+  // {
+  //   filterName: 'Tuần',
+  //   filterKey: 'weeks',
+  //   options: WEEK_OPTIONS,
+  // },
 ];
 
 const ScheduleFilterBottomSheet: React.FC<ScheduleFilterBottomSheetProps> = ({
@@ -107,13 +103,13 @@ const ScheduleFilterBottomSheet: React.FC<ScheduleFilterBottomSheetProps> = ({
       filterTypes.companies.map(item => filters.push(`name|$eq|${item}`));
     }
 
-    if (filterTypes.weeks && filterTypes.weeks.length > 0) {
-      filterTypes.weeks.map(item => filters.push(`week|$eq|${item}`));
-    }
+    // if (filterTypes.weeks && filterTypes.weeks.length > 0) {
+    //   filterTypes.weeks.map(item => filters.push(`week|$eq|${item}`));
+    // }
 
     onConfirm(filters);
     onClose();
-  }, [filterTypes, onClose]);
+  }, [filterTypes, onConfirm, onClose]);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -161,10 +157,10 @@ const ScheduleFilterBottomSheet: React.FC<ScheduleFilterBottomSheetProps> = ({
                           return filterTypes.companies?.some(
                             e => value.value === e
                           );
-                        case 'weeks':
-                          return filterTypes.weeks?.some(
-                            e => value.value === e
-                          );
+                        // case 'weeks':
+                        //   return filterTypes.weeks?.some(
+                        //     e => value.value === e
+                        //   );
                         default:
                           return false;
                       }

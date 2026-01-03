@@ -12,10 +12,11 @@ import {
   AbsentStudentGroup,
 } from '@/features/military-number/AbsentStudentGroup';
 import { useCreateAttendanceReport } from '@/hooks/useAttendanceReport';
+import { formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSearchParams } from 'expo-router/build/hooks';
+import { useRouter, useSearchParams } from 'expo-router/build/hooks';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, TextInput } from 'react-native';
@@ -38,6 +39,7 @@ const reportNumberSchema = z.object({
 });
 
 const ReportNumberScreen = () => {
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   const searchParams = useSearchParams();
   const companyItem = JSON.parse(
@@ -53,10 +55,8 @@ const ReportNumberScreen = () => {
     },
   ]);
 
-  const {
-    mutateAsync: createAttendanceReport,
-    isPending: isCreatePending,
-  } = useCreateAttendanceReport();
+  const { mutateAsync: createAttendanceReport, isPending: isCreatePending } =
+    useCreateAttendanceReport();
 
   const refs = {
     purpose: useRef<TextInput>(null),
@@ -124,11 +124,14 @@ const ReportNumberScreen = () => {
       absentGroups: arr,
     };
 
-    console.log('createAttendanceReport params:', params);
-
     createAttendanceReport(params, {
       onSuccess: res => {
-        console.log('createAttendanceReport', res);
+        if (res) {
+          router.push({
+            pathname: '/military-number/military-history-report',
+            params: { companyItem: JSON.stringify(companyItem) },
+          });
+        }
       },
     });
   };
@@ -140,7 +143,9 @@ const ReportNumberScreen = () => {
     >
       <ScreenHeader
         title="BÁO CÁO QUÂN SỐ"
-        subTitle={`ĐẠI ĐỘI ${companyItem.name} - `}
+        subTitle={`ĐẠI ĐỘI ${companyItem.name} - ${formatEducation(
+          companyItem?.course?.type
+        )}`}
         marginTop={4}
         hasBorderBottom={false}
       />
@@ -207,6 +212,7 @@ const ReportNumberScreen = () => {
                   handleChangeReasonTxt={text => {
                     editAbsentGroup(item, { ...item, otherReason: text });
                   }}
+                  company={companyItem}
                 />
               );
             })}

@@ -1,3 +1,4 @@
+import { Company } from '@/api/types/company';
 import InfoSvg from '@/assets/icons/info-svg';
 import RemoveSvg from '@/assets/icons/remove-svg';
 import Dropdown from '@/components/common/Dropdown/Dropdown';
@@ -33,8 +34,9 @@ export interface AbsentGroup {
 }
 
 type AbsentStudentGroupProps = {
-  item: AbsentGroup;
   index: number;
+  item: AbsentGroup;
+  company: Company;
   onEditGroup: (item: AbsentGroup, newItem: AbsentGroup) => void;
   onRemoveGroup: (group: AbsentGroup) => void;
   handleChangeReasonTxt?: (value: string) => void;
@@ -43,6 +45,7 @@ type AbsentStudentGroupProps = {
 export function AbsentStudentGroup({
   item,
   index,
+  company,
   onEditGroup,
   onRemoveGroup,
   handleChangeReasonTxt,
@@ -53,6 +56,7 @@ export function AbsentStudentGroup({
     page: 1,
     limit: LIMIT,
     search: keyword,
+    filter: [`company.id|$eq|${company?.id}`],
   });
 
   const studentData =

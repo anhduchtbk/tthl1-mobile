@@ -7,7 +7,7 @@ import {
 } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { ReactElement, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 
 type PropsDayElement = {
   value: string;
@@ -101,10 +101,3 @@ export function DayElementScrollView({ onChange }: PropsDayElementScroll) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  dayContainer: {
-    gap: 16,
-    height: 48,
-  },
-});

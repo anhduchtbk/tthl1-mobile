@@ -1,9 +1,13 @@
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatDate, formatRank } from '@/lib/utils';
+import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 
 export function SettingHeader() {
+  const { user } = useAuthStore();
+
   return (
     <Box>
       <Box alignItems="center" gap={8}>
@@ -12,7 +16,7 @@ export function SettingHeader() {
           fontWeight="bold"
           color={colors.text[3]}
         >
-          Đại uý Nguyễn Thị Mai
+          {formatRank(user?.rank)} {user?.fullName}
         </Text>
         <Text
           fontSize={FontSize.SMALL}
@@ -34,7 +38,7 @@ export function SettingHeader() {
       >
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            Ban huấn luyện
+            {'-'}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Đơn vị
@@ -42,7 +46,7 @@ export function SettingHeader() {
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            Cán bộ
+            {user?.role?.name}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Chức vụ
@@ -50,7 +54,7 @@ export function SettingHeader() {
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            01/01/1995
+            {formatDate(user?.birthday)}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Ngày sinh

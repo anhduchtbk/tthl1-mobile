@@ -1,5 +1,6 @@
 import { Box } from '@/components/common/Layout/Box';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { STATUS_TYPE } from '@/constants/value';
 import AcceptRequestModal from '@/features/home/notification/AcceptRequestModal';
 import RejectRequestModal from '@/features/home/notification/RejectRequestModal';
 import { RenderRequestItem } from '@/features/home/notification/RenderRequestItem';
@@ -28,16 +29,16 @@ const fakeItem = {
       type: 'facilityFullname',
       value: 'Súng tiểu liên AK-47',
     },
-    {
-      title: 'Lần mượn',
-      type: 'requestTime',
-      value: '01',
-    },
-    {
-      title: 'Nơi mượn',
-      type: 'requestAddress',
-      value: 'Tiểu đoàn 2',
-    },
+    // {
+    //   title: 'Lần mượn',
+    //   type: 'requestTime',
+    //   value: '01',
+    // },
+    // {
+    //   title: 'Nơi mượn',
+    //   type: 'requestAddress',
+    //   value: 'Tiểu đoàn 2',
+    // },
     {
       title: 'Số lượng',
       type: 'quantity',
@@ -56,7 +57,7 @@ const fakeItem = {
     {
       title: 'Trạng thái',
       type: 'status',
-      value: 0,
+      value: STATUS_TYPE.PENDING,
     },
   ],
 };

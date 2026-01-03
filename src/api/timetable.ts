@@ -1,9 +1,9 @@
 import axiosInstance from './axios';
 import {
-    GetTimetableByCompanyListRequest,
-    GetTimetableByCompanyListResponse,
-    GetTimetableListRequest,
-    GetTimetableListResponse,
+  GetTimetableByCompanyListRequest,
+  GetTimetableByCompanyListResponse,
+  GetTimetableListRequest,
+  GetTimetableListResponse,
 } from './types/timetable';
 
 export const getTimetableList = async (
@@ -18,7 +18,7 @@ export const getTimetableByCompanyList = async (
   params: GetTimetableByCompanyListRequest
 ): Promise<GetTimetableByCompanyListResponse> => {
   const response = await axiosInstance.get(
-    `timetable/company/${params.companyId}`
+    `timetable/company/${params.companyId}?fromDate=${params.fromDate}&toDate=${params.toDate}`
   );
 
   return response.data;

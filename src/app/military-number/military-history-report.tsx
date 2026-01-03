@@ -4,51 +4,128 @@ import { Box } from '@/components/common/Layout/Box';
 import { DateTimePickerModal } from '@/components/common/Modal/DateTimePickerModal';
 import { Text } from '@/components/common/Text/Text';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
-import { HISTORY_TYPE } from '@/constants/value';
 import {
   HistoryElement,
   TotalWeekElement,
 } from '@/features/manage-student/history/HistoryElement';
 import MilitaryHistoryFilterBottomSheet from '@/features/military-number/military-history-report/MilitaryHistoryFilterBottomSheet';
 import { DayElementScrollView } from '@/features/schedule/DayElement';
+import { useGetAttendanceReportList } from '@/hooks/useAttendanceReport';
+import { formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
+import dayjs from 'dayjs';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const fakeData = [
-  {
-    id: 1,
-    type: HISTORY_TYPE.MORNING,
-    totalStudents: 127,
-    absentStudents: 2,
-    actualStudents: 125,
-    listStudentGroup: [
-      {
-        reseasonAbsent: 'Ốm đau',
-        absentStudents: ['Nguyễn Văn B', 'Trần Thị C', 'Nguyễn Anh Tuấn'],
-      },
-      {
-        reseasonAbsent: 'Có việc gia đình',
-        absentStudents: ['Lê Văn D'],
-      },
+const LIMIT = 20;
+
+export default function MilitaryNumberScreen() {
+  const searchParams = useSearchParams();
+  const companyItem = JSON.parse(
+    searchParams.get('companyItem') || ''
+  ) as Company;
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenDateModal, setIsOpenDateModal] = useState(false);
+
+  const [dateType, setDateType] = useState<'from' | 'to'>('from');
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const fromTime = dayjs().startOf('week').add(1, 'day').format('YYYY-MM-DD');
+  const toTime = dayjs().endOf('week').add(1, 'day').format('YYYY-MM-DD');
+
+  const { data } = useGetAttendanceReportList({
+    page: 1,
+    limit: LIMIT,
+    filter: [
+      `company.id|$eq|${companyItem?.id}`,
+      `reportTime|$gt|${fromTime}`,
+      `reportTime|$lt|${toTime}`,
     ],
-  },
-  {
-    id: 2,
-    type: HISTORY_TYPE.AFTERNOON,
-    totalStudents: 127,
-    absentStudents: 2,
-    actualStudents: 125,
-    listStudentGroup: [
-      {
-        reseasonAbsent: 'Công tác đột xuất',
-        absentStudents: ['Phạm Thị E', 'Võ Văn F'],
-      },
-    ],
-  },
-];
+  });
+
+  const formatData = (attendanceList: any[]) => {
+    return attendanceList.map(item => {
+      return {
+        id: 1,
+        type: item.session,
+        totalStudents: item.personnelCount,
+        absentStudents: item.totalAbsent,
+        actualStudents: item.personnelCount - item.totalAbsent,
+        listStudentGroup: groupByReason(item.attendanceRecords)
+      };
+    });
+  };
+
+  console.log('aaaaa', formatData(data));
+
+  return (
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      edges={['top']}
+    >
+      <ScreenHeader
+        title="LỊCH SỬ BÁO QUÂN SỐ"
+        subTitle={`ĐẠI ĐỘI ${companyItem.name} - ${formatEducation(
+          companyItem?.course?.type
+        )}`}
+        marginTop={4}
+      />
+      <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
+      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+        <Box px={16} gap={16}>
+          <DayElementScrollView onChange={setSelectedIndex} />
+          <Box gap={12}>
+            {selectedIndex === 0 ? (
+              <WeeklySummary data={weeklySummaryFakeData} />
+            ) : (
+              <DailyDetail data={formatData(data)} />
+            )}
+          </Box>
+        </Box>
+        <Box h={100} />
+      </ScrollView>
+
+      <MilitaryHistoryFilterBottomSheet
+        isOpen={isOpenModal}
+        fromDate={fromDate}
+        toDate={toDate}
+        onSelectFromDate={() => {
+          setDateType('from');
+          setIsOpenDateModal(true);
+        }}
+        onSelectToDate={() => {
+          setDateType('to');
+          setIsOpenDateModal(true);
+        }}
+        onClose={() => setIsOpenModal(false)}
+      />
+      <DateTimePickerModal
+        isVisible={isOpenDateModal}
+        value={
+          dateType === 'from' && fromDate
+            ? fromDate
+            : dateType === 'to' && toDate
+            ? toDate
+            : new Date()
+        }
+        dateMode="date"
+        onChange={(newDate: Date) => {
+          if (dateType === 'from') {
+            setFromDate(newDate);
+          } else {
+            setToDate(newDate);
+          }
+        }}
+        closeModal={() => setIsOpenDateModal(false)}
+      />
+    </SafeAreaView>
+  );
+}
 
 export type WeeklySummaryDay = {
   date: string; // yyyy-mm-dd
@@ -150,71 +227,29 @@ function WeeklySummary({ data }: { data: any[] }) {
   );
 }
 
-export default function MilitaryNumberScreen() {
-  const searchParams = useSearchParams();
-  const companyItem = JSON.parse(
-    searchParams.get('companyItem') || ''
-  ) as Company;
+type AbsentItem = {
+  reason: string;
+  student: {
+    fullName: string;
+  };
+};
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isOpenDateModal, setIsOpenDateModal] = useState(false);
+function groupByReason(data: AbsentItem[]) {
+  const map = new Map<string, string[]>();
 
-  const [dateType, setDateType] = useState<'from' | 'to'>('from');
-  const [fromDate, setFromDate] = useState<Date | null>(null);
-  const [toDate, setToDate] = useState<Date | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  data.forEach(item => {
+    const reason = item.reason;
+    const studentName = item.student.fullName;
 
-  return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: colors.white }}
-      edges={['top']}
-    >
-      <ScreenHeader
-        title="LỊCH SỬ BÁO QUÂN SỐ"
-        subTitle={`ĐẠI ĐỘI ${companyItem.name} - `}
-        marginTop={4}
-      />
-      <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Box px={16} gap={16}>
-          <DayElementScrollView onChange={setSelectedIndex} />
-          <Box gap={12}>
-            {selectedIndex === 0 ? (
-              <WeeklySummary data={weeklySummaryFakeData} />
-            ) : (
-              <DailyDetail data={fakeData} />
-            )}
-          </Box>
-        </Box>
-      </ScrollView>
+    if (!map.has(reason)) {
+      map.set(reason, []);
+    }
 
-      <MilitaryHistoryFilterBottomSheet
-        isOpen={isOpenModal}
-        fromDate={fromDate}
-        toDate={toDate}
-        onSelectFromDate={() => {
-          setDateType('from');
-          setIsOpenDateModal(true);
-        }}
-        onSelectToDate={() => {
-          setDateType('to');
-          setIsOpenDateModal(true);
-        }}
-        onClose={() => setIsOpenModal(false)}
-      />
-      <DateTimePickerModal
-        isVisible={isOpenDateModal}
-        value={new Date()}
-        dateMode="date"
-        onChange={(newDate: Date) => {
-          if (dateType === 'from') {
-            setFromDate(newDate);
-          } else {
-            setToDate(newDate);
-          }
-        }}
-        closeModal={() => setIsOpenDateModal(false)}
-      />
-    </SafeAreaView>
-  );
+    map.get(reason)!.push(studentName);
+  });
+
+  return Array.from(map.entries()).map(([reason, students]) => ({
+    reasonAbsent: reason,
+    absentStudents: students,
+  }));
 }

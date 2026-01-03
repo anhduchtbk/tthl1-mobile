@@ -37,14 +37,14 @@ export function FacilityInformation({
     [];
 
   const formatData = (transactions: Transaction[]) => {
-    return transactions.map((item, index) => {
+    return transactions.map((item) => {
       return {
         timeIndex: formatDate(item?.createdAt),
         infos: [
           {
             title: 'Đơn vị yêu cầu',
             type: 'requestedUnit',
-            value: `C${company?.name}`,
+            value: `C${company?.name} - `,
           },
           {
             title: 'Người yêu cầu',
@@ -61,16 +61,16 @@ export function FacilityInformation({
             type: 'facilityFullname',
             value: equipment?.name,
           },
-          {
-            title: 'Lần mượn',
-            type: 'requestTime',
-            value: transactions?.length + 1 - index,
-          },
-          {
-            title: 'Nơi mượn',
-            type: 'requestAddress',
-            value: '',
-          },
+          // {
+          //   title: 'Lần mượn',
+          //   type: 'requestTime',
+          //   value: transactions?.length + 1 - index,
+          // },
+          // {
+          //   title: 'Nơi mượn',
+          //   type: 'requestAddress',
+          //   value: '',
+          // },
           {
             title: 'Số lượng',
             type: 'quantity',
@@ -97,11 +97,13 @@ export function FacilityInformation({
             value: item?.approvedAt
               ? dayjs(item?.approvedAt).format('hh:mm:ss, DD/MM/YYYY')
               : '--/--/----',
+            isInvisible: item?.status === 'pending',
           },
           {
             title: 'Người phê duyệt',
             type: 'approver',
             value: '',
+            isInvisible: item?.status === 'pending',
           },
         ],
       };

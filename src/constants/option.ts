@@ -5,6 +5,7 @@ import {
   PARTY_MEMBER_TYPE,
   POLICY_TYPE,
   REPORT_NUMBER_TYPE,
+  STATUS_TYPE,
   TALENT_TYPE,
 } from '@/constants/value';
 
@@ -65,18 +66,23 @@ export const NOTIFICATION_STATUS_OPTIONS = [
   { label: 'Đã duyệt', value: NOTIFICATION_STATUS.DA_DUYET },
   { label: 'Từ chối', value: NOTIFICATION_STATUS.TU_CHOI },
 ];
+export const STATUS_OPTIONS = [
+  { label: 'Chờ duyệt', value: STATUS_TYPE.PENDING },
+  { label: 'Đồng ý', value: STATUS_TYPE.APPROVED },
+  { label: 'Từ chối', value: STATUS_TYPE.REJECTED },
+];
 
 export const REPORT_NUMBER_OPTIONS = [
   {
     label: 'Điểm danh buổi sáng',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_BUOI_SANG,
+    value: REPORT_NUMBER_TYPE.MORNING,
   },
   {
     label: 'Điểm danh buổi chiều',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_BUOI_CHIEU,
+    value: REPORT_NUMBER_TYPE.AFTERNOON,
   },
   {
     label: 'Điểm danh buổi tối',
-    value: REPORT_NUMBER_TYPE.DIEM_DANH_BUOI_TOI,
+    value: REPORT_NUMBER_TYPE.EVENING,
   },
 ];

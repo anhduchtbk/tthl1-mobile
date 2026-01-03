@@ -2,7 +2,7 @@ import type { LoginRequest } from '@/api/types/auth';
 import { useAuthStore } from '@/store/authStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMutation } from '@tanstack/react-query';
-import { login } from '../api/auth';
+import { getMe, login } from '../api/auth';
 
 export const useLogin = () => {
   const setAuth = useAuthStore(state => state.setAuth);
@@ -13,13 +13,13 @@ export const useLogin = () => {
       // Lưu thông tin user và token vào store
       if (response.data) {
         await AsyncStorage.setItem('token', response.data.token);
+
+        const res = await getMe();
+
+        console.log('ddddd', res);
+
         setAuth({
-          user: {
-            id: response.data?.role?.id,
-            email: response.data.email,
-            name: response.data?.role?.name,
-            description: response.data?.role?.description, 
-          },
+          user: res?.data,
           token: response.data.token,
         });
       }

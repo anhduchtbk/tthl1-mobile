@@ -5,18 +5,18 @@ export enum SCHEDULE_TYPE {
   EXTRA = 'extra',
 }
 
-// Buổi điểm danh
-export enum HISTORY_TYPE {
-  MORNING = 'morning',
-  AFTERNOON = 'afternoon',
-  NIGHT = 'night',
-}
-
 // Hệ đào tạo
 export enum EDUCATION_TYPE {
   CHINH_QUY = 'chinh_quy',
   TRUNG_CAP = 'trung_cap',
   VB2 = 'van_bang_2',
+}
+
+// Trạng thái
+export enum STATUS_TYPE {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
 }
 
 // Đại đội
@@ -31,6 +31,19 @@ export enum COMPANY_TYPE {
   EIGHT = '8',
   NINE = '9',
   TEN = '10',
+}
+
+export enum RANK_TYPE {
+  BINH_NHI = 'BINH_NHI',
+  BINH_NHAT = 'BINH_NHAT',
+  THIEU_UY = 'THIEU_UY',
+  TRUNG_UY = 'TRUNG_UY',
+  THUONG_UY = 'THUONG_UY',
+  DAI_UY = 'DAI_UY',
+  THIEU_TA = 'THIEU_TA',
+  TRUNG_TA = 'TRUNG_TA',
+  THUONG_TA = 'THUONG_TA',
+  DAI_TA = 'DAI_TA',
 }
 
 // Đảng viên
@@ -71,9 +84,9 @@ export enum NOTIFICATION_STATUS {
 
 // Mốc điểm danh
 export enum REPORT_NUMBER_TYPE {
-  DIEM_DANH_BUOI_SANG = 'morning',
-  DIEM_DANH_BUOI_CHIEU = 'afternoon',
-  DIEM_DANH_BUOI_TOI = 'night',
+  MORNING = 'morning',
+  AFTERNOON = 'afternoon',
+  EVENING = 'evening',
 }
 
 // ...

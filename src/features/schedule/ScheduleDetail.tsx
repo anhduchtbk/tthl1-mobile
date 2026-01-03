@@ -2,6 +2,7 @@ import { Company } from '@/api/types/company';
 import { Timetable } from '@/api/types/timetable';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -41,7 +42,13 @@ export function ScheduleDetail({
       >
         <Text fontSize={isHome ? 20 : 15} fontWeight="bold" color={'#333'}>
           Thời khoá biểu (C
-          {companyItem?.name || item?.days?.[0]?.items?.[0]?.company?.name} - )
+          {companyItem?.name ||
+            item?.days?.[0]?.items?.[0]?.company?.name} -{' '}
+          {formatEducation(
+            companyItem?.course?.type ||
+              item?.days?.[0]?.items?.[0]?.company?.course?.type
+          )}
+          )
         </Text>
         {!isHome && (
           <Text fontSize={12} color={colors.primary[20]}>

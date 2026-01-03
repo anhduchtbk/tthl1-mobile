@@ -45,6 +45,8 @@ const LendFacilityModal = ({
   onClose,
 }: Props) => {
   const { user } = useAuthStore();
+  console.log('vvv', user);
+  
   const { mutateAsync: createTransaction, isPending: isCreatePending } =
     useCreateTransaction();
 

@@ -1,6 +1,8 @@
 import Button from '@/components/common/Button';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { STATUS_OPTIONS } from '@/constants/option';
+import { STATUS_TYPE } from '@/constants/value';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
@@ -11,6 +13,7 @@ interface RowItem {
   title: string;
   type: string;
   value: string | number;
+  isInvisible?: boolean;
 }
 
 type RowItemProps = PropsWithChildren<{
@@ -40,9 +43,6 @@ export const RenderRequestItem = ({
 }: RowItemProps) => {
   const router = useRouter();
 
-  console.log('ssss', rowItem);
-  
-
   const onOpenHistoryRequest = () => {
     router.push({
       pathname: '/home/notification/history-request',
@@ -56,7 +56,7 @@ export const RenderRequestItem = ({
   return (
     <Box style={styles.containerItem}>
       {rowItem?.infos?.map((item, index) => {
-        return (
+        return item?.isInvisible ? null : (
           <Box
             key={index}
             flexDirection="row"
@@ -73,19 +73,16 @@ export const RenderRequestItem = ({
                 px={10}
                 borderRadius={16}
                 bgColor={
-                  item.value === 'pending'
+                  item.value === STATUS_TYPE.PENDING
                     ? '#FEBC2F'
-                    : item.value === 'approved'
+                    : item.value === STATUS_TYPE.APPROVED
                     ? '#27C840'
                     : '#FF5F57'
                 }
               >
                 <Text fontSize={FontSize.SMALL} color={colors.white}>
-                  {item.value === 'pending'
-                    ? 'Chờ duyệt'
-                    : item.value === 'approved'
-                    ? 'Đồng ý'
-                    : 'Từ chối'}
+                  {STATUS_OPTIONS.find(status => status.value === item.value)
+                    ?.label || 'Không xác định'}
                 </Text>
               </Box>
             ) : (

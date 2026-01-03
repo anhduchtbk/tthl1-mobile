@@ -48,7 +48,7 @@ export default function LoginScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(changePasswordSchema),
     mode: 'onChange',
@@ -60,7 +60,7 @@ export default function LoginScreen() {
 
   const onLogin = async (data: FormData) => {
     await loginRequest(
-      { email: data.username, password: data.password },
+     data,
       {
         onSuccess: data => {
           if (data.status === 200) {
