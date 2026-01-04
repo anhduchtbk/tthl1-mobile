@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button';
-import ButtonTypeSelector from '@/components/common/Button/ButtonTypeSelector';
+import ButtonTypeSelector from '@/components/common/Button/buttonTypeSelector';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { ModalHeader } from '@/components/header/ModalHeader';
