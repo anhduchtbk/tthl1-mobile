@@ -22,7 +22,7 @@ export default function FacilityDetailScreen() {
   const [isOpenBackModal, setIsOpenBackModal] = useState(false);
 
   const params = useSearchParams();
-  
+
   const { data, isLoading } = useGetTransactionByEquipment(
     Number(params.get('equipment_id'))
   );
@@ -56,7 +56,7 @@ export default function FacilityDetailScreen() {
         >
           <Image
             source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUsU-l3itkZGtUGUMHLChMnGGgE6SiOYYK7Q&s',
+              uri: 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg',
             }}
             style={styles.imgAvatar}
           />

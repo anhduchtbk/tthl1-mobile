@@ -8,9 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Box } from '@/components/common/Layout/Box';
 import { FunctionList } from '@/features/home/function-list';
-import { HonorOfWeek } from '@/features/home/honnor';
 import { InforAccount } from '@/features/home/infor-account';
-import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
 import { useGetTimetableList } from '@/hooks/useTimetable';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -40,15 +38,15 @@ export default function HomeScreen() {
         >
           <InforAccount />
           <FunctionList />
-          <ScheduleDetail item={formatByWeek(data || [])[0]} isHome />
-          <HonorOfWeek />
+          {/* <ScheduleDetail item={formatByWeek(data || [])[0]} isHome />
+          <HonorOfWeek /> */}
           <Image
             source={require('@/assets/images/footer-home-image.png')}
             resizeMode="contain"
             style={{
               width: screenWidth,
               height: (screenWidth / 375) * 280,
-              marginTop: 16,
+              // marginTop: 16,
               alignSelf: 'center',
             }}
           />

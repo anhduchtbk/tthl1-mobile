@@ -56,7 +56,7 @@ export default function MilitaryNumberScreen() {
         totalStudents: item.personnelCount,
         absentStudents: item.totalAbsent,
         actualStudents: item.personnelCount - item.totalAbsent,
-        listStudentGroup: groupByReason(item.attendanceRecords)
+        listStudentGroup: groupByReason(item.attendanceRecords),
       };
     });
   };
@@ -76,7 +76,7 @@ export default function MilitaryNumberScreen() {
         marginTop={4}
       />
       <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
-      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         <Box px={16} gap={16}>
           <DayElementScrollView onChange={setSelectedIndex} />
           <Box gap={12}>

@@ -54,7 +54,7 @@ export default function StudentDetailScreen() {
         >
           <Image
             source={{
-              uri: 'https://images2.thanhnien.vn/zoom/686_429/528068263637045248/2025/3/24/chi-pu-r4-1742803995521521142964-0-0-568-908-crop-1742804234653431348943.jpg',
+              uri: 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg',
             }}
             style={styles.imgAvatar}
           />
