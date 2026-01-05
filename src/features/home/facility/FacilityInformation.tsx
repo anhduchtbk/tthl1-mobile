@@ -2,7 +2,8 @@ import { Transaction, TransactionsByType } from '@/api/types/transaction';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
-import { formatDate } from '@/lib/utils';
+import { EDUCATION_TYPE, STATUS_TYPE } from '@/constants/value';
+import { formatDate, formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -13,6 +14,11 @@ interface FacilityInformationProps {
   company: {
     id: number;
     name: string;
+    course: {
+      id: number;
+      name: string;
+      type: EDUCATION_TYPE;
+    };
   };
   equipment: {
     id: number;
@@ -37,24 +43,26 @@ export function FacilityInformation({
     [];
 
   const formatData = (transactions: Transaction[]) => {
-    return transactions.map((item) => {
+    return transactions.map(item => {
       return {
         timeIndex: formatDate(item?.createdAt),
         infos: [
           {
             title: 'Đơn vị yêu cầu',
             type: 'requestedUnit',
-            value: `C${company?.name} - `,
+            value: `C${company?.name} - ${formatEducation(
+              company?.course?.type || ''
+            )}`,
           },
           {
             title: 'Người yêu cầu',
             type: 'requester',
-            value: item?.user?.email,
+            value: item?.user?.fullName,
           },
           {
             title: 'SĐT',
             type: 'phoneNumber',
-            value: '',
+            value: item?.user?.phoneNumber,
           },
           {
             title: 'Tên vật chất',
@@ -66,11 +74,11 @@ export function FacilityInformation({
           //   type: 'requestTime',
           //   value: transactions?.length + 1 - index,
           // },
-          // {
-          //   title: 'Nơi mượn',
-          //   type: 'requestAddress',
-          //   value: '',
-          // },
+          {
+            title: 'Nơi mượn',
+            type: 'requestAddress',
+            value: item?.borrowSource?.name,
+          },
           {
             title: 'Số lượng',
             type: 'quantity',
@@ -97,13 +105,19 @@ export function FacilityInformation({
             value: item?.approvedAt
               ? dayjs(item?.approvedAt).format('hh:mm:ss, DD/MM/YYYY')
               : '--/--/----',
-            isInvisible: item?.status === 'pending',
+            isInvisible: item?.status !== STATUS_TYPE.APPROVED,
           },
           {
             title: 'Người phê duyệt',
             type: 'approver',
             value: '',
-            isInvisible: item?.status === 'pending',
+            isInvisible: item?.status !== STATUS_TYPE.APPROVED,
+          },
+          {
+            title: 'Lý do từ chối',
+            type: 'rejectReason',
+            value: item?.rejectReason || '',
+            isInvisible: item?.status !== STATUS_TYPE.DENIED,
           },
         ],
       };

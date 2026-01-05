@@ -226,3 +226,18 @@ export function getCurrentWeekDates(startOfWeek?: string) {
 
   return daysInWeek;
 }
+
+export function getWeekNumberByCourse(
+  startDate: string,
+  reportTime: string
+): number {
+  console.log('ggg', startDate, reportTime);
+
+  const start = new Date(startDate);
+  const report = new Date(reportTime);
+
+  const diffTime = report.getTime() - start.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  return Math.floor(diffDays / 7) + 1;
+}

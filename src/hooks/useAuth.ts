@@ -1,8 +1,8 @@
-import type { LoginRequest } from '@/api/types/auth';
+import type { ChangePasswordRequest, LoginRequest } from '@/api/types/auth';
 import { useAuthStore } from '@/store/authStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMutation } from '@tanstack/react-query';
-import { getMe, login } from '../api/auth';
+import { changePassword, getMe, login } from '../api/auth';
 
 export const useLogin = () => {
   const setAuth = useAuthStore(state => state.setAuth);
@@ -16,13 +16,18 @@ export const useLogin = () => {
 
         const res = await getMe();
 
-        console.log('ddddd', res);
-
         setAuth({
           user: res?.data,
           token: response.data.token,
         });
       }
     },
+  });
+};
+
+export const useChangePassword = () => {
+  return useMutation({
+    mutationFn: (data: ChangePasswordRequest) => changePassword(data),
+    onSuccess: async () => {},
   });
 };

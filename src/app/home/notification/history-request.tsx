@@ -5,6 +5,7 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { STATUS_TYPE } from '@/constants/value';
 import { RenderRequestItem } from '@/features/home/notification/RenderRequestItem';
 import { useGetTransactionEquipmentByCompany } from '@/hooks/useTransaction';
 import { formatDate, formatEducation } from '@/lib/utils';
@@ -47,12 +48,12 @@ export default function HistoryRequestScreen() {
           {
             title: 'Người yêu cầu',
             type: 'requester',
-            value: item?.user?.email,
+            value: item?.user?.fullName,
           },
           {
             title: 'SĐT',
             type: 'phoneNumber',
-            value: '',
+            value: item?.user?.phoneNumber,
           },
           {
             title: 'Tên vật chất',
@@ -64,11 +65,11 @@ export default function HistoryRequestScreen() {
           //   type: 'requestTime',
           //   value: transactions?.length + 1 - index,
           // },
-          // {
-          //   title: 'Nơi mượn',
-          //   type: 'requestAddress',
-          //   value: '',
-          // },
+          {
+            title: 'Nơi mượn',
+            type: 'requestAddress',
+            value: item?.borrowSource?.name,
+          },
           {
             title: 'Số lượng',
             type: 'quantity',
@@ -95,13 +96,19 @@ export default function HistoryRequestScreen() {
             value: item?.approvedAt
               ? dayjs(item?.approvedAt).format('hh:mm:ss, DD/MM/YYYY')
               : '--/--/----',
-            isInvisible: item?.status === 'pending',
+            isInvisible: item?.status !== STATUS_TYPE.APPROVED,
           },
           {
             title: 'Người phê duyệt',
             type: 'approver',
             value: '',
-            isInvisible: item?.status === 'pending',
+            isInvisible: item?.status !== STATUS_TYPE.APPROVED,
+          },
+          {
+            title: 'Lý do từ chối',
+            type: 'rejectReason',
+            value: item?.rejectReason || '',
+            isInvisible: item?.status !== STATUS_TYPE.DENIED,
           },
         ],
       };

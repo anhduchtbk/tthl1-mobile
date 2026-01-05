@@ -32,10 +32,17 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   response => response,
   async error => {
+    const status = error.response?.status;
+    const data = error.response?.data;
+
     if (error.response?.status === 401) {
       await AsyncStorage.removeItem('token');
     }
-    return Promise.reject(error);
+    return Promise.reject({
+      status,
+      data,
+      message: data?.message || error.message,
+    });
   }
 );
 

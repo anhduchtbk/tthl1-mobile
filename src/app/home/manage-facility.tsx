@@ -1,4 +1,3 @@
-import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
@@ -31,8 +30,9 @@ export default function ManageFacilityScreen() {
 
   return (
     <Box flex={1} bgColor={colors.white}>
-      <ScreenHeader title="QUẢN LÝ VẬT CHẤT" isSearch />
-      <FilterButton />
+      <ScreenHeader title="QUẢN LÝ VẬT CHẤT" />
+      {/* <FilterButton /> */}
+      <Box h={16} />
       {isLoading ? (
         Array.from({ length: 5 }, (_, index) => {
           return <RenderFacilityItemSkeleton key={index} />;

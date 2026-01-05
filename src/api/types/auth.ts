@@ -5,6 +5,11 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export interface LoginResponse {
   message?: {
     statusCode: number;
@@ -40,6 +45,7 @@ export interface User {
     id: number;
     name: string;
     description: string;
+    department: string;
     isActive: boolean;
     createdAt: string;
     updatedAt: string;

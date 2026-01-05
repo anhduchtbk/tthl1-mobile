@@ -69,7 +69,7 @@ export const NOTIFICATION_STATUS_OPTIONS = [
 export const STATUS_OPTIONS = [
   { label: 'Chờ duyệt', value: STATUS_TYPE.PENDING },
   { label: 'Đồng ý', value: STATUS_TYPE.APPROVED },
-  { label: 'Từ chối', value: STATUS_TYPE.REJECTED },
+  { label: 'Từ chối', value: STATUS_TYPE.DENIED },
 ];
 
 export const REPORT_NUMBER_OPTIONS = [

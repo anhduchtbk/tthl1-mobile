@@ -3,11 +3,13 @@ import { Box } from '@/components/common/Layout/Box';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import { useChangePassword } from '@/hooks/useAuth';
 import { colors } from '@/theme/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextInput } from 'react-native';
+import { Alert, TextInput } from 'react-native';
 import z from 'zod';
 
 type ChangePasswordFormData = {
@@ -28,11 +30,17 @@ const changePasswordSchema = z
   });
 
 export default function ChangePasswordScreen() {
+  const router = useRouter();
   const refs = {
     currentPassword: useRef<TextInput>(null),
     newPassword: useRef<TextInput>(null),
     confirmNewPassword: useRef<TextInput>(null),
   };
+
+  const {
+    mutateAsync: changePasswordRequest,
+    isPending: isChangePasswordPending,
+  } = useChangePassword();
 
   const {
     control,
@@ -48,7 +56,30 @@ export default function ChangePasswordScreen() {
     },
   });
 
-  const onConfirm = () => {};
+  const onConfirm = (data: ChangePasswordFormData) => {
+    const params = {
+      currentPassword: data?.currentPassword,
+      newPassword: data?.newPassword,
+    };
+
+    changePasswordRequest(params, {
+      onSuccess: data => {
+        if (data) {
+          Alert.alert('Thông báo', 'Thay đổi mật khẩu thành công', [
+            {
+              text: 'Ok',
+              onPress: () => {
+                router.back();
+              },
+            },
+          ]);
+        }
+      },
+      onError: (error: any) => {
+        Alert.alert('Lỗi!!!', JSON.stringify(error?.data?.message?.message));
+      },
+    });
+  };
 
   return (
     <Box flex={1} bgColor={colors.white}>
@@ -89,7 +120,11 @@ export default function ChangePasswordScreen() {
           control={control}
           error={errors?.confirmNewPassword?.message}
         />
-        <Button text="XÁC NHẬN" onPress={handleSubmit(onConfirm)} />
+        <Button
+          text="XÁC NHẬN"
+          onPress={handleSubmit(onConfirm)}
+          loading={isChangePasswordPending}
+        />
       </Box>
     </Box>
   );

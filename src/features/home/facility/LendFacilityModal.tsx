@@ -11,13 +11,14 @@ import { Text } from '@/components/common/Text/Text';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
 import { useCreateTransaction } from '@/hooks/useTransaction';
+import { formatRank } from '@/lib/utils';
 import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { z } from 'zod';
 
@@ -45,8 +46,7 @@ const LendFacilityModal = ({
   onClose,
 }: Props) => {
   const { user } = useAuthStore();
-  console.log('vvv', user);
-  
+
   const { mutateAsync: createTransaction, isPending: isCreatePending } =
     useCreateTransaction();
 
@@ -76,7 +76,7 @@ const LendFacilityModal = ({
       companyName: '',
       facilityAmount: 1,
       reason: '',
-      requester: user?.name,
+      requester: `${formatRank(user?.rank)} ${user?.fullName}`,
     },
   });
 
@@ -102,7 +102,17 @@ const LendFacilityModal = ({
       onSuccess: res => {
         console.log('createAttendanceReportRequest', res);
 
-        onClose();
+        Alert.alert('Thông báo', 'Tạo yêu cầu mượn thành công', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              onClose();
+            },
+          },
+        ]);
+      },
+      onError: (error: any) => {
+        Alert.alert('Lỗi!!!', JSON.stringify(error?.data?.message?.message));
       },
     });
   };
@@ -201,7 +211,7 @@ const LendFacilityModal = ({
             name="requester"
             control={control}
             label={'Người yêu cầu'}
-            value={user?.name}
+            value={`${formatRank(user?.rank)} ${user?.fullName}`}
             keyboardType="number-pad"
             innerInputWrapper={{
               backgroundColor: colors.white,

@@ -1,7 +1,7 @@
-import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import OverflowScrollView from '@/components/common/ScrollView/OverflowScrollView';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
+import AutoWidthImage from '@/features/home/facility/AutoWidthImage';
 import BackFacilityModal from '@/features/home/facility/BackFacilityModal';
 import { FacilityHeader } from '@/features/home/facility/FacilityHeader';
 import { FacilityInformation } from '@/features/home/facility/FacilityInformation';
@@ -12,7 +12,7 @@ import { colors } from '@/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSearchParams } from 'expo-router/build/hooks';
 import React, { useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function FacilityDetailScreen() {
@@ -46,21 +46,18 @@ export default function FacilityDetailScreen() {
         borderTopLeftRadius={30}
         borderTopRightRadius={30}
       >
-        <Box
-          pos="absolute"
-          top={-40}
-          left={0}
-          right={0}
-          alignItems="center"
-          zIndex={999}
-        >
-          <Image
-            source={{
-              uri: 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg',
-            }}
-            style={styles.imgAvatar}
-          />
-        </Box>
+        {data?.equipment?.image && (
+          <Box
+            pos="absolute"
+            top={-40}
+            left={0}
+            right={0}
+            alignItems="center"
+            zIndex={999}
+          >
+            <AutoWidthImage uri={data?.equipment?.image} height={80} />
+          </Box>
+        )}
         {isLoading ? (
           <Box mt={100}>
             <ActivityIndicator color={colors.primary[20]} />
@@ -79,9 +76,10 @@ export default function FacilityDetailScreen() {
               onLendFacility={() => setIsOpenLendModal(true)}
               onBackFacility={() => setIsOpenBackModal(true)}
             />
-            <Box mx={-16}>
+            {/* <Box mx={-16}>
               <FilterButton />
-            </Box>
+            </Box> */}
+            <Box h={16} />
             {data &&
               data.transactionsByCompany?.map((item, index) => {
                 return (
@@ -118,12 +116,5 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-  },
-  imgAvatar: {
-    width: 217,
-    height: 80,
-    borderWidth: 4,
-    borderRadius: 20,
-    borderColor: colors.white,
   },
 });

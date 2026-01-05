@@ -38,7 +38,7 @@ export function SettingHeader() {
       >
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            {'-'}
+            {user?.role?.department || '-'}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Đơn vị

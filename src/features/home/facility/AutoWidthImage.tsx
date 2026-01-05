@@ -1,3 +1,4 @@
+import { colors } from '@/theme/colors';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 
@@ -19,7 +20,17 @@ const AutoWidthImage = ({ uri, height }: AutoWidthImageProps) => {
   if (!width) return null;
 
   return (
-    <Image source={{ uri }} style={{ width, height }} resizeMode="contain" />
+    <Image
+      source={{ uri }}
+      style={{
+        width,
+        height,
+        borderWidth: 4,
+        borderRadius: 20,
+        borderColor: colors.white,
+      }}
+      resizeMode="cover"
+    />
   );
 };
 

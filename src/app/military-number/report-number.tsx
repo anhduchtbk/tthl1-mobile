@@ -19,7 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'expo-router/build/hooks';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ScrollView, TextInput } from 'react-native';
+import { Alert, ScrollView, TextInput } from 'react-native';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -127,11 +127,21 @@ const ReportNumberScreen = () => {
     createAttendanceReport(params, {
       onSuccess: res => {
         if (res) {
-          router.push({
-            pathname: '/military-number/military-history-report',
-            params: { companyItem: JSON.stringify(companyItem) },
-          });
+          Alert.alert('Thông báo', 'Báo cáo quân số thành công', [
+            {
+              text: 'Ok',
+              onPress: () => {
+                router.push({
+                  pathname: '/military-number/military-history-report',
+                  params: { companyItem: JSON.stringify(companyItem) },
+                });
+              },
+            },
+          ]);
         }
+      },
+      onError: (error: any) => {
+        Alert.alert('Lỗi!!!', JSON.stringify(error?.data?.message?.message));
       },
     });
   };

@@ -1,6 +1,7 @@
 import { GetTransactionEquipmentResponse } from '@/api/types/transaction';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 
@@ -15,6 +16,8 @@ export function FacilityHeader({
   onLendFacility: () => void;
   onBackFacility: () => void;
 }) {
+  const { user } = useAuthStore();
+
   return (
     <Box>
       <Box alignItems="center" gap={8}>
@@ -64,45 +67,49 @@ export function FacilityHeader({
           </Text>
         </Box>
       </Box>
-
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-        gap={16}
-        pb={16}
-        borderBottomWidth={1}
-        borderBottomColor={'#F0F0F0'}
-      >
+      {user?.role?.name === 'Đại đội trưởng' ||
+      user?.role?.name === 'Đại đội phó' ? (
         <Box
-          flex={1}
-          bgColor={colors.primary[10]}
-          borderWidth={1}
-          borderColor={colors.blue}
-          borderRadius={16}
-          py={9}
-          px={30}
-          onPress={onLendFacility}
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={16}
+          pb={16}
+          borderBottomWidth={1}
+          borderBottomColor={'#F0F0F0'}
         >
-          <Text color={colors.white} align="center">
-            Đăng ký{'\n'}mượn vật chất
-          </Text>
+          <Box
+            flex={1}
+            bgColor={colors.primary[10]}
+            borderWidth={1}
+            borderColor={colors.blue}
+            borderRadius={16}
+            py={9}
+            px={30}
+            onPress={onLendFacility}
+          >
+            <Text color={colors.white} align="center">
+              Đăng ký{'\n'}mượn vật chất
+            </Text>
+          </Box>
+          <Box
+            flex={1}
+            bgColor={colors.white}
+            borderWidth={1}
+            borderColor={colors.blue}
+            borderRadius={16}
+            py={9}
+            px={30}
+            onPress={onBackFacility}
+          >
+            <Text color={colors.blue} align="center">
+              Đăng ký{'\n'}trả vật chất
+            </Text>
+          </Box>
         </Box>
-        <Box
-          flex={1}
-          bgColor={colors.white}
-          borderWidth={1}
-          borderColor={colors.blue}
-          borderRadius={16}
-          py={9}
-          px={30}
-          onPress={onBackFacility}
-        >
-          <Text color={colors.blue} align="center">
-            Đăng ký{'\n'}trả vật chất
-          </Text>
-        </Box>
-      </Box>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 }

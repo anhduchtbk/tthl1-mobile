@@ -1,5 +1,5 @@
 import { Company } from '@/api/types/company';
-import FilterButton from '@/components/common/Button/filter-button';
+import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { DateTimePickerModal } from '@/components/common/Modal/DateTimePickerModal';
 import { Text } from '@/components/common/Text/Text';
@@ -11,7 +11,7 @@ import {
 import MilitaryHistoryFilterBottomSheet from '@/features/military-number/military-history-report/MilitaryHistoryFilterBottomSheet';
 import { DayElementScrollView } from '@/features/schedule/DayElement';
 import { useGetAttendanceReportList } from '@/hooks/useAttendanceReport';
-import { formatEducation } from '@/lib/utils';
+import { formatEducation, getWeekNumberByCourse } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'expo-router/build/hooks';
@@ -33,10 +33,13 @@ export default function MilitaryNumberScreen() {
   const [dateType, setDateType] = useState<'from' | 'to'>('from');
   const [fromDate, setFromDate] = useState<Date | null>(null);
   const [toDate, setToDate] = useState<Date | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedDate, setSelectedDate] = useState('all');
 
-  const fromTime = dayjs().startOf('week').add(1, 'day').format('YYYY-MM-DD');
-  const toTime = dayjs().endOf('week').add(1, 'day').format('YYYY-MM-DD');
+  const fromTime = dayjs()
+    .startOf('week')
+    .subtract(6, 'day')
+    .format('YYYY-MM-DD');
+  const toTime = dayjs().endOf('week').subtract(6, 'day').format('YYYY-MM-DD');
 
   const { data } = useGetAttendanceReportList({
     page: 1,
@@ -47,21 +50,6 @@ export default function MilitaryNumberScreen() {
       `reportTime|$lt|${toTime}`,
     ],
   });
-
-  const formatData = (attendanceList: any[]) => {
-    return attendanceList.map(item => {
-      return {
-        id: 1,
-        type: item.session,
-        totalStudents: item.personnelCount,
-        absentStudents: item.totalAbsent,
-        actualStudents: item.personnelCount - item.totalAbsent,
-        listStudentGroup: groupByReason(item.attendanceRecords),
-      };
-    });
-  };
-
-  console.log('aaaaa', formatData(data));
 
   return (
     <SafeAreaView
@@ -75,17 +63,29 @@ export default function MilitaryNumberScreen() {
         )}`}
         marginTop={4}
       />
-      <FilterButton onOpenFilter={() => setIsOpenModal(true)} />
+      {/* <FilterButton onOpenFilter={() => setIsOpenModal(true)} /> */}
+      <Box px={16} mt={8} mb={16}>
+        <DayElementScrollView
+          week={getWeekNumberByCourse(
+            data?.[0]?.company?.course?.startDate,
+            data?.[0]?.reportTime
+          )}
+          fromDate={fromTime}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+      </Box>
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-        <Box px={16} gap={16}>
-          <DayElementScrollView onChange={setSelectedIndex} />
-          <Box gap={12}>
-            {selectedIndex === 0 ? (
-              <WeeklySummary data={weeklySummaryFakeData} />
-            ) : (
-              <DailyDetail data={formatData(data)} />
-            )}
-          </Box>
+        <Box px={16} gap={12}>
+          {selectedDate === 'all' ? (
+            <WeeklySummary data={formatWeeklySummary(data)} />
+          ) : (
+            <DailyDetail
+              data={formatReportList(data).filter(
+                item => item.reportTime === selectedDate
+              )}
+            />
+          )}
         </Box>
         <Box h={100} />
       </ScrollView>
@@ -127,67 +127,6 @@ export default function MilitaryNumberScreen() {
   );
 }
 
-export type WeeklySummaryDay = {
-  date: string; // yyyy-mm-dd
-  label: string; // Thứ 2 (02/01/2025)
-  total: number;
-  absent: number;
-  actual: number;
-  groups?: {
-    title: string; // Nhóm học viên 1
-    reason: string;
-    students: string[];
-  }[];
-};
-
-export const weeklySummaryFakeData: WeeklySummaryDay[] = [
-  {
-    date: '2025-01-02',
-    label: 'Thứ 2 (02/01/2025)',
-    total: 110,
-    absent: 4,
-    actual: 106,
-    groups: [
-      {
-        title: 'Nhóm học viên 1',
-        reason: 'Nằm quân y (2 học viên)',
-        students: ['Nguyễn Văn A', 'Nguyễn Văn B'],
-      },
-      {
-        title: 'Nhóm học viên 2',
-        reason: 'Nghỉ tranh thủ (2 học viên)',
-        students: ['Nguyễn Văn C', 'Nguyễn Văn D'],
-      },
-    ],
-  },
-  {
-    date: '2025-01-03',
-    label: 'Thứ 3 (03/01/2025)',
-    total: 110,
-    absent: 0,
-    actual: 110,
-  },
-  {
-    date: '2025-01-04',
-    label: 'Thứ 4 (04/01/2025)',
-    total: 110,
-    absent: 4,
-    actual: 106,
-    groups: [
-      {
-        title: 'Nhóm học viên 1',
-        reason: 'Nằm quân y (2 học viên)',
-        students: ['Nguyễn Văn A', 'Nguyễn Văn B'],
-      },
-      {
-        title: 'Nhóm học viên 2',
-        reason: 'Nghỉ tranh thủ (2 học viên)',
-        students: ['Nguyễn Văn C', 'Nguyễn Văn D'],
-      },
-    ],
-  },
-];
-
 function DailyDetail({ data }: { data: any[] }) {
   return (
     <Box gap={16}>
@@ -201,8 +140,8 @@ function DailyDetail({ data }: { data: any[] }) {
 function WeeklySummary({ data }: { data: any[] }) {
   return (
     <Box gap={16}>
-      {data.map(day => (
-        <Box key={day.date} gap={16}>
+      {data.map((day, index) => (
+        <Box key={index} gap={16}>
           <Box alignSelf="flex-start">
             <Text
               fontSize={16}
@@ -227,29 +166,165 @@ function WeeklySummary({ data }: { data: any[] }) {
   );
 }
 
-type AbsentItem = {
+export interface WeeklySummaryGroup {
+  title: string;
   reason: string;
-  student: {
-    fullName: string;
-  };
-};
+  students: Student[];
+}
 
-function groupByReason(data: AbsentItem[]) {
-  const map = new Map<string, string[]>();
+export interface WeeklySummaryDay {
+  date: string;
+  label: string;
+  total: number;
+  absent: number;
+  actual: number;
+  groups?: WeeklySummaryGroup[];
+}
 
-  data.forEach(item => {
-    const reason = item.reason;
-    const studentName = item.student.fullName;
+function formatVietnameseLabel(dateStr: string): string {
+  const date = new Date(dateStr);
 
-    if (!map.has(reason)) {
-      map.set(reason, []);
+  const dayMap = [
+    'Chủ nhật',
+    'Thứ 2',
+    'Thứ 3',
+    'Thứ 4',
+    'Thứ 5',
+    'Thứ 6',
+    'Thứ 7',
+  ];
+
+  const dayName = dayMap[date.getDay()];
+  const dd = String(date.getDate()).padStart(2, '0');
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const yyyy = date.getFullYear();
+
+  return `${dayName} (${dd}/${mm}/${yyyy})`;
+}
+
+export function formatWeeklySummary(apiData: any[]): WeeklySummaryDay[] {
+  const dayMap: Record<
+    string,
+    {
+      date: string;
+      label: string;
+      total: number;
+      studentMap: Map<number, Student>;
+      reasonMap: Map<string, Map<number, Student>>;
+    }
+  > = {};
+
+  apiData.forEach(item => {
+    const date = item.reportTime.split('T')[0];
+
+    if (!dayMap[date]) {
+      dayMap[date] = {
+        date,
+        label: formatVietnameseLabel(item.reportTime),
+        total: item.personnelCount,
+        studentMap: new Map(),
+        reasonMap: new Map(),
+      };
     }
 
-    map.get(reason)!.push(studentName);
+    item.attendanceRecords?.forEach((record: any) => {
+      const student = record.student;
+      if (!student?.id || !student?.fullName) return;
+
+      const reason = record.reason || 'Không rõ lý do';
+
+      // chống trùng học viên trong ngày
+      dayMap[date].studentMap.set(student.id, student);
+
+      // group theo reason
+      if (!dayMap[date].reasonMap.has(reason)) {
+        dayMap[date].reasonMap.set(reason, new Map());
+      }
+
+      dayMap[date].reasonMap.get(reason)!.set(student.id, student);
+    });
   });
 
-  return Array.from(map.entries()).map(([reason, students]) => ({
-    reasonAbsent: reason,
-    absentStudents: students,
-  }));
+  return Object.values(dayMap).map(day => {
+    const absent = day.studentMap.size;
+    const actual = day.total - absent;
+
+    const groups =
+      absent > 0
+        ? Array.from(day.reasonMap.entries()).map(
+            ([reason, studentMap], index) => ({
+              title: `Nhóm học viên ${index + 1}`,
+              reason: `${reason} (${studentMap.size} học viên)`,
+              students: Array.from(studentMap.values()),
+            })
+          )
+        : undefined;
+
+    return {
+      date: day.date,
+      label: day.label,
+      total: day.total,
+      absent,
+      actual,
+      ...(groups ? { groups } : {}),
+    };
+  });
 }
+
+export interface AbsentStudent {
+  id: number;
+  name: string;
+}
+
+export interface StudentGroupItem {
+  reasonAbsent: string;
+  absentStudents: AbsentStudent[];
+  totalStudents: number;
+}
+
+export const formatReportList = (attendanceList: any[]) => {
+  return attendanceList.map(item => {
+    const reasonMap: Record<string, AbsentStudent[]> = {};
+
+    // Group students by reason
+    item.attendanceRecords?.forEach((record: any) => {
+      const reason = record.reason || 'Không rõ lý do';
+      const student = record.student;
+
+      if (!student?.id || !student?.fullName) return;
+
+      if (!reasonMap[reason]) {
+        reasonMap[reason] = [];
+      }
+
+      // tránh trùng học viên trong cùng reason
+      const exists = reasonMap[reason].some(s => s.id === student.id);
+
+      if (!exists) {
+        reasonMap[reason].push(student);
+      }
+    });
+
+    const listStudentGroup: StudentGroupItem[] = Object.entries(reasonMap).map(
+      ([reason, students]) => ({
+        reasonAbsent: reason,
+        absentStudents: students,
+        totalStudents: item.personnelCount,
+      })
+    );
+
+    const totalAbsent = listStudentGroup.reduce(
+      (sum, group) => sum + group.absentStudents.length,
+      0
+    );
+
+    return {
+      id: item.id,
+      reportTime: item.reportTime.split('T')[0],
+      absentStudents: totalAbsent,
+      actualStudents: item.personnelCount - totalAbsent,
+      type: item.session, // morning | afternoon
+      listStudentGroup,
+    };
+  });
+};

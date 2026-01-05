@@ -33,7 +33,7 @@ export function TotalWeekElement({ item }: { item: WeeklySummaryDay }) {
           <StudentGroup
             key={index}
             numberGroup={index + 1}
-            reseasonAbsent={group.reason}
+            reasonAbsent={group.reason}
             absentStudents={group.students}
           />
         ))}
@@ -79,7 +79,7 @@ export function HistoryElement({ item }: { item: History }) {
           <StudentGroup
             key={index}
             numberGroup={index + 1}
-            reseasonAbsent={group.reseasonAbsent}
+            reasonAbsent={group.reasonAbsent}
             absentStudents={group.absentStudents}
           />
         ))}

@@ -7,7 +7,7 @@ import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
 import { PropsWithChildren } from 'react';
-import { StyleSheet } from 'react-native';
+import { Linking, StyleSheet } from 'react-native';
 
 interface RowItem {
   title: string;
@@ -92,6 +92,11 @@ export const RenderRequestItem = ({
                 alignItems="center"
                 justifyContent="flex-end"
                 gap={16}
+                onPress={() => {
+                  if (item.type === 'phoneNumber') {
+                    Linking.openURL(`tel: ${item.value}`);
+                  }
+                }}
               >
                 <Text
                   fontSize={14}

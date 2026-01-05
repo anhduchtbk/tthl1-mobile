@@ -1,4 +1,4 @@
-import { STATUS_TYPE } from "@/constants/value";
+import { EDUCATION_TYPE, STATUS_TYPE } from '@/constants/value';
 
 export interface Transaction {
   id: number;
@@ -6,9 +6,17 @@ export interface Transaction {
   status: STATUS_TYPE;
   type: 'borrow' | 'return';
   reason: string;
+  rejectReason: string | null;
   user: {
     id: number;
-    email: string;
+    username: string;
+    fullName: string;
+    phoneNumber: string;
+  };
+  borrowSource: {
+    id: number;
+    name: string;
+    type: string;
   };
   approvedAt: string;
   createdAt: string;
@@ -25,6 +33,11 @@ interface TransactionsByCompany {
   company: {
     id: number;
     name: string;
+    course: {
+      id: number;
+      name: string;
+      type: EDUCATION_TYPE;
+    };
   };
   currentQuantity: number;
   transactionsByType: TransactionsByType[];
@@ -33,6 +46,7 @@ interface TransactionsByCompany {
 interface TransactionEquipment {
   id: number;
   name: string;
+  image: string;
 }
 
 export interface GetTransactionEquipmentResponse {

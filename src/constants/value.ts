@@ -16,7 +16,7 @@ export enum EDUCATION_TYPE {
 export enum STATUS_TYPE {
   PENDING = 'pending',
   APPROVED = 'approved',
-  REJECTED = 'rejected',
+  DENIED = 'denied',
 }
 
 // Đại đội

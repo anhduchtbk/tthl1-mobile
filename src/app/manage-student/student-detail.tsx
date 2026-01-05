@@ -65,9 +65,9 @@ export default function StudentDetailScreen() {
         >
           <StudentHeader studentDetail={data || studentDetail} />
           <BasicInformation studentDetail={data || studentDetail} />
-          <RelativeInformation
-            familyMembers={studentDetail?.familyMembers || []}
-          />
+          {studentDetail?.familyMembers?.length > 0 && (
+            <RelativeInformation familyMembers={studentDetail?.familyMembers} />
+          )}
           <Box h={100} />
         </OverflowScrollView>
       </Box>

@@ -29,8 +29,8 @@ export default function ScheduleDetailScreen() {
 
   const { data, isLoading } = useGetTimetableByCompanyList({
     companyId: companyItem?.id,
-    fromDate: dayjs(fromDate).format('YYYY-MM-DD'),
-    toDate: dayjs(toDate).format('YYYY-MM-DD'),
+    fromDate: fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : '',
+    toDate: toDate ? dayjs(toDate).format('YYYY-MM-DD') : '',
   });
 
   const reversedData = React.useMemo(

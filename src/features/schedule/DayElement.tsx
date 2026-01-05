@@ -6,7 +6,7 @@ import {
   getCurrentWeekDates,
 } from '@/lib/utils';
 import { colors } from '@/theme/colors';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 
 type PropsDayElement = {
@@ -22,7 +22,10 @@ type WeekSummaryProps = {
 };
 
 type PropsDayElementScroll = {
-  onChange?: (index: number) => void;
+  week: number;
+  fromDate: string;
+  selectedDate: string;
+  setSelectedDate: (value: string) => void;
 };
 
 export function DayElement({
@@ -65,37 +68,40 @@ function WeekSummary({ isCheck, week, onPress }: WeekSummaryProps) {
           Tổng hợp
         </Text>
         <Text align="center" color={isCheck ? colors.text[3] : colors.text[4]}>
-          tuần {week}
+          tuần {week || ''}
         </Text>
       </Box>
     </TouchableOpacity>
   );
 }
 
-export function DayElementScrollView({ onChange }: PropsDayElementScroll) {
-  const weekDates = getCurrentWeekDates();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export function DayElementScrollView({
+  week,
+  fromDate,
+  selectedDate,
+  setSelectedDate,
+}: PropsDayElementScroll) {
+  const weekDates = getCurrentWeekDates(fromDate);
 
-  const handleSelect = (index: number) => {
-    setSelectedIndex(index);
-    onChange?.(index);
+  const handleSelect = (index: string) => {
+    setSelectedDate(index);
   };
 
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       {/* Tổng hợp */}
       <WeekSummary
-        week={13}
-        isCheck={selectedIndex === 0}
-        onPress={() => handleSelect(0)}
+        week={week}
+        isCheck={selectedDate === 'all'}
+        onPress={() => handleSelect('all')}
       />
 
       {weekDates.map((date, index) => (
         <DayElement
-          key={date}
+          key={index}
           value={date}
-          isCheck={selectedIndex === index + 1}
-          onPress={() => handleSelect(index + 1)}
+          isCheck={selectedDate === date}
+          onPress={() => handleSelect(date)}
         />
       ))}
     </ScrollView>
