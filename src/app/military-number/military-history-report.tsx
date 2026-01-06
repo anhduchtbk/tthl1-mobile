@@ -35,11 +35,8 @@ export default function MilitaryNumberScreen() {
   const [toDate, setToDate] = useState<Date | null>(null);
   const [selectedDate, setSelectedDate] = useState('all');
 
-  const fromTime = dayjs()
-    .startOf('week')
-    .subtract(6, 'day')
-    .format('YYYY-MM-DD');
-  const toTime = dayjs().endOf('week').subtract(6, 'day').format('YYYY-MM-DD');
+  const fromTime = dayjs().startOf('week').add(1, 'day').format('YYYY-MM-DD');
+  const toTime = dayjs().endOf('week').add(1, 'day').format('YYYY-MM-DD');
 
   const { data } = useGetAttendanceReportList({
     page: 1,

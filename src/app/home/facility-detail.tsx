@@ -1,8 +1,10 @@
 import { Box } from '@/components/common/Layout/Box';
 import OverflowScrollView from '@/components/common/ScrollView/OverflowScrollView';
+import { Text } from '@/components/common/Text/Text';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import AutoWidthImage from '@/features/home/facility/AutoWidthImage';
 import BackFacilityModal from '@/features/home/facility/BackFacilityModal';
+import EquipmentStatusBottomSheet from '@/features/home/facility/EquipmentStatusModal';
 import { FacilityHeader } from '@/features/home/facility/FacilityHeader';
 import { FacilityInformation } from '@/features/home/facility/FacilityInformation';
 import LendFacilityModal from '@/features/home/facility/LendFacilityModal';
@@ -20,6 +22,8 @@ export default function FacilityDetailScreen() {
 
   const [isOpenLendModal, setIsOpenLendModal] = useState(false);
   const [isOpenBackModal, setIsOpenBackModal] = useState(false);
+  const [isOpenEquipmentModal, setIsOpenEquipmentModal] =
+    useState<boolean>(false);
 
   const params = useSearchParams();
 
@@ -31,6 +35,10 @@ export default function FacilityDetailScreen() {
     page: 1,
     limit: 20,
   });
+
+  const handleOpenEquipmentModal = () => {
+    setIsOpenEquipmentModal(true);
+  };
 
   return (
     <Box flex={1}>
@@ -76,9 +84,22 @@ export default function FacilityDetailScreen() {
               onLendFacility={() => setIsOpenLendModal(true)}
               onBackFacility={() => setIsOpenBackModal(true)}
             />
-            {/* <Box mx={-16}>
-              <FilterButton />
-            </Box> */}
+            <Box>
+              {/* <FilterButton /> */}
+              <Box
+                borderWidth={1}
+                borderColor={colors.primary[20]}
+                borderRadius={16}
+                px={10}
+                py={4}
+                alignSelf="flex-end"
+                onPress={handleOpenEquipmentModal}
+              >
+                <Text fontSize={12} color={colors.primary[20]}>
+                  Nắm giữ thực tế
+                </Text>
+              </Box>
+            </Box>
             <Box h={16} />
             {data &&
               data.transactionsByCompany?.map((item, index) => {
@@ -105,6 +126,13 @@ export default function FacilityDetailScreen() {
         inventoryList={inventoryList}
         facilityDetail={data!}
         onClose={() => setIsOpenBackModal(false)}
+      />
+      <EquipmentStatusBottomSheet
+        onClose={() => {
+          setIsOpenEquipmentModal(false);
+        }}
+        isOpen={isOpenEquipmentModal}
+        onConfirm={() => {}}
       />
     </Box>
   );

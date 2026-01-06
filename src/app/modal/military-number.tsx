@@ -10,6 +10,7 @@ import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LIMIT = 20;
 
@@ -51,7 +52,7 @@ const CompanySearch: React.FC<CompanySearchProps> = () => {
   };
 
   return (
-    <Box bgColor={colors.white} flex={1} justifyContent="space-between">
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
       <Box p={16} pb={0}>
         <ModalHeader title="Tìm kiếm" onClose={onClose} />
       </Box>
@@ -93,7 +94,7 @@ const CompanySearch: React.FC<CompanySearchProps> = () => {
           />
         )}
       </Box>
-    </Box>
+    </SafeAreaView>
   );
 };
 

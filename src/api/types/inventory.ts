@@ -15,6 +15,31 @@ export interface GetListInventoryRequest {
   limit?: number;
 }
 
+interface Course {
+  name: string;
+  type: string; // ví dụ: 'van_bang_2'
+}
+
+interface CompanyStatus {
+  id: number;
+  name: string;
+  course: Course;
+}
+
+interface LentToItem {
+  company: CompanyStatus;
+  quantity: number;
+}
+
+export interface GetEquipmentStatus {
+  equipmentId: number;
+  name: string;
+  totalAmount: number;
+  lent: number;
+  remain: number;
+  lentTo: LentToItem[];
+}
+
 export interface Equipment {
   id: number;
   name: string;
@@ -30,7 +55,7 @@ export interface Manager {
   role: {
     id: number;
     name: string;
-  }
+  };
 }
 
 export interface GetInventoryListByIdRequest {
