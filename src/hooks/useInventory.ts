@@ -1,5 +1,9 @@
 import { INVENTORY_QUERY_KEY } from '@/api/constants/inventory';
-import { getInventoryList, getInventoryListById } from '@/api/inventory';
+import {
+  getEquipmentStatus,
+  getInventoryList,
+  getInventoryListById,
+} from '@/api/inventory';
 import { GetListInventoryRequest, Inventory } from '@/api/types/inventory';
 import { useQuery } from '@tanstack/react-query';
 import { useInfinitePagination } from './useInfinitePagination';
@@ -17,5 +21,13 @@ export const useGetInventoryListById = (inventory_id: number) => {
     queryKey: [INVENTORY_QUERY_KEY.listInventoryById, inventory_id],
     queryFn: () => getInventoryListById(inventory_id),
     enabled: !!inventory_id,
+  });
+};
+
+export const useGetEquipmentListStatusById = (equipment_id: number) => {
+  return useQuery({
+    queryKey: [INVENTORY_QUERY_KEY.listEquipmentStatus, equipment_id],
+    queryFn: () => getEquipmentStatus(equipment_id),
+    enabled: !!equipment_id,
   });
 };

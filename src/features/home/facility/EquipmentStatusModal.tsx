@@ -1,40 +1,20 @@
-import Button from '@/components/common/Button';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { ModalHeader } from '@/components/header/ModalHeader';
-import {
-  COMPANY_TYPE,
-  EDUCATION_TYPE,
-  PARTY_MEMBER_TYPE,
-  POLICY_TYPE,
-  TALENT_TYPE,
-} from '@/constants/value';
+import { EDUCATION_TYPE } from '@/constants/value';
+import { useGetEquipmentListStatusById } from '@/hooks/useInventory';
 import { formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface EquipmentStatusBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (filter: string[]) => void;
+  equipmentId: number;
 }
-
-type FilterType = {
-  educations?: EDUCATION_TYPE[];
-  companies?: COMPANY_TYPE[];
-  partyMembers?: PARTY_MEMBER_TYPE[];
-  policies?: POLICY_TYPE[];
-  talents?: TALENT_TYPE[];
-};
 
 type Course = {
   name: string;
@@ -50,52 +30,6 @@ type CompanyStatus = {
 type LentToItem = {
   company: CompanyStatus;
   quantity: number;
-};
-
-type Equipment = {
-  equipmentId: number;
-  name: string;
-  totalAmount: number;
-  lent: number;
-  remain: number;
-  lentTo: LentToItem[];
-};
-
-type CompanyElementProps = {
-  type?: string;
-  companyList?: string[];
-};
-
-const fakeData: Equipment = {
-  equipmentId: 1,
-  name: 'Súng tiểu liên AK-47',
-  totalAmount: 250,
-  lent: 5,
-  remain: 245,
-  lentTo: [
-    {
-      company: {
-        id: 1,
-        name: '1',
-        course: {
-          name: 'VB2K1',
-          type: 'van_bang_2',
-        },
-      },
-      quantity: 3,
-    },
-    {
-      company: {
-        id: 2,
-        name: '2',
-        course: {
-          name: 'VB2K1',
-          type: 'trung_cap',
-        },
-      },
-      quantity: 2,
-    },
-  ],
 };
 
 const CompanyElement = ({ item }: { item: GroupedCourseItem }) => {
@@ -133,20 +67,12 @@ const CompanyElement = ({ item }: { item: GroupedCourseItem }) => {
 const EquipmentStatusBottomSheet: React.FC<EquipmentStatusBottomSheetProps> = ({
   isOpen,
   onClose,
-  onConfirm,
+  equipmentId,
 }) => {
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['80%'], []);
-
-  const [filterTypes, setFilterTypes] = useState<FilterType>({
-    educations: [],
-    companies: [],
-    partyMembers: [],
-    policies: [],
-    talents: [],
-  });
 
   useEffect(() => {
     if (isOpen) {
@@ -155,13 +81,6 @@ const EquipmentStatusBottomSheet: React.FC<EquipmentStatusBottomSheetProps> = ({
       bottomSheetRef.current?.dismiss();
     }
   }, [isOpen]);
-
-  const handleSave = useCallback(() => {
-    let filters: string[] = [];
-
-    onConfirm(filters);
-    onClose();
-  }, [filterTypes, onClose]);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -175,7 +94,7 @@ const EquipmentStatusBottomSheet: React.FC<EquipmentStatusBottomSheetProps> = ({
     []
   );
 
-  console.log(groupLentToByCourseType(fakeData.lentTo));
+  const { data } = useGetEquipmentListStatusById(equipmentId);
 
   return (
     <BottomSheetModal
@@ -201,34 +120,34 @@ const EquipmentStatusBottomSheet: React.FC<EquipmentStatusBottomSheetProps> = ({
                 <Text fontWeight="bold" fontSize={14}>
                   Tên vật chất:
                 </Text>
-                <Text fontSize={14}>Súng tiểu liên 123</Text>
+                <Text fontSize={14}>{data?.name}</Text>
               </Box>
               <Box flexDirection="row" justifyContent="space-between">
                 <Text fontWeight="bold" fontSize={14}>
                   Tổng số:
                 </Text>
-                <Text fontSize={14}>Súng tiểu liên 123</Text>
+                <Text fontSize={14}>{data?.totalAmount}</Text>
               </Box>
               <Box flexDirection="row" justifyContent="space-between">
                 <Text fontWeight="bold" fontSize={14}>
                   Đã bàn giao:
                 </Text>
-                <Text fontSize={14}>Súng tiểu liên 123</Text>
+                <Text fontSize={14}>{data?.lent}</Text>
               </Box>
               <Box flexDirection="row" justifyContent="space-between">
                 <Text fontWeight="bold" fontSize={14}>
                   Tồn kho:
                 </Text>
-                <Text fontSize={14}>Súng tiểu liên 123</Text>
+                <Text fontSize={14}>{data?.remain}</Text>
               </Box>
             </Box>
-            {groupLentToByCourseType(fakeData.lentTo).map((item, index) => {
+            {groupLentToByCourseType(data?.lentTo).map((item, index) => {
               return <CompanyElement key={index} item={item} />;
             })}
             {/* <CompanyElement /> */}
           </ScrollView>
         </Box>
-        <Button text="Đồng ý" onPress={handleSave} />
+        {/* <Button text="Đồng ý" onPress={handleSave} /> */}
       </Box>
     </BottomSheetModal>
   );
@@ -247,7 +166,7 @@ function groupLentToByCourseType(lentTo?: LentToItem[]): GroupedCourseItem[] {
   }
 
   const map = lentTo.reduce((acc, item) => {
-    const courseType = item.company.course.type;
+    const courseType = item.company.course.type as EDUCATION_TYPE;
 
     if (!acc[courseType]) {
       acc[courseType] = [];

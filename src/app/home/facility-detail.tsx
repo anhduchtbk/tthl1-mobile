@@ -132,7 +132,7 @@ export default function FacilityDetailScreen() {
           setIsOpenEquipmentModal(false);
         }}
         isOpen={isOpenEquipmentModal}
-        onConfirm={() => {}}
+        equipmentId={Number(params.get('equipment_id'))}
       />
     </Box>
   );
