@@ -73,7 +73,7 @@ const MilitaryFilterBottomSheet: React.FC<MilitaryFilterBottomSheetProps> = ({
     // Hệ đào tạo
     if (filterTypes.educations && filterTypes.educations.length > 0) {
       filterTypes.educations.map(item =>
-        filters.push(`company.course.type|$eq|${item}`)
+        filters.push(`course.type|$eq|${item}`)
       );
     }
     // Đại đội

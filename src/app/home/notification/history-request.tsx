@@ -41,7 +41,7 @@ export default function HistoryRequestScreen() {
     [];
 
   const formatData = (transactions: Transaction[]) => {
-    return transactions.map((item, index) => {
+    return transactions.map(item => {
       return {
         timeIndex: formatDate(item?.createdAt),
         infos: [

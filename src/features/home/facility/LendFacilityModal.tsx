@@ -50,16 +50,17 @@ const LendFacilityModal = ({
   const { mutateAsync: createTransaction, isPending: isCreatePending } =
     useCreateTransaction();
 
+  const availableQuantity =
+    facilityDetail?.totalInventoryQuantity -
+    facilityDetail?.totalBorrowedQuantity;
+
   const reportNumberSchema = z.object({
     companyName: z.string().min(1, 'Vui lòng chọn nơi mượn vật chất'),
     facilityAmount: z
       .number('Số lượng không hợp lệ')
       .min(1, 'Vui lòng nhập số lượng')
       .gt(0, 'Số lượng phải lớn hơn 0')
-      .lt(
-        facilityDetail?.totalInventoryQuantity,
-        `Số lượng phải nhỏ hơn ${facilityDetail?.totalInventoryQuantity}`
-      ),
+      .lt(availableQuantity, `Số lượng phải nhỏ hơn ${availableQuantity}`),
     reason: z.string().min(1, 'Vui lòng nhập lý do'),
     requester: z.string(),
   });
@@ -183,7 +184,7 @@ const LendFacilityModal = ({
                 py={5}
               >
                 <Text fontSize={FontSize.SMALL} color={colors.blue}>
-                  Tất cả ({facilityDetail?.totalInventoryQuantity || 0})
+                  Tất cả ({availableQuantity || 0})
                 </Text>
               </Box>
             }
@@ -199,7 +200,6 @@ const LendFacilityModal = ({
             control={control}
             label={'Lý do'}
             placeholder={'Nhập lý do'}
-            keyboardType="number-pad"
             innerInputWrapper={{
               backgroundColor: colors.white,
               borderColor: '#F1CFE3',
@@ -212,7 +212,6 @@ const LendFacilityModal = ({
             control={control}
             label={'Người yêu cầu'}
             value={`${formatRank(user?.rank)} ${user?.fullName}`}
-            keyboardType="number-pad"
             innerInputWrapper={{
               backgroundColor: colors.white,
               borderColor: '#F1CFE3',

@@ -43,10 +43,10 @@ const CompanyElement = ({ item }: { item: GroupedCourseItem }) => {
         alignSelf="flex-start"
       >
         <Text fontSize={12} color={colors.primary[20]} fontWeight="bold">
-          {formatEducation(item.courseType)}
+          {formatEducation(item.courseType as EDUCATION_TYPE)}
         </Text>
       </Box>
-      {item.items.map(company => {
+      {item.companies.map(company => {
         return (
           <Box
             flexDirection="row"
@@ -156,8 +156,8 @@ const EquipmentStatusBottomSheet: React.FC<EquipmentStatusBottomSheetProps> = ({
 export default EquipmentStatusBottomSheet;
 
 type GroupedCourseItem = {
-  courseType: EDUCATION_TYPE;
-  items: LentToItem[];
+  courseType: string;
+  companies: LentToItem[];
 };
 
 function groupLentToByCourseType(lentTo?: LentToItem[]): GroupedCourseItem[] {
@@ -166,7 +166,7 @@ function groupLentToByCourseType(lentTo?: LentToItem[]): GroupedCourseItem[] {
   }
 
   const map = lentTo.reduce((acc, item) => {
-    const courseType = item.company.course.type as EDUCATION_TYPE;
+    const courseType = item.course.type as EDUCATION_TYPE;
 
     if (!acc[courseType]) {
       acc[courseType] = [];
@@ -177,8 +177,8 @@ function groupLentToByCourseType(lentTo?: LentToItem[]): GroupedCourseItem[] {
     return acc;
   }, {} as Record<string, LentToItem[]>);
 
-  return Object.entries(map).map(([courseType, items]) => ({
+  return Object.entries(map).map(([courseType, companies]) => ({
     courseType,
-    items,
+    companies,
   }));
 }

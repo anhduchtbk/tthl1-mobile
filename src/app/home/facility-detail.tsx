@@ -84,21 +84,20 @@ export default function FacilityDetailScreen() {
               onLendFacility={() => setIsOpenLendModal(true)}
               onBackFacility={() => setIsOpenBackModal(true)}
             />
-            <Box>
-              {/* <FilterButton /> */}
-              <Box
-                borderWidth={1}
-                borderColor={colors.primary[20]}
-                borderRadius={16}
-                px={10}
-                py={4}
-                alignSelf="flex-end"
-                onPress={handleOpenEquipmentModal}
-              >
-                <Text fontSize={12} color={colors.primary[20]}>
-                  Nắm giữ thực tế
-                </Text>
-              </Box>
+            {/* <FilterButton /> */}
+            <Box
+              borderWidth={1}
+              borderColor={colors.primary[20]}
+              borderRadius={16}
+              px={10}
+              py={4}
+              mt={16}
+              alignSelf="flex-end"
+              onPress={handleOpenEquipmentModal}
+            >
+              <Text fontSize={12} color={colors.primary[20]}>
+                Nắm giữ thực tế
+              </Text>
             </Box>
             <Box h={16} />
             {data &&
