@@ -1,7 +1,7 @@
 import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { formatDate, formatUnitRank } from '@/lib/utils';
+import { formatDate, formatEducation, formatUnitRank } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 
@@ -37,7 +37,8 @@ export function StudentHeader({ studentDetail }: { studentDetail: Student }) {
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
             A{studentDetail.squad}B{studentDetail.platoon}C
-            {studentDetail.company?.name}
+            {studentDetail.company?.name} -{' '}
+            {formatEducation(studentDetail?.company?.course?.type)}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Đơn vị

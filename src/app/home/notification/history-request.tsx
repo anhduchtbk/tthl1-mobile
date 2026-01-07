@@ -68,7 +68,10 @@ export default function HistoryRequestScreen() {
           {
             title: 'Nơi mượn',
             type: 'requestAddress',
-            value: item?.borrowSource?.name,
+            value:
+              item?.borrowSource?.name !== 'Tiểu đoàn 2'
+                ? `Đại đội ${item?.borrowSource?.name}`
+                : 'Tiểu đoàn 2',
           },
           {
             title: 'Số lượng',

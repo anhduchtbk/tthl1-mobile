@@ -166,7 +166,7 @@ function groupLentToByCourseType(lentTo?: LentToItem[]): GroupedCourseItem[] {
   }
 
   const map = lentTo.reduce((acc, item) => {
-    const courseType = item.course.type as EDUCATION_TYPE;
+    const courseType = item.company.course?.type as EDUCATION_TYPE;
 
     if (!acc[courseType]) {
       acc[courseType] = [];

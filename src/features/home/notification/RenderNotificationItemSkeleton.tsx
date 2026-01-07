@@ -3,7 +3,7 @@ import { useTheme } from '@react-navigation/native';
 import { Skeleton } from 'moti/skeleton';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 
-export function RenderStudentItemSkeleton() {
+export function RenderNotificationItemSkeleton() {
   const { colors } = useTheme();
   const { width } = useWindowDimensions();
 
@@ -12,20 +12,28 @@ export function RenderStudentItemSkeleton() {
   return (
     <Box style={styles.card}>
       <Skeleton
-        width={width * 0.36}
+        width={width * 0.62}
         height={18}
         radius={8}
         colors={skeletonColor}
       />
-      <Box flexDirection="row" alignItems="center" mt={4} gap={36}>
+      <Box my={4}>
         <Skeleton
-          width={width * 0.21}
+          width={width * 0.35}
+          height={14}
+          radius={8}
+          colors={skeletonColor}
+        />
+      </Box>
+      <Box flexDirection="row" alignItems="center" gap={24}>
+        <Skeleton
+          width={width * 0.2}
           height={14}
           radius={8}
           colors={skeletonColor}
         />
         <Skeleton
-          width={width * 0.3}
+          width={width * 0.2}
           height={14}
           radius={8}
           colors={skeletonColor}
@@ -37,13 +45,13 @@ export function RenderStudentItemSkeleton() {
         justifyContent="space-between"
       >
         <Skeleton
-          width={width * 0.18}
+          width={width * 0.5}
           height={13}
           radius={8}
           colors={skeletonColor}
         />
         <Skeleton
-          width={width * 0.2}
+          width={width * 0.22}
           height={24}
           radius={16}
           colors={skeletonColor}
@@ -55,13 +63,12 @@ export function RenderStudentItemSkeleton() {
 
 const styles = StyleSheet.create({
   card: {
-    height: 83,
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderRadius: 10,
+
     padding: 12,
     margin: 16,
     marginTop: 0,
-
     // iOS shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },

@@ -1,4 +1,11 @@
 import { EDUCATION_TYPE, STATUS_TYPE } from '@/constants/value';
+import { PaginationResponse } from '@/types/api';
+import { User } from './auth';
+import { Company } from './company';
+
+export interface UserCompany extends User {
+  company: Company;
+}
 
 export interface Transaction {
   id: number;
@@ -7,20 +14,30 @@ export interface Transaction {
   type: 'borrow' | 'return';
   reason: string;
   rejectReason: string | null;
-  user: {
-    id: number;
-    username: string;
-    fullName: string;
-    phoneNumber: string;
-  };
+  user: UserCompany;
   borrowSource: {
     id: number;
     name: string;
     type: string;
   };
-  approvedAt: string;
+  approvedAt: string | null;
   createdAt: string;
   updatedAt: string;
+}
+
+interface TrainingEquipment {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  name: string;
+  description: string | null;
+  image: string;
+}
+
+export interface TransactionPending extends Transaction {
+  transactionType: 'BORROW' | 'RETURN';
+  trainingEquipment: TrainingEquipment;
 }
 
 export interface TransactionsByType {
@@ -47,6 +64,12 @@ interface TransactionEquipment {
   id: number;
   name: string;
   image: string;
+}
+
+interface AvailableCompany {
+  companyId: number;
+  companyName: string;
+  availableQuantity: number;
 }
 
 export interface GetTransactionEquipmentResponse {
@@ -101,3 +124,14 @@ export interface GetTransactionEquipmentByCompanyResponse {
   currentQuantityInCompany: number;
   transactions: Transaction[];
 }
+
+export type GetTransactionAvailableCompaniesResponse = AvailableCompany[];
+
+export interface GetTransactionPendingRequest {
+  order?: 'ASC' | 'DESC';
+  page: number;
+  limit: number;
+}
+
+export type GetTransactionPendingResponse =
+  PaginationResponse<TransactionPending>;

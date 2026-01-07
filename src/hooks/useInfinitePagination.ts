@@ -32,51 +32,39 @@ export const useInfinitePagination = <
   const infiniteQuery = useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam }) => {
-      const params = (pageParam ?? initialParams) as TParams;
-      return queryFn(params);
+      return queryFn(pageParam as TParams);
     },
     initialPageParam: initialParams,
-    getNextPageParam: lastPage => {
-      if (lastPage?.meta?.hasNextPage) {
-        return {
-          ...initialParams,
-          lastestID: lastPage.meta?.page + 1,
-        } as TParams;
-      }
-      return undefined;
+
+    getNextPageParam: (lastPage, _pages, lastPageParam) => {
+      if (!lastPage?.meta?.hasNextPage) return undefined;
+
+      return {
+        ...(lastPageParam as TParams),
+        page: lastPage.meta.page + 1,
+      };
     },
+
     enabled,
     staleTime,
     gcTime: cacheTime,
   });
 
   const flatData = useMemo(
-    () =>
-      infiniteQuery.data?.pages?.flatMap(
-        (page: PaginationResponse<TData>) => page.data || []
-      ) || [],
+    () => infiniteQuery.data?.pages.flatMap(page => page.data ?? []) ?? [],
     [infiniteQuery.data]
   );
 
-  const hasNextPage = useMemo(
-    () =>
-      !!infiniteQuery.data?.pages?.[infiniteQuery.data.pages.length - 1]?.meta
-        ?.hasNextPage,
-    [infiniteQuery.data]
-  );
+  const lastMeta = infiniteQuery.data?.pages.at(-1)?.meta;
 
-  const totalCount = useMemo(
-    () =>
-      infiniteQuery.data?.pages?.[infiniteQuery.data.pages.length - 1]?.meta
-        ?.itemCount || 0,
-    [infiniteQuery.data]
-  );
+  const hasNextPage = !!lastMeta?.hasNextPage;
+  const totalCount = lastMeta?.itemCount ?? 0;
 
   const handleLoadMore = useCallback(() => {
-    if (!infiniteQuery.isFetchingNextPage && hasNextPage) {
+    if (hasNextPage && !infiniteQuery.isFetchingNextPage) {
       infiniteQuery.fetchNextPage();
     }
-  }, [infiniteQuery, hasNextPage]);
+  }, [hasNextPage, infiniteQuery]);
 
   return {
     ...infiniteQuery,

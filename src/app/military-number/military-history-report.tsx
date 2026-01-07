@@ -14,7 +14,7 @@ import { useGetAttendanceReportList } from '@/hooks/useAttendanceReport';
 import { formatEducation, getWeekNumberByCourse } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import dayjs from 'dayjs';
-import { useSearchParams } from 'expo-router/build/hooks';
+import { useRouter, useSearchParams } from 'expo-router/build/hooks';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -22,6 +22,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const LIMIT = 20;
 
 export default function MilitaryNumberScreen() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const companyItem = JSON.parse(
     searchParams.get('companyItem') || ''
@@ -59,6 +60,7 @@ export default function MilitaryNumberScreen() {
           companyItem?.course?.type
         )}`}
         marginTop={4}
+        onBackPress={() => router.replace('/(tabs)/military-number')}
       />
       {/* <FilterButton onOpenFilter={() => setIsOpenModal(true)} /> */}
       <Box px={16} mt={8} mb={16}>
@@ -320,6 +322,7 @@ export const formatReportList = (attendanceList: any[]) => {
       reportTime: item.reportTime.split('T')[0],
       absentStudents: totalAbsent,
       actualStudents: item.personnelCount - totalAbsent,
+      totalStudents: item.personnelCount,
       type: item.session, // morning | afternoon
       listStudentGroup,
     };

@@ -74,13 +74,13 @@ export const formatFamilyRole = (familyRole: string) => {
       return 'Chồng';
     case 'vo':
       return 'Vợ';
-    case 'anh trai':
+    case 'anh_trai':
       return 'Anh trai';
-    case 'em trai':
+    case 'em_trai':
       return 'Em trai';
-    case 'chi gai':
+    case 'chi_gai':
       return 'Chị gái';
-    case 'em gai':
+    case 'em_gai':
       return 'Em gái';
     default:
       return 'Thân nhân';
@@ -231,13 +231,11 @@ export function getWeekNumberByCourse(
   startDate: string,
   reportTime: string
 ): number {
-  console.log('ggg', startDate, reportTime);
-
   const start = new Date(startDate);
   const report = new Date(reportTime);
 
   const diffTime = report.getTime() - start.getTime();
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-  return Math.floor(diffDays / 7) + 1;
+  return Math.floor(diffDays / 70) + 1;
 }

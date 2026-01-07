@@ -1,22 +1,58 @@
+import { TransactionPending } from '@/api/types/transaction';
 import CloseSvg from '@/assets/icons/close-svg';
 import Button from '@/components/common/Button';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { STATUS_TYPE } from '@/constants/value';
+import { useUpdateTransactionStatus } from '@/hooks/useTransaction';
+import { formatEducation } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import React from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const MODAL_WIDTH = SCREEN_WIDTH * 0.9;
 
 interface Props {
+  transactionItem: TransactionPending;
   isVisible: boolean;
   onClose: () => void;
+  onConfirm: (transaction: TransactionPending) => void;
 }
 
-const AcceptRequestModal = ({ isVisible, onClose }: Props) => {
+const AcceptRequestModal = ({
+  transactionItem,
+  isVisible,
+  onClose,
+  onConfirm,
+}: Props) => {
+  const { mutateAsync: updateStatusRequest, isPending: isUpdateStatusPending } =
+    useUpdateTransactionStatus(transactionItem?.id);
+
+  const onSubmit = async () => {
+    const params = { status: STATUS_TYPE.APPROVED };
+    await updateStatusRequest(params, {
+      onSuccess: () => {
+        Alert.alert('Thông báo', 'Xác nhận yêu cầu thành công', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              onConfirm({
+                ...transactionItem,
+                ...params,
+              });
+              onClose();
+            },
+          },
+        ]);
+      },
+      onError: (error: any) => {
+        Alert.alert('Lỗi!!!', JSON.stringify(error?.data?.message?.message));
+      },
+    });
+  };
   return (
     <Modal
       isVisible={isVisible}
@@ -54,8 +90,13 @@ const AcceptRequestModal = ({ isVisible, onClose }: Props) => {
         <Text fontSize={FontSize.LARGE} color={colors.text[2]}>
           Bạn có chắc chắn đồng ý{' '}
           <Text fontWeight="bold" color={colors.blue}>
-            yêu cầu mượn 100 khẩu Súng tiểu liên AK-47 từ Tiểu đoàn 2 cho C2 -
-            VB2?
+            yêu cầu{' '}
+            {transactionItem?.transactionType === 'BORROW' ? 'mượn' : 'trả'}{' '}
+            {transactionItem?.quantity}{' '}
+            {transactionItem?.trainingEquipment?.name} từ{' '}
+            {transactionItem?.borrowSource?.name || 'Tiểu đoàn 2'} cho C
+            {transactionItem?.user?.company?.name} -{' '}
+            {formatEducation(transactionItem?.user?.company?.course?.type)}?
           </Text>
         </Text>
         <Box h={16} />
@@ -65,11 +106,16 @@ const AcceptRequestModal = ({ isVisible, onClose }: Props) => {
               variant="outlined"
               text="Huỷ"
               size="small"
-              onPress={() => onClose()}
+              onPress={onClose}
             />
           </Box>
           <Box flex={1}>
-            <Button text="Xác nhận" size="small" onPress={() => onClose()} />
+            <Button
+              text="Xác nhận"
+              size="small"
+              onPress={onSubmit}
+              loading={isUpdateStatusPending}
+            />
           </Box>
         </Box>
       </Box>

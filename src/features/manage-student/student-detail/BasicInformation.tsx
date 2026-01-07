@@ -44,6 +44,7 @@ export function BasicInformation({
     {
       title: 'Ngày vào đảng',
       value: formatDate(studentDetail.partyEnrollmentDate),
+      isInvisible: !studentDetail.isPartyMember,
     },
   ];
 
@@ -98,6 +99,7 @@ export function BasicInformation({
 interface RowItem {
   title: string;
   value: string | undefined | null;
+  isInvisible?: boolean;
 }
 
 type RowItemProps = PropsWithChildren<{
@@ -108,7 +110,7 @@ const RenderListItem = ({ listItem }: RowItemProps) => {
   return (
     <Box style={styles.containerItem}>
       {listItem.map((item, index) => {
-        return (
+        return item.isInvisible ? null : (
           <Box
             key={index}
             flexDirection="row"

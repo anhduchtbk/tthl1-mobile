@@ -1,4 +1,8 @@
-import { PARTY_MEMBER_TYPE, POLICY_TYPE } from '@/constants/value';
+import {
+  EDUCATION_TYPE,
+  PARTY_MEMBER_TYPE,
+  POLICY_TYPE,
+} from '@/constants/value';
 import { PaginationResponse } from '@/types/api';
 
 interface Course {
@@ -6,7 +10,7 @@ interface Course {
   createdAt: string;
   updatedAt: string;
   name: string;
-  type: string;
+  type: EDUCATION_TYPE;
   startDate: string;
   endDate: string;
 }

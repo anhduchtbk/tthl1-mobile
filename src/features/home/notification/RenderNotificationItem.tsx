@@ -1,61 +1,61 @@
+import { TransactionPending } from '@/api/types/transaction';
 import StarSvg from '@/assets/icons/star-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { formatDate } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-type ItemProps = {
-  facilityFullname: string;
-  companyFullname: string;
-  facilityAmount: number;
-  commandTime: number;
-  commanderFullname: string;
-};
-
 type RenderItemProps = {
-  item: ItemProps;
+  item: TransactionPending;
 };
 
 export function RenderNotificationItem({ item }: RenderItemProps) {
   const router = useRouter();
 
   const onReportNumber = () => {
-    router.push('/home/notification/facility-request');
+    router.push({
+      pathname: '/home/notification/facility-request',
+      params: {
+        transactionItem: JSON.stringify(item),
+      },
+    });
   };
 
   return (
     <Box style={styles.card}>
       <Text color={colors.text[3]} fontWeight="bold">
-        Yêu cầu mượn {item.facilityFullname}
+        Yêu cầu {item?.transactionType === 'BORROW' ? 'mượn' : 'trả'}{' '}
+        {item.trainingEquipment?.name}
       </Text>
       <Box h={4} />
       <Text color={colors.text[1]} fontSize={11}>
         <Text fontWeight="bold" color={colors.text[1]}>
           Đơn vị yêu cầu:{' '}
         </Text>
-        {item.companyFullname} - 
+        C{item.user?.company?.name} -
       </Text>
       <Box flexDirection="row" alignItems="center" gap={24} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>
           <Text fontWeight="bold" color={colors.text[1]}>
             Số lượng:{' '}
           </Text>
-          {item.facilityAmount}
+          {item.quantity}
         </Text>
         <Text color={colors.text[1]} fontSize={11}>
           <Text fontWeight="bold" color={colors.text[1]}>
-            Lần mượn:{' '}
+            Thời gian tạo:{' '}
           </Text>
-          {item.commandTime}
+          {formatDate(item?.createdAt)}
         </Text>
       </Box>
       <Box flex={1} flexDirection="row" alignItems="flex-end">
         <Box flex={1} flexDirection="row" alignItems="center" gap={6}>
           <StarSvg />
           <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
-            Người yêu cầu: Đại uý {item.commanderFullname}
+            Người yêu cầu: Đại uý {item.user?.fullName}
           </Text>
         </Box>
         <TouchableOpacity

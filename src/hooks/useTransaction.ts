@@ -1,16 +1,21 @@
 import { TRANSACTION_QUERY_KEY } from '@/api/constants/transaction';
 import {
   createTransaction,
+  getTransactionAvailableCompanies,
   getTransactionByEquipment,
   getTransactionEquipmentByCompany,
+  getTransactionPending,
   updateTransactionStatus,
 } from '@/api/transaction';
 import {
   CreateTransactionRequest,
   CreateTransactionResponse,
+  GetTransactionPendingRequest,
+  TransactionPending,
   UpdateTransactionStatusRequest,
 } from '@/api/types/transaction';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfinitePagination } from './useInfinitePagination';
 
 export const useGetTransactionByEquipment = (equipment_id: number) => {
   return useQuery({
@@ -59,13 +64,37 @@ export const useUpdateTransactionStatus = (transactionId: number) => {
     mutationKey: [TRANSACTION_QUERY_KEY.updateTransactionStatus, transactionId],
     mutationFn: (data: UpdateTransactionStatusRequest) =>
       updateTransactionStatus(transactionId, data),
-    onSuccess: (data: any) => {
-      // queryClient.invalidateQueries({
-      //   queryKey: [
-      //     TRANSACTION_QUERY_KEY.listTransactionByEquipment,
-      //     data?.trainingEquipment?.id,
-      //   ],
-      // });
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          TRANSACTION_QUERY_KEY.listTransactionByEquipment,
+          TRANSACTION_QUERY_KEY.listTransactionPending,
+        ],
+      });
     },
+  });
+};
+
+export const useGetTransactionAvailableCompanies = (equipmentId: number) => {
+  return useQuery({
+    queryKey: [
+      TRANSACTION_QUERY_KEY.listTransactionAvailableCompanies,
+      equipmentId,
+    ],
+    queryFn: () => getTransactionAvailableCompanies(equipmentId),
+    enabled: !!equipmentId,
+  });
+};
+
+export const useGetTransactionPending = (
+  params: GetTransactionPendingRequest
+) => {
+  return useInfinitePagination<
+    TransactionPending,
+    GetTransactionPendingRequest
+  >({
+    queryKey: [TRANSACTION_QUERY_KEY.listTransactionPending, params],
+    queryFn: getTransactionPending,
+    initialParams: params,
   });
 };

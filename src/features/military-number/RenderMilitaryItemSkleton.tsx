@@ -1,5 +1,4 @@
 import { Box } from '@/components/common/Layout/Box';
-import { colors } from '@/theme/colors';
 import { useTheme } from '@react-navigation/native';
 import { Skeleton } from 'moti/skeleton';
 import { StyleSheet, useWindowDimensions } from 'react-native';
@@ -79,12 +78,5 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     // Android shadow
     elevation: 6,
-  },
-  containerBox: {
-    borderWidth: 1,
-    borderColor: colors.blue,
-    borderRadius: 16,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
   },
 });

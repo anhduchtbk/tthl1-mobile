@@ -10,13 +10,16 @@ import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import Input from '@/components/common/TextField/Input';
 import TextField from '@/components/common/TextField/TextField';
-import { useCreateTransaction } from '@/hooks/useTransaction';
+import {
+  useCreateTransaction,
+  useGetTransactionAvailableCompanies,
+} from '@/hooks/useTransaction';
 import { formatRank } from '@/lib/utils';
 import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
@@ -46,12 +49,19 @@ const BackFacilityModal = ({
   onClose,
 }: Props) => {
   const { user } = useAuthStore();
+
+  const { data: companyList } = useGetTransactionAvailableCompanies(
+    facilityDetail?.equipment?.id
+  );
+
   const { mutateAsync: createTransaction, isPending: isCreatePending } =
     useCreateTransaction();
 
-  const availableQuantity =
+  const totalLeftQuantity =
     facilityDetail?.totalInventoryQuantity -
     facilityDetail?.totalBorrowedQuantity;
+
+  const [availableQuantity, setAvailableQuantity] = useState(totalLeftQuantity);
 
   const reportNumberSchema = z.object({
     companyName: z.string().min(1, 'Vui lòng chọn nơi trả vật chất'),
@@ -68,24 +78,53 @@ const BackFacilityModal = ({
     control,
     setValue,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(reportNumberSchema),
     mode: 'onChange',
     defaultValues: {
       companyName: '',
-      facilityAmount: 1,
+      facilityAmount: 0,
       reason: '',
       requester: `${formatRank(user?.rank)} ${user?.fullName}`,
     },
   });
 
-  const data = inventoryList?.map(item => {
-    return {
-      label: item.name,
-      value: `${item.id}`,
-    };
-  });
+  const data = React.useMemo(() => {
+    if (!companyList) return [];
+
+    return [
+      { label: 'Tiểu đoàn 2', value: '0' }, // default option
+      ...companyList.map(item => ({
+        label: `Đại đội ${item.companyName}`,
+        value: String(item.companyId),
+      })),
+    ];
+  }, [companyList]);
+
+  useEffect(() => {
+    const defaultCompany = data.find(item => item.value === '0');
+    if (defaultCompany) {
+      setValue('companyName', defaultCompany.value);
+    }
+  }, [data, setValue]);
+
+  const onChangeCompany = useCallback(
+    (value: string) => {
+      setValue('companyName', value);
+
+      if (value === '0') {
+        setAvailableQuantity(totalLeftQuantity);
+      } else {
+        const quantity = companyList?.find(
+          item => item.companyId === Number(watch('companyName'))
+        )?.availableQuantity;
+        setAvailableQuantity(quantity || 0);
+      }
+    },
+    [watch('companyName')]
+  );
 
   const onSubmit = (data: FormData) => {
     console.log('Form data:', data);
@@ -161,7 +200,7 @@ const BackFacilityModal = ({
             searchPlaceholder={'Tìm kiếm'}
             dropdownStyle={{ borderColor: '#F1CFE3' }}
             error={errors?.companyName?.message}
-            onChange={(value: string) => setValue('companyName', value)}
+            onChange={onChangeCompany}
           />
           <Input
             as={TextField}

@@ -13,6 +13,7 @@ import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  Alert,
   Image,
   StyleSheet,
   TextInput,
@@ -59,20 +60,17 @@ export default function LoginScreen() {
   });
 
   const onLogin = async (data: FormData) => {
-    await loginRequest(
-     data,
-      {
-        onSuccess: data => {
-          if (data.status === 200) {
-            router.replace('/(tabs)');
-            return;
-          }
-        },
-        onError: error => {
-          console.log('error: ', error);
-        },
-      }
-    );
+    await loginRequest(data, {
+      onSuccess: data => {
+        if (data.status === 200) {
+          router.replace('/(tabs)');
+          return;
+        }
+      },
+      onError: (error: any) => {
+        Alert.alert('Lỗi!!!', JSON.stringify(error?.data?.message?.message));
+      },
+    });
   };
 
   return (
@@ -111,6 +109,7 @@ export default function LoginScreen() {
           <Input
             as={TextField}
             autoFocus
+            autoCapitalize="none"
             name="username"
             control={control}
             label="Tên đăng nhập"

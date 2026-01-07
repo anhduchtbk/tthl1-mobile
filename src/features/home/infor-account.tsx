@@ -1,3 +1,4 @@
+import NotificationSvg from '@/assets/icons/notification-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { formatRank } from '@/lib/utils';
@@ -5,7 +6,7 @@ import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { useRouter } from 'expo-router';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export function InforAccount() {
   const { user } = useAuthStore();
@@ -38,9 +39,9 @@ export function InforAccount() {
             {formatRank(user?.rank)} - {user?.role?.name}
           </Text>
         </Box>
-        {/* <TouchableOpacity activeOpacity={0.7} onPress={onOpenNotification}>
+        <TouchableOpacity activeOpacity={0.7} onPress={onOpenNotification}>
           <NotificationSvg />
-          <Box
+          {/* <Box
             borderRadius={100}
             borderWidth={1}
             borderColor={colors.white}
@@ -56,8 +57,8 @@ export function InforAccount() {
             <Text color={colors.white} fontSize={8}>
               1
             </Text>
-          </Box>
-        </TouchableOpacity> */}
+          </Box> */}
+        </TouchableOpacity>
       </Box>
       <Box bgColor={'#FFF7DB'} borderRadius={16}>
         <Image

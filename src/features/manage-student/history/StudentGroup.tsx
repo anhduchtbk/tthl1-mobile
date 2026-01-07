@@ -15,8 +15,6 @@ export function StudentGroup({
   reasonAbsent,
   absentStudents = [],
 }: PropsStudentGroup) {
-  console.log('dddd', absentStudents);
-
   const router = useRouter();
 
   return (

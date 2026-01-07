@@ -9,16 +9,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Box } from '@/components/common/Layout/Box';
 import { FunctionList } from '@/features/home/function-list';
 import { InforAccount } from '@/features/home/infor-account';
-import { useGetTimetableList } from '@/hooks/useTimetable';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
-  const { data } = useGetTimetableList({
-    page: 1,
-    limit: 21,
-  });
+  // const { data } = useGetTimetableList({
+  //   page: 1,
+  //   limit: 21,
+  // });
 
   return (
     <LinearGradient
