@@ -68,7 +68,13 @@ export default function LoginScreen() {
         }
       },
       onError: (error: any) => {
-        Alert.alert('Lỗi!!!', JSON.stringify(error?.data?.message?.message));
+        if (
+          error?.data?.message?.message === 'username or password is incorrect'
+        ) {
+          Alert.alert('Lỗi!!!', `Tên đăng nhập hoặc mật khẩu không chính xác.`);
+        } else {
+          Alert.alert('Lỗi!!!', JSON.stringify(error?.data?.message?.message));
+        }
       },
     });
   };

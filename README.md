@@ -1,50 +1,36 @@
-# Welcome to your Expo app 👋
+# 👋 Chào mừng đến với dự án quản lý **TTHL1** (VB2 - K4)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 🚀 Hướng dẫn khởi chạy dự án
 
-## Get started
+### 1. Chuẩn bị môi trường
 
-1. Install dependencies
+Đảm bảo bạn đã cài đặt:
 
-   ```bash
-   npm install
-   ```
+- **Node.js** (khuyến nghị dùng LTS, với dự án hiện tại dùng v24.11.1 LTS)
+- **npm** hoặc **yarn**
+- **Expo CLI**
 
-2. Start the app
+### 2. Cài đặt dependencies
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Mở Terminal và di chuyển tới thư mục dự án **TTHL1-mobile**, sau đó chạy:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 3. Khởi chạy dự án
 
-## Learn more
+Khởi động ứng dụng với Expo:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npx expo start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 4. Chạy trên thiết bị
 
-## Join the community
+- 📱 **Android/iOS**: Mở ứng dụng **Expo Go** và quét QR code
+- 🖥️ **Giả lập**: Chọn Android Emulator hoặc iOS Simulator trong Expo DevTools
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Chúc bạn code vui vẻ! 🎉
