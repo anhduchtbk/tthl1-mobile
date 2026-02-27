@@ -18,7 +18,7 @@ export function InforAccount() {
 
   return (
     <Box gap={24}>
-      <Box flexDirection="row" mt={6} gap={8}>
+      <Box flexDirection="row" mt={6} gap={8} onPress={() => router.push('/(tabs)/setting')}>
         <Image
           source={{
             uri: 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg',

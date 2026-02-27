@@ -3,6 +3,7 @@ import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { DateTimePickerModal } from '@/components/common/Modal/DateTimePickerModal';
 import { Text } from '@/components/common/Text/Text';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import {
   HistoryElement,
@@ -129,9 +130,11 @@ export default function MilitaryNumberScreen() {
 function DailyDetail({ data }: { data: any[] }) {
   return (
     <Box gap={16}>
-      {data.map((item, idx) => (
-        <HistoryElement key={idx} item={item} />
-      ))}
+      {data?.length > 0 ? (
+        data.map((item, idx) => <HistoryElement key={idx} item={item} />)
+      ) : (
+        <EmptyScreen text="Không có dữ liệu" />
+      )}
     </Box>
   );
 }

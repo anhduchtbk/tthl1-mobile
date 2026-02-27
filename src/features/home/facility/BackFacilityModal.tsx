@@ -220,6 +220,9 @@ const BackFacilityModal = ({
                 borderRadius={16}
                 px={10}
                 py={5}
+                onPress={() =>
+                  setValue('facilityAmount', availableQuantity || 0)
+                }
               >
                 <Text fontSize={FontSize.SMALL} color={colors.blue}>
                   Tất cả ({availableQuantity || 0})

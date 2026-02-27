@@ -43,10 +43,18 @@ export function DayElement({
         borderRadius={16}
         bgColor={isCheck ? colors.primary[40] : colors.white}
       >
-        <Text color={isCheck ? colors.text[3] : colors.text[4]} align="center">
+        <Text
+          color={isCheck ? colors.text[3] : colors.text[4]}
+          align="center"
+          fontWeight={isCheck ? 'bold' : 'regular'}
+        >
           {formatVietnameseDay(value)}
         </Text>
-        <Text color={isCheck ? colors.text[3] : colors.text[4]} align="center">
+        <Text
+          color={isCheck ? colors.text[3] : colors.text[4]}
+          align="center"
+          fontWeight={isCheck ? 'bold' : 'regular'}
+        >
           ({formatDate(value)})
         </Text>
       </Box>
@@ -64,10 +72,18 @@ function WeekSummary({ isCheck, week, onPress }: WeekSummaryProps) {
         borderRadius={16}
         bgColor={isCheck ? colors.primary[40] : colors.white}
       >
-        <Text align="center" color={isCheck ? colors.text[3] : colors.text[4]}>
+        <Text
+          align="center"
+          color={isCheck ? colors.text[3] : colors.text[4]}
+          fontWeight={isCheck ? 'bold' : 'regular'}
+        >
           Tổng hợp
         </Text>
-        <Text align="center" color={isCheck ? colors.text[3] : colors.text[4]}>
+        <Text
+          align="center"
+          color={isCheck ? colors.text[3] : colors.text[4]}
+          fontWeight={isCheck ? 'bold' : 'regular'}
+        >
           tuần {week || ''}
         </Text>
       </Box>

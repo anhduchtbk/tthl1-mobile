@@ -23,7 +23,7 @@ export function RenderStudentItem({ item }: RenderItemProps) {
   };
 
   return (
-    <Box style={styles.card}>
+    <Box style={styles.card} onPress={onSeeMore}>
       <Text color={colors.text[3]} fontWeight="bold">
         {item?.fullName} - {item.university}
       </Text>

@@ -2,7 +2,7 @@ import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { PARTY_MEMBER_OPTIONS, POLICY_OPTIONS } from '@/constants/option';
-import { formatBoolean, formatDate } from '@/lib/utils';
+import { formatBoolean, formatDate, formatGender, formatUnitRank } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
@@ -14,12 +14,21 @@ export function BasicInformation({
 }) {
   const basic = [
     {
+      title: 'Chức vụ',
+      value: formatUnitRank(studentDetail.unitRank),
+      isInvisible: !studentDetail.unitRank,
+    },
+    {
       title: 'Quê quán',
       value: studentDetail.placeOfOrigin,
     },
     {
       title: 'Nơi sinh',
       value: studentDetail.placeOfResidence,
+    },
+    {
+      title: 'Giới tính',
+      value: formatGender(studentDetail.gender),
     },
     {
       title: 'SĐT',

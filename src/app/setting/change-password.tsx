@@ -20,9 +20,20 @@ type ChangePasswordFormData = {
 
 const changePasswordSchema = z
   .object({
-    currentPassword: z.string().min(1, 'Vui lòng nhập mật khẩu hiện tại'),
-    newPassword: z.string().min(1, 'Vui lòng nhập mật khẩu mới'),
-    confirmNewPassword: z.string().min(1, 'Vui lòng nhập lại mật khẩu mới'),
+    currentPassword: z
+      .string()
+      .min(1, 'Vui lòng nhập mật khẩu hiện tại')
+      .min(6, 'Nhập tối thiểu 6 ký tự'),
+    newPassword: z
+      .string()
+      .min(1, 'Vui lòng nhập mật khẩu mới')
+      .min(1, 'Vui lòng nhập mật khẩu hiện tại')
+      .min(6, 'Nhập tối thiểu 6 ký tự'),
+    confirmNewPassword: z
+      .string()
+      .min(1, 'Vui lòng nhập lại mật khẩu mới')
+      .min(1, 'Vui lòng nhập mật khẩu hiện tại')
+      .min(6, 'Nhập tối thiểu 6 ký tự'),
   })
   .refine(data => data.newPassword === data.confirmNewPassword, {
     message: 'Nhập lại mật khẩu mới chưa chính xác, vui lòng nhập lại',
@@ -97,6 +108,7 @@ export default function ChangePasswordScreen() {
           returnKeyType="next"
           onSubmitEditing={() => refs.newPassword.current?.focus()}
           error={errors?.currentPassword?.message}
+          isPassword
         />
         <Input
           as={TextField}
@@ -109,6 +121,7 @@ export default function ChangePasswordScreen() {
           returnKeyType="next"
           onSubmitEditing={() => refs.confirmNewPassword.current?.focus()}
           error={errors?.newPassword?.message}
+          isPassword
         />
         <Input
           as={TextField}
@@ -119,6 +132,7 @@ export default function ChangePasswordScreen() {
           placeholder="Nhập lại mật khẩu mới"
           control={control}
           error={errors?.confirmNewPassword?.message}
+          isPassword
         />
         <Button
           text="XÁC NHẬN"

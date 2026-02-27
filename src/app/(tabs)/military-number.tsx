@@ -51,6 +51,9 @@ export default function MilitaryNumberScreen() {
     filter: filters,
   });
 
+console.log('ssss', data);
+
+
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator size={'small'} color={colors.primary[20]} />
