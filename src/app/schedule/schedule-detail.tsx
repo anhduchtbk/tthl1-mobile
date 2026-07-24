@@ -2,6 +2,7 @@ import { Company } from '@/api/types/company';
 import FilterButton from '@/components/common/Button/filter-button';
 import { Box } from '@/components/common/Layout/Box';
 import { DateTimePickerModal } from '@/components/common/Modal/DateTimePickerModal';
+import { EmptyScreen } from '@/components/empty/EmptyScreen';
 import { ScreenHeader } from '@/components/header/ScreenHeader';
 import MilitaryHistoryFilterBottomSheet from '@/features/military-number/military-history-report/MilitaryHistoryFilterBottomSheet';
 import { ScheduleDetail } from '@/features/schedule/ScheduleDetail';
@@ -66,6 +67,9 @@ export default function ScheduleDetailScreen() {
           contentContainerStyle={{ paddingHorizontal: 16 }}
           ListFooterComponent={<Box h={100} />}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <EmptyScreen text="Chưa có dữ liệu thời khoá biểu" />
+          }
         />
       )}
       <MilitaryHistoryFilterBottomSheet
@@ -88,8 +92,8 @@ export default function ScheduleDetailScreen() {
           dateType === 'from' && fromDate
             ? fromDate
             : dateType === 'to' && toDate
-            ? toDate
-            : new Date()
+              ? toDate
+              : new Date()
         }
         dateMode="date"
         onChange={(newDate: Date) => {

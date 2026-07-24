@@ -21,6 +21,7 @@ export default function StudentDetailScreen() {
   const studentDetail = JSON.parse(searchParams.get('studentDetail') || '');
 
   const { data } = UseGetStudentDetail(studentDetail?.id);
+  console.log('fff', studentDetail, data);
 
   return (
     <SafeAreaView
@@ -54,7 +55,7 @@ export default function StudentDetailScreen() {
         >
           <Image
             source={{
-              uri: 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg',
+              uri: data?.avatar || studentDetail?.avatar || '',
             }}
             style={styles.imgAvatar}
           />
@@ -88,5 +89,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 85,
     borderColor: '#F7F7F7',
+    backgroundColor: colors.neutral.background,
   },
 });

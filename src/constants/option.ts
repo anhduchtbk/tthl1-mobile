@@ -13,6 +13,7 @@ export const EDUCATION_OPTIONS = [
   { label: 'Chính quy', value: EDUCATION_TYPE.CHINH_QUY },
   { label: 'Trung cấp', value: EDUCATION_TYPE.TRUNG_CAP },
   { label: 'Văn bằng 2', value: EDUCATION_TYPE.VB2 },
+  { label: 'Nghĩa vụ CA', value: EDUCATION_TYPE.NGHIA_VU },
 ];
 
 export const COMPANY_OPTIONS = [

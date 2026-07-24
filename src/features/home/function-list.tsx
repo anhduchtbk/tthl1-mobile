@@ -1,9 +1,9 @@
 import BookSvg from '@/assets/icons/book-svg';
-import HomeColorSvg from '@/assets/icons/home-color-svg';
 import TimetableSvg from '@/assets/icons/timetable-svg';
 import UserSvg from '@/assets/icons/user-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
+import { WINDOW_WIDTH } from '@gorhom/bottom-sheet';
 import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -46,8 +46,8 @@ export function FunctionList() {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.containerFList}>
-          <TouchableOpacity
+        {/* <View style={styles.containerFList}> */}
+        {/* <TouchableOpacity
             activeOpacity={0.7}
             style={styles.btAva}
             onPress={() => router.push('/home/manage-facility')}
@@ -60,22 +60,22 @@ export function FunctionList() {
             >
               Quản lý vật chất
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={styles.btAva}
-            onPress={() => router.push('/(tabs)/schedule')}
+          </TouchableOpacity> */}
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.btAva}
+          onPress={() => router.push('/(tabs)/schedule')}
+        >
+          <TimetableSvg />
+          <Text
+            style={styles.txtFunction}
+            fontWeight="medium"
+            color={'#292929'}
           >
-            <TimetableSvg />
-            <Text
-              style={styles.txtFunction}
-              fontWeight="medium"
-              color={'#292929'}
-            >
-              Thời khoá biểu
-            </Text>
-          </TouchableOpacity>
-        </View>
+            Thời khoá biểu
+          </Text>
+        </TouchableOpacity>
+        {/* </View> */}
       </Box>
     </Box>
   );
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     borderColor: '#BED6FF',
     borderWidth: 1,
     gap: 8,
+    maxWidth: WINDOW_WIDTH / 2 - 24,
   },
   imgAva: {
     width: 32,

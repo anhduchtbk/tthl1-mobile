@@ -110,8 +110,8 @@ export default function MilitaryNumberScreen() {
           dateType === 'from' && fromDate
             ? fromDate
             : dateType === 'to' && toDate
-            ? toDate
-            : new Date()
+              ? toDate
+              : new Date()
         }
         dateMode="date"
         onChange={(newDate: Date) => {
@@ -142,28 +142,32 @@ function DailyDetail({ data }: { data: any[] }) {
 function WeeklySummary({ data }: { data: any[] }) {
   return (
     <Box gap={16}>
-      {data.map((day, index) => (
-        <Box key={index} gap={16}>
-          <Box alignSelf="flex-start">
-            <Text
-              fontSize={16}
-              color={colors.primary[20]}
-              style={{ paddingHorizontal: 8 }}
-            >
-              {day.label}
-            </Text>
+      {data?.length > 0 ? (
+        data.map((day, index) => (
+          <Box key={index} gap={16}>
+            <Box alignSelf="flex-start">
+              <Text
+                fontSize={16}
+                color={colors.primary[20]}
+                style={{ paddingHorizontal: 8 }}
+              >
+                {day.label}
+              </Text>
 
-            <Box
-              height={2}
-              backgroundColor={colors.primary[20]}
-              mt={6}
-              mx={2}
-            />
+              <Box
+                height={2}
+                backgroundColor={colors.primary[20]}
+                mt={6}
+                mx={2}
+              />
+            </Box>
+
+            <TotalWeekElement item={day} />
           </Box>
-
-          <TotalWeekElement item={day} />
-        </Box>
-      ))}
+        ))
+      ) : (
+        <EmptyScreen text="Không có dữ liệu" />
+      )}
     </Box>
   );
 }

@@ -121,7 +121,7 @@ const StudentFilterBottomSheet: React.FC<StudentFilterBottomSheetProps> = ({
     // Hệ đào tạo
     if (filterTypes.educations && filterTypes.educations.length > 0) {
       filterTypes.educations.map(item =>
-        filters.push(`course.type|$eq|${item}`)
+        filters.push(`educationType|$eq|${item}`)
       );
     }
     // Đại đội

@@ -8,7 +8,7 @@ type ActiveSvgProps = SvgProps & {
 
 function ManageStudentSvg({ activeColor, ...props }: ActiveSvgProps) {
   return (
-    <Svg fill="none" {...props}>
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
       <Path
         fill={activeColor || '#B2BDBE'}
         d="M4.56 4.36h-.002a.713.713 0 0 0-.712.716v10.732c0 .393.321.714.716.715 1.666.004 4.457.351 6.382 2.366V7.66a.686.686 0 0 0-.098-.363C9.266 4.75 6.23 4.364 4.56 4.36ZM19.154 15.808V5.076a.713.713 0 0 0-.712-.716h-.001c-1.67.004-4.707.39-6.287 2.936a.686.686 0 0 0-.098.362V18.89c1.925-2.015 4.716-2.362 6.382-2.366a.718.718 0 0 0 .716-.715Z"

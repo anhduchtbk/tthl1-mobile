@@ -35,6 +35,7 @@ export interface FamilyMember {
   jobRank: string;
   familyRole: string;
   phoneNumber: string;
+  birthday: string | null;
 }
 
 export interface Student {
@@ -66,6 +67,10 @@ export interface Student {
   graduationDate: string;
   company: Company;
   familyMembers: FamilyMember[];
+
+  avatar: string | null;
+  phoneNumber: string | null;
+  educationType: EDUCATION_TYPE;
 }
 
 export interface GetStudentListRequest {

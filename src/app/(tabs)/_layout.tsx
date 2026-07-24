@@ -7,16 +7,17 @@ import PersonnelSvg from '@/assets/icons/personnel-svg';
 import SettingSvg from '@/assets/icons/setting-svg';
 import TimetableIconSvg from '@/assets/icons/timetable';
 import { colors } from '@/theme/colors';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: colors.primary[20],
-        // tabBarStyle: Platform.select({
-        //   ios: { position: 'absolute' },
-        //   default: {},
-        // }),
+        tabBarStyle: Platform.select({
+          ios: { position: 'absolute' },
+          default: {},
+        }),
         headerShown: false,
       }}
     >

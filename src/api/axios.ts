@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-export const BASE_URL = 'https://k02.ichhoa.dev/api/';
+export const BASE_URL = 'https://api.tthl1.xyz/api/';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

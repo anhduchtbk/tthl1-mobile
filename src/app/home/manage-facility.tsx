@@ -4,12 +4,15 @@ import { ScreenHeader } from '@/components/header/ScreenHeader';
 import { RenderFacilityItem } from '@/features/home/facility/RenderFacilityItem';
 import { RenderFacilityItemSkeleton } from '@/features/home/facility/RenderFacilityItemSkeleton';
 import { useGetInventoryList } from '@/hooks/useInventory';
+import { useAuthStore } from '@/store/authStore';
 import { colors } from '@/theme/colors';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 const LIMIT = 10;
 
 export default function ManageFacilityScreen() {
+  const { user } = useAuthStore();
+
   const {
     data,
     isLoadingFirstPage: isLoading,
@@ -22,6 +25,13 @@ export default function ManageFacilityScreen() {
     page: 1,
     limit: LIMIT,
   });
+
+  const companyData = user?.company
+    ? [
+        ...(data || []),
+        { id: user?.company?.id, name: `Đại đội ${user?.company?.name}` },
+      ]
+    : data;
 
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
@@ -39,7 +49,7 @@ export default function ManageFacilityScreen() {
         })
       ) : (
         <FlatList
-          data={data || []}
+          data={companyData || []}
           renderItem={({ item }) => <RenderFacilityItem item={item} />}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 16 }}

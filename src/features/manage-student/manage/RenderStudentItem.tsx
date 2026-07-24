@@ -25,7 +25,8 @@ export function RenderStudentItem({ item }: RenderItemProps) {
   return (
     <Box style={styles.card} onPress={onSeeMore}>
       <Text color={colors.text[3]} fontWeight="bold">
-        {item?.fullName} - {item.university}
+        {item?.fullName}
+        {item.university && ` - ${item.university}`}
       </Text>
       <Box flexDirection="row" alignItems="center" gap={36} mt={4}>
         <Text color={colors.text[1]} fontSize={11}>

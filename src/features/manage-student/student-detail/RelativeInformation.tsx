@@ -1,7 +1,7 @@
 import { FamilyMember } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
-import { formatFamilyRole, formatPhoneNumber } from '@/lib/utils';
+import { formatDate, formatFamilyRole, formatPhoneNumber } from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { FontSize } from '@/theme/fonts';
 import { PropsWithChildren } from 'react';
@@ -24,7 +24,7 @@ export function RelativeInformation({
         {
           title: 'Ngày sinh',
           type: 'birthday',
-          value: '',
+          value: formatDate(item.birthday),
         },
         {
           title: 'Nơi sinh',

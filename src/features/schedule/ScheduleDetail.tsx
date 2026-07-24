@@ -62,11 +62,17 @@ export function ScheduleDetail({
         setSelectedDate={setSelectedDate}
       />
       <Box gap={8}>
-        {item?.days
-          .find(day => day.date === selectedDate)
-          ?.items.map((timetable, index) => {
-            return <ScheduleItem item={timetable} key={index} />;
-          })}
+        {(() => {
+          const selectedDay = item?.days.find(day => day.date === selectedDate);
+          return selectedDay?.items && selectedDay.items.length > 0 ? (
+            selectedDay.items.map((timetable, index) => {
+              return <ScheduleItem item={timetable} key={index} />;
+            })
+          ) : (
+            // <EmptyScreen text="Chưa có dữ liệu thời khoá biểu" />
+            <></>
+          );
+        })()}
       </Box>
       {isHome && (
         <Box

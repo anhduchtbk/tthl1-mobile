@@ -8,7 +8,7 @@ type ActiveSvgProps = SvgProps & {
 
 function SettingSvg({ activeColor, ...props }: ActiveSvgProps) {
   return (
-    <Svg fill="none" {...props}>
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
       <Path
         fill={activeColor || '#B2BDBE'}
         fillRule="evenodd"

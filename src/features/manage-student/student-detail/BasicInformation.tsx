@@ -2,7 +2,13 @@ import { Student } from '@/api/types/student';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { PARTY_MEMBER_OPTIONS, POLICY_OPTIONS } from '@/constants/option';
-import { formatBoolean, formatDate, formatGender, formatUnitRank } from '@/lib/utils';
+import {
+  formatBoolean,
+  formatDate,
+  formatGender,
+  formatPhoneNumber,
+  formatUnitRank,
+} from '@/lib/utils';
 import { colors } from '@/theme/colors';
 import { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
@@ -20,19 +26,22 @@ export function BasicInformation({
     },
     {
       title: 'Quê quán',
-      value: studentDetail.placeOfOrigin,
+      // value: studentDetail.placeOfOrigin,
+      value: studentDetail.country,
     },
-    {
-      title: 'Nơi sinh',
-      value: studentDetail.placeOfResidence,
-    },
+    // {
+    //   title: 'Nơi sinh',
+    //   value: studentDetail.placeOfResidence,
+    // },
     {
       title: 'Giới tính',
       value: formatGender(studentDetail.gender),
     },
     {
       title: 'SĐT',
-      value: '',
+      value: studentDetail.phoneNumber
+        ? formatPhoneNumber(studentDetail.phoneNumber)
+        : '-',
     },
     {
       title: 'Đoàn viên',
@@ -41,6 +50,7 @@ export function BasicInformation({
     {
       title: 'Ngày vào đoàn',
       value: formatDate(studentDetail.youngUnionEnrollmentDate),
+      isInvisible: !studentDetail.isYoungUnionMember,
     },
     {
       title: 'Đảng viên',
@@ -80,10 +90,10 @@ export function BasicInformation({
       title: 'Lưu ý khác',
       value: studentDetail.note,
     },
-    {
-      title: 'Cán bộ chỉ huy',
-      value: '',
-    },
+    // {
+    //   title: 'Cán bộ chỉ huy',
+    //   value: '',
+    // },
   ];
 
   return (

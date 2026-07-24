@@ -10,6 +10,7 @@ export enum EDUCATION_TYPE {
   CHINH_QUY = 'chinh_quy',
   TRUNG_CAP = 'trung_cap',
   VB2 = 'van_bang_2',
+  NGHIA_VU = 'nghia_vu_quan_su',
 }
 
 // Trạng thái

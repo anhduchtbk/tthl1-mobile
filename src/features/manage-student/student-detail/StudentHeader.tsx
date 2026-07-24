@@ -45,7 +45,7 @@ export function StudentHeader({ studentDetail }: { studentDetail: Student }) {
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
           <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
-            {formatEducation(studentDetail?.company?.course?.type)}
+            {formatEducation(studentDetail?.educationType)}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
             Hệ đào tạo

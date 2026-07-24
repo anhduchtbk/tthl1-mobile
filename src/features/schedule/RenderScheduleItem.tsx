@@ -23,7 +23,7 @@ export function RenderScheduleItem({ item }: RenderItemProps) {
   };
 
   return (
-    <Box style={styles.card}>
+    <Box style={styles.card} onPress={onSeeMore}>
       <Text color={colors.text[3]} fontWeight="bold">
         Đại đội {item?.name} - {formatEducation(item?.course?.type)}
       </Text>

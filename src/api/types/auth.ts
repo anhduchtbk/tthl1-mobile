@@ -52,6 +52,11 @@ export interface User {
     deletedAt: string | null;
     permissions: string[];
   };
+
+  company: {
+    id: number;
+    name: string;
+  };
 }
 
 export interface GetMeResponse {

@@ -1,4 +1,4 @@
-import { SCHEDULE_TYPE } from '@/constants/value';
+import { RANK_TYPE, SCHEDULE_TYPE } from '@/constants/value';
 import { PaginationResponse } from '@/types/api';
 import { Company } from './company';
 
@@ -20,7 +20,7 @@ export interface Teacher {
   email: string;
   fullName: string;
   phoneNumber: string;
-  rank: string;
+  rank: RANK_TYPE;
   isActive: boolean;
 }
 

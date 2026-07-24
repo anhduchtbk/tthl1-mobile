@@ -1,5 +1,4 @@
 import { Inventory } from '@/api/types/inventory';
-import StarSvg from '@/assets/icons/star-svg';
 import { Box } from '@/components/common/Layout/Box';
 import { Text } from '@/components/common/Text/Text';
 import { colors } from '@/theme/colors';
@@ -43,11 +42,11 @@ export function RenderFacilityItem({ item }: RenderItemProps) {
       </Box>
       <Box flexDirection="row" alignItems="flex-end">
         <Box flex={1} flexDirection="row" alignItems="center" gap={6}>
-          <StarSvg />
+          {/* <StarSvg />
           <Text color={colors.text[1]} fontSize={11} style={{ flex: 1 }}>
             Đại đội trưởng:{' '}
-            {/* {item.commanderFullname ? item.commanderFullname : '---'} */}
-          </Text>
+            {item.commanderFullname ? item.commanderFullname : '---'}
+          </Text> */}
         </Box>
         <TouchableOpacity
           activeOpacity={0.7}

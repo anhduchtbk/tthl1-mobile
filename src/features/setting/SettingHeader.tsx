@@ -37,7 +37,12 @@ export function SettingHeader() {
         justifyContent="space-between"
       >
         <Box flex={1} alignItems="center" gap={4}>
-          <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
+          <Text
+            fontSize={15}
+            fontWeight="bold"
+            color={colors.text[3]}
+            align="center"
+          >
             {user?.role?.department || '-'}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
@@ -45,7 +50,12 @@ export function SettingHeader() {
           </Text>
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
-          <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
+          <Text
+            fontSize={15}
+            fontWeight="bold"
+            color={colors.text[3]}
+            align="center"
+          >
             {user?.role?.name}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>
@@ -53,7 +63,12 @@ export function SettingHeader() {
           </Text>
         </Box>
         <Box flex={1} alignItems="center" gap={4}>
-          <Text fontSize={15} fontWeight="bold" color={colors.text[3]}>
+          <Text
+            fontSize={15}
+            fontWeight="bold"
+            color={colors.text[3]}
+            align="center"
+          >
             {formatDate(user?.birthday)}
           </Text>
           <Text fontSize={13} color={colors.text[1]}>

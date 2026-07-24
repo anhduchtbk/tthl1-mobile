@@ -59,6 +59,8 @@ export const formatEducation = (education?: EDUCATION_TYPE) => {
       return 'Trung cấp';
     case EDUCATION_TYPE.VB2:
       return 'VB2';
+    case EDUCATION_TYPE.NGHIA_VU:
+      return 'Nghĩa vụ CA';
     default:
       return '';
   }

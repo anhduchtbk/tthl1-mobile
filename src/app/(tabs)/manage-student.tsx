@@ -34,7 +34,9 @@ export default function ManageStudentScreen() {
   const renderLoadingFooter = () =>
     isFetchingNextPage ? (
       <ActivityIndicator size={'small'} color={colors.primary[20]} />
-    ) : null;
+    ) : (
+      <Box h={200} />
+    );
 
   const handleOpenModal = () => {
     setIsOpenModal(true);

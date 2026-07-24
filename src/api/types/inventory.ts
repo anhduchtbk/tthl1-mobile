@@ -2,11 +2,11 @@ import { PaginationResponse } from '@/types/api';
 
 export interface Inventory {
   id: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   name: string;
   deletedAt?: null;
-  description: string;
+  description?: string;
 }
 
 export interface GetListInventoryRequest {

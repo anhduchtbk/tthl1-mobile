@@ -27,11 +27,10 @@ export function ScheduleItem({ item }: { item: Timetable }) {
       </Box>
       <Box gap={2}>
         <Text fontWeight="bold" color={colors.text[3]}>
-          {item?.subject?.name} ({item?.content})
+          {item?.subject?.name}
         </Text>
         <Text fontSize={13} color={colors.text[1]}>
-          Buổi: {'-'} 
-          {/* {item?.isDone ? '(XONG)' : ''} */}
+          Ghi chú: {item?.content || '---'}
         </Text>
         <Text fontSize={13} fontWeight="bold" color={colors.text[1]}>
           CBHL: {formatRank(item?.teacher?.rank)} {item?.teacher?.fullName}
